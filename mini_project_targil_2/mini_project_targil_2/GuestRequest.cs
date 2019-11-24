@@ -7,33 +7,22 @@ using System.Threading.Tasks;
 
 namespace mini_project_targil_2
 {
-    class GuestRequest: IComparable
+    class GuestRequest
     {
         DateTime EntryDate, ReleaseDate;
-        bool IsApproved;
+
+        public bool IsApproved
+        {
+            get => IsApproved;
+            set => IsApproved = value;
+        }
 
         public override string ToString()
         {
+            //TODO implement
             return "";
         }
 
-        public bool ApproveRequest(GuestRequest guestReq)
-        {
-            return true;
-        }
-
-        public int GetAnnualBusyDays()
-        {
-            return 1;
-        }
-        public float GetAnnualBusyPercentage()
-        {
-            return 1;
-        }
-
-        public int CompareTo(object obj)
-        {
-            throw new NotImplementedException();
-        }
+       
     }
 }

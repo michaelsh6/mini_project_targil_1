@@ -16,16 +16,17 @@ namespace mini_project_targil_2
             //Fill randomally the Entry and Release dates of gs
             return gs;
         }
+
         static void Main(string[] args)
         {
             List<Host> lsHosts;
             lsHosts = new List<Host>()
- {
- new Host(1, rand.Next(1,5)),
- new Host(2, rand.Next(1,5)),
- new Host(3, rand.Next(1,5)),
- new Host(4, rand.Next(1,5)),
- new Host(5, rand.Next(1,5))
+            {
+                 new Host(1, rand.Next(1,5)),
+                 new Host(2, rand.Next(1,5)),
+                 new Host(3, rand.Next(1,5)),
+                 new Host(4, rand.Next(1,5)),
+                 new Host(5, rand.Next(1,5))
             };
             GuestRequest gs1 = new GuestRequest();
             GuestRequest gs2 = new GuestRequest();
@@ -82,8 +83,7 @@ namespace mini_project_targil_2
                         //sort this host by occupancy of its units
                         host.SortUnits();
                         //print this host detailes
-                        Console.WriteLine("**** Details of the Host with the
-                        most occupied unit:\n");
+                        Console.WriteLine("**** Details of the Host with the most occupied unit:\n");
 
 
                          Console.WriteLine(host);
@@ -93,4 +93,4 @@ namespace mini_project_targil_2
             }
         }
     }
-}
+}
