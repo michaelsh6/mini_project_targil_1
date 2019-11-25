@@ -14,13 +14,14 @@ namespace mini_project_targil_2
         //public static DateTime  FIRST_DATE = new DateTime(YEAR, 1, 1);
         //public static DateTime  LAST_DATE = new DateTime(YEAR, 12, 31);
 
-        public DateTime EntryDate { get => EntryDate; set => EntryDate = value; }
-        public DateTime ReleaseDate { get => ReleaseDate; set => ReleaseDate = value; }
+        public DateTime EntryDate; //{ get => EntryDate; set => EntryDate = value; }
+        public DateTime ReleaseDate;//{ get => ReleaseDate; set => ReleaseDate = value; }
 
+        private bool m_IsApproved;
         public bool IsApproved
         {
-            get => IsApproved;
-            set => IsApproved = value;
+            get => m_IsApproved;
+            set => m_IsApproved = value;
         }
         public GuestRequest()
         {
@@ -34,7 +35,7 @@ namespace mini_project_targil_2
 
         public override string ToString()
         {
-            return $"Entry Date: {EntryDate.ToString("dd/mm")}, Release Date: {ReleaseDate.ToString("dd/mm")}";
+            return $"Entry Date: {EntryDate.ToString("dd/MM")}, Release Date: {ReleaseDate.ToString("dd/MM")}";
         }
 
        

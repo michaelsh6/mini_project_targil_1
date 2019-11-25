@@ -13,7 +13,15 @@ namespace mini_project_targil_2
         private static GuestRequest CreateRandomRequest()
         {
             GuestRequest gs = new GuestRequest();
-            
+
+            DateTime firstDate = new DateTime(2019, 1, 1);
+            DateTime lastDate = new DateTime(2019, 12, 31);
+
+            int numOfDays = rand.Next((lastDate- firstDate).Days);
+            gs.EntryDate = firstDate.AddDays(rand.Next(numOfDays));
+
+            numOfDays = rand.Next((lastDate - gs.EntryDate).Days);
+            gs.ReleaseDate = gs.EntryDate.AddDays(numOfDays);
             //Fill randomally the Entry and Release dates of gs
             return gs;
         }
@@ -85,8 +93,9 @@ namespace mini_project_targil_2
                         //print this host detailes
                         Console.WriteLine("**** Details of the Host with the most occupied unit:\n");
 
-
-                         Console.WriteLine(host);
+                        Console.WriteLine(host);
+                        //foreach (var host1 in lsHosts)
+                        //    Console.WriteLine(host1);
                         break;
                     }
                 }

@@ -16,18 +16,20 @@ namespace mini_project_targil_2
 
     public Host(int HostKey, int numOfUnit)
         {
+            HostingUnitCollection = new List<HostingUnit>();
             this.HostKey = HostKey;
             for(int i=0;i< numOfUnit;i++)
             {
                 HostingUnitCollection.Add(new HostingUnit());
             }
-            //TODO init units  
         }
 
-        public void AssignRequests(params GuestRequest[] gs1)
+        public bool AssignRequests(params GuestRequest[] gs)
         {
-            //TODO implement
-            throw new NotImplementedException();
+            bool flag = true;
+            for(int i = 0; i<gs.Length;i++)
+                if (SubmitRequest(gs[i]) == -1) flag = false;
+            return flag;
         }
 
         public void SortUnits()
@@ -38,19 +40,28 @@ namespace mini_project_targil_2
 
         private long SubmitRequest(GuestRequest guestReq)
         {
-            //TODO implement
-            return 1;
+            for (int i = 0; i < HostingUnitCollection.Count; i++)
+            {
+                if (HostingUnitCollection[i].ApproveRequest(guestReq))
+                    return HostingUnitCollection[i].HostingUnitKey;
+            }
+            return -1;
         }
         public int GetHostAnnualBusyDays()
         {
-            //TODO implement
-            return 1;
+            int sum = 0;
+            for (int i = 0; i < HostingUnitCollection.Count; i++)
+                sum +=  HostingUnitCollection[i].GetAnnualBusyDays();
+            return sum;
         }
 
         public override string ToString()
         {
+            String result = $"Host Key: {HostKey}\n";
+            for (int i = 0; i < HostingUnitCollection.Count; i++)
+                result += HostingUnitCollection[i].ToString();
             //TODO implement
-            return "";
+            return result;// + $"\n{this.GetHostAnnualBusyDays()}";
         }
 
         public HostingUnit this[int i]
@@ -61,9 +72,7 @@ namespace mini_project_targil_2
 
         public IEnumerator GetEnumerator()
         {
-            //TODO implement
-            throw new NotImplementedException();
-            //return ;
+            return HostingUnitCollection.GetEnumerator();
         }
     }
 

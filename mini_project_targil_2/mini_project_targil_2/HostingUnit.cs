@@ -38,11 +38,10 @@ namespace mini_project_targil_2
         public int GetAnnualBusyDays()
         {
             int year = GuestRequest.YEAR;
-            DateTime CurrentDay = new DateTime(year, 1, 1);
-            DateTime lastDay = new DateTime(year, 12, 31);
+
             int numOfBusyDays = 0;
-            for (; CurrentDay <= lastDay; CurrentDay = CurrentDay.AddDays(1))
-                if (this[CurrentDay] == true) numOfBusyDays++;
+            for (DateTime date = new DateTime(year, 1, 1); date.Year == year; date = date.AddDays(1))
+                if (this[date] == true) numOfBusyDays++;
             return numOfBusyDays;
         }
         public float GetAnnualBusyPrecentege()
@@ -70,8 +69,33 @@ namespace mini_project_targil_2
 
         public override string ToString()
         {
-            //TODO implement
-            return "";
+            string result = $"Hosting Unit Key: {HostingUnitKey}\n";
+
+            int year = GuestRequest.YEAR;
+            DateTime firstDate = new DateTime(year, 1, 1);
+            bool flag = false;
+            for (DateTime date = new DateTime(year, 1, 1); date.Year == year; date = date.AddDays(1))
+            {
+                if (this[date] == true)
+                {
+                    if (flag == false)
+                        firstDate = date;
+                    flag = true;
+                }
+                else
+                {
+                    if(flag == true)
+                    {
+                        string EntryDate = firstDate.ToString("dd/MM");
+                        string ReleaseDate = date.AddDays(-1).ToString("dd/MM");
+                        result += $"Entry Date: {EntryDate}, Release Date: {ReleaseDate}\n";
+                        // {(date - firstDate).Days}
+                        flag = false;
+                    }
+                }
+            }
+            // + $"{this.GetAnnualBusyDays()}\n"
+            return result;
         }
     }
 
