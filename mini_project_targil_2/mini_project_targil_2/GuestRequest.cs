@@ -14,15 +14,18 @@ namespace mini_project_targil_2
         //public static DateTime  FIRST_DATE = new DateTime(YEAR, 1, 1);
         //public static DateTime  LAST_DATE = new DateTime(YEAR, 12, 31);
 
-        public DateTime EntryDate { get => EntryDate; private set  => EntryDate = value; }
-        public DateTime ReleaseDate { get => ReleaseDate; private set => ReleaseDate = value; }
+        public DateTime EntryDate { get => EntryDate; set => EntryDate = value; }
+        public DateTime ReleaseDate { get => ReleaseDate; set => ReleaseDate = value; }
 
         public bool IsApproved
         {
             get => IsApproved;
             set => IsApproved = value;
         }
-        
+        public GuestRequest()
+        {
+            IsApproved = false;
+        }
 
         public int num_of_day()
         {

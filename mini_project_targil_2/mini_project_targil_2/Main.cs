@@ -13,6 +13,7 @@ namespace mini_project_targil_2
         private static GuestRequest CreateRandomRequest()
         {
             GuestRequest gs = new GuestRequest();
+            
             //Fill randomally the Entry and Release dates of gs
             return gs;
         }
@@ -70,8 +71,7 @@ namespace mini_project_targil_2
             //get max value in dictionary
             float maxVal = dict.Values.Max();
             //get max value key name in dictionary
-            long maxKey =
-           dict.FirstOrDefault(x => x.Value == dict.Values.Max()).Key;
+            long maxKey = dict.FirstOrDefault(x => x.Value == dict.Values.Max()).Key;
             //find the Host that its unit has the maximum occupancy percentage
             foreach (var host in lsHosts)
             {

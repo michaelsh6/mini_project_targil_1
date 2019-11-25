@@ -5,18 +5,22 @@ using static mini_project_targil_2.HostingUnit;
 
 namespace mini_project_targil_2
 {
-    internal class Host : IEnumerable
+    class Host : IEnumerable
     {
         int HostKey;
-        public List<HostingUnit> HostingUnitCollection
-        {
-            get => HostingUnitCollection;
-            private set => HostingUnitCollection = value;
-        }
+        public List<HostingUnit> HostingUnitCollection;
+        //{
+        //    get => HostingUnitCollection;
+        //    set => HostingUnitCollection = value;
+        //}
 
-        public Host(int HostKey, int numOfUnit)
+    public Host(int HostKey, int numOfUnit)
         {
             this.HostKey = HostKey;
+            for(int i=0;i< numOfUnit;i++)
+            {
+                HostingUnitCollection.Add(new HostingUnit());
+            }
             //TODO init units  
         }
 
@@ -28,8 +32,7 @@ namespace mini_project_targil_2
 
         public void SortUnits()
         {
-            //TODO implement
-            throw new NotImplementedException();
+            HostingUnitCollection.Sort();
         }
 
 
