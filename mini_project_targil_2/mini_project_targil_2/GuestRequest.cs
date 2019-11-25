@@ -9,18 +9,29 @@ namespace mini_project_targil_2
 {
     class GuestRequest
     {
-        DateTime EntryDate, ReleaseDate;
+        
+        public const int YEAR  = 2019;
+        //public static DateTime  FIRST_DATE = new DateTime(YEAR, 1, 1);
+        //public static DateTime  LAST_DATE = new DateTime(YEAR, 12, 31);
+
+        public DateTime EntryDate { get => EntryDate; private set  => EntryDate = value; }
+        public DateTime ReleaseDate { get => ReleaseDate; private set => ReleaseDate = value; }
 
         public bool IsApproved
         {
             get => IsApproved;
             set => IsApproved = value;
         }
+        
+
+        public int num_of_day()
+        {
+            return (ReleaseDate - EntryDate).Days;
+        }
 
         public override string ToString()
         {
-            //TODO implement
-            return "";
+            return $"Entry Date: {EntryDate.ToString("dd/mm")}, Release Date: {ReleaseDate.ToString("dd/mm")}";
         }
 
        

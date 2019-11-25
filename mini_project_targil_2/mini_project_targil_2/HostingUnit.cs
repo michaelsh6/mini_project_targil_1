@@ -27,26 +27,46 @@ namespace mini_project_targil_2
 
         public bool ApproveRequest(GuestRequest guestReq)
         {
-            //TODO implement
+            for (DateTime CurrentDay = guestReq.EntryDate; CurrentDay <= guestReq.ReleaseDate; CurrentDay = CurrentDay.AddDays(1))
+                if (this[CurrentDay] == true) return false;
+            for (DateTime CurrentDay = guestReq.EntryDate; CurrentDay <= guestReq.ReleaseDate; CurrentDay = CurrentDay.AddDays(1))
+                this[CurrentDay] = true;
+            guestReq.IsApproved = true;
             return true;
         }
 
         public int GetAnnualBusyDays()
         {
-            return 1;
+            int year = GuestRequest.YEAR;
+            DateTime CurrentDay = new DateTime(year, 1, 1);
+            DateTime lastDay = new DateTime(year, 12, 31);
+            int numOfBusyDays = 0;
+            for (; CurrentDay <= lastDay; CurrentDay = CurrentDay.AddDays(1))
+                if (this[CurrentDay] == true) numOfBusyDays++;
+            return numOfBusyDays;
         }
         public float GetAnnualBusyPrecentege()
         {
-            //TODO implement
-            return 1;
+            int DayOfYear = new DateTime(GuestRequest.YEAR, 12, 31).DayOfYear;
+            int numOfBusyDays = this.GetAnnualBusyDays();
+            return ((float)numOfBusyDays )/DayOfYear;
         }
 
         public int CompareTo(object obj)
         {
-            //TODO implement 
-            throw new NotImplementedException();
+            if (obj == null) return 1;
+            HostingUnit otherHostingUnit = obj as HostingUnit;
+            if (otherHostingUnit != null)
+                return this.GetAnnualBusyDays().CompareTo(otherHostingUnit.GetAnnualBusyDays());
+            else
+                throw new NotImplementedException();
         }
 
+        public bool this[DateTime date]
+        {
+            private set => Diary[date.Day-1,date.Month-1] = value;
+            get => Diary[date.Day-1, date.Month-1];
+        }
 
         public override string ToString()
         {
