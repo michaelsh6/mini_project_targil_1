@@ -1,4 +1,7 @@
-﻿using System;
+//michael shachor 206197733
+//Shimon Mizrahi 203375563
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,15 +12,16 @@ namespace mini_project_targil_2
     class Program
     {
 
-        static Random rand = new Random(DateTime.Now.Millisecond);
+        static Random rand = new Random(DateTime.Now.Millisecond);//random.
+        //CreateRandomRequest function: the function create a random request and return them.
         private static GuestRequest CreateRandomRequest()
         {
             GuestRequest gs = new GuestRequest();
             
-            DateTime firstDate = new DateTime(GuestRequest.YEAR, 1, 1);
-            DateTime lastDate = new DateTime(GuestRequest.YEAR, 12, 31);
-            int numOfDays;
-            int dateRange;
+            DateTime firstDate = new DateTime(GuestRequest.YEAR, 1, 1);//create first date.
+            DateTime lastDate = new DateTime(GuestRequest.YEAR, 12, 31);//create last date.
+            int numOfDays;//sum of date.
+            int dateRange;//range request.
 
             do
             {
@@ -26,14 +30,14 @@ namespace mini_project_targil_2
 
             dateRange = (lastDate - gs.EntryDate).Days;
 
-            } while (dateRange<2);
+            } while (dateRange<2);//in case that range lowwer than 2 days like end year for example.
 
 
             numOfDays = rand.Next(2,Math.Min(10,(lastDate - gs.EntryDate).Days));
             gs.ReleaseDate = gs.EntryDate.AddDays(numOfDays);
 
 
-            //Fill randomally the Entry and Release dates of gs
+            //Fill randomally the Entry and Release dates of gs.
             return gs;
         }
 
