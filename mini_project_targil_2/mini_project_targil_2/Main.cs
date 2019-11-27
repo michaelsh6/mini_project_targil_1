@@ -13,15 +13,26 @@ namespace mini_project_targil_2
         private static GuestRequest CreateRandomRequest()
         {
             GuestRequest gs = new GuestRequest();
+            
+            DateTime firstDate = new DateTime(GuestRequest.YEAR, 1, 1);
+            DateTime lastDate = new DateTime(GuestRequest.YEAR, 12, 31);
+            int numOfDays;
+            int dateRange;
 
-            DateTime firstDate = new DateTime(2019, 1, 1);
-            DateTime lastDate = new DateTime(2019, 12, 31);
+            do
+            {
+            numOfDays = rand.Next((lastDate - firstDate).Days);
+            gs.EntryDate = firstDate.AddDays(numOfDays);
 
-            int numOfDays = rand.Next((lastDate- firstDate).Days);
-            gs.EntryDate = firstDate.AddDays(rand.Next(numOfDays));
+            dateRange = (lastDate - gs.EntryDate).Days;
 
-            numOfDays = rand.Next((lastDate - gs.EntryDate).Days);
+            } while (dateRange<2);
+
+
+            numOfDays = rand.Next(2,Math.Min(10,(lastDate - gs.EntryDate).Days));
             gs.ReleaseDate = gs.EntryDate.AddDays(numOfDays);
+
+
             //Fill randomally the Entry and Release dates of gs
             return gs;
         }
