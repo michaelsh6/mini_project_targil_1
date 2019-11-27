@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +12,6 @@ namespace mini_project_targil_2
     //
     class GuestRequest
     {
-        
         public static int YEAR = DateTime.Today.Year;
         //public static DateTime  FIRST_DATE = new DateTime(YEAR, 1, 1);
         //public static DateTime  LAST_DATE = new DateTime(YEAR, 12, 31);
@@ -21,7 +20,6 @@ namespace mini_project_targil_2
         public DateTime ReleaseDate;//{ get => ReleaseDate; set => ReleaseDate = value; }
 
         private bool m_IsApproved;
-        
         /// <summary>
         /// Property get\set of m_IsApproved field.
         /// </summary>
@@ -30,7 +28,7 @@ namespace mini_project_targil_2
             get => m_IsApproved;
             set => m_IsApproved = value;
         }
-         /// <summary>
+        /// <summary>
         ///GuestRequest defult ctor.
         /// </summary>
         public GuestRequest()
@@ -41,10 +39,10 @@ namespace mini_project_targil_2
         /// num_of_day function.
         /// </summary>
         /// <returns>the function returns requested vacation term.</returns>
-        public int num_of_day()
-        {
-            return (ReleaseDate - EntryDate).Days;
-        }
+        //public int num_of_day()
+        //{
+        //    return (ReleaseDate - EntryDate).Days;
+        //}
 
         /// <summary>
         /// ToString function.
@@ -55,6 +53,6 @@ namespace mini_project_targil_2
             return $"Entry Date: {EntryDate}, Release Date: {ReleaseDate}";
         }
 
-       
+
     }
 }
