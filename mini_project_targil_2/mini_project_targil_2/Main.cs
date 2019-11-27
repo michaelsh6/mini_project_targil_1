@@ -11,7 +11,6 @@ namespace mini_project_targil_2
 {
     class Program
     {
-
         static Random rand = new Random(DateTime.Now.Millisecond);//random.
         //CreateRandomRequest function: the function create a random request and return them.
         private static GuestRequest CreateRandomRequest()
