@@ -37,30 +37,26 @@ namespace mini_project_targil_2
             return gs;
         }
 
+        
         static void Main(string[] args)
         {
             List<Host> lsHosts;
             lsHosts = new List<Host>()
-            {
-                 new Host(1, rand.Next(1,5)),
-                 new Host(2, rand.Next(1,5)),
-                 new Host(3, rand.Next(1,5)),
-                 new Host(4, rand.Next(1,5)),
-                 new Host(5, rand.Next(1,5))
-            };
-            GuestRequest gs1 = new GuestRequest();
-            GuestRequest gs2 = new GuestRequest();
-            GuestRequest gs3 = new GuestRequest();
+             {
+             new Host(1, rand.Next(1,5)),
+             new Host(2, rand.Next(1,5)),
+             new Host(3, rand.Next(1,5)),
+             new Host(4, rand.Next(1,5)),
+             new Host(5, rand.Next(1,5))
+             };
             for (int i = 0; i < 100; i++)
             {
                 foreach (var host in lsHosts)
                 {
-                    if (!gs1.IsApproved)
-                        gs1 = CreateRandomRequest();
-                    if (!gs2.IsApproved)
-                        gs2 = CreateRandomRequest();
-                    if (!gs3.IsApproved)
-                        gs3 = CreateRandomRequest();
+
+                    GuestRequest gs1 = CreateRandomRequest();
+                    GuestRequest gs2 = CreateRandomRequest();
+                    GuestRequest gs3 = CreateRandomRequest();
                     switch (rand.Next(1, 4))
                     {
                         case 1:
@@ -90,7 +86,8 @@ namespace mini_project_targil_2
             //get max value in dictionary
             float maxVal = dict.Values.Max();
             //get max value key name in dictionary
-            long maxKey = dict.FirstOrDefault(x => x.Value == dict.Values.Max()).Key;
+            long maxKey =
+           dict.FirstOrDefault(x => x.Value == dict.Values.Max()).Key;
             //find the Host that its unit has the maximum occupancy percentage
             foreach (var host in lsHosts)
             {
@@ -103,10 +100,8 @@ namespace mini_project_targil_2
                         host.SortUnits();
                         //print this host detailes
                         Console.WriteLine("**** Details of the Host with the most occupied unit:\n");
-
+        
                         Console.WriteLine(host);
-                        //foreach (var host1 in lsHosts)
-                        //    Console.WriteLine(host1);
                         break;
                     }
                 }
@@ -114,3 +109,6 @@ namespace mini_project_targil_2
         }
     }
 }
+
+
+

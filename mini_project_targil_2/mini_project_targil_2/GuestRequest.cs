@@ -50,7 +50,7 @@ namespace mini_project_targil_2
         /// <returns>the function returns string entry and exit vacation.</returns>
         public override string ToString()
         {
-            return $"Entry Date: {EntryDate}, Release Date: {ReleaseDate}";
+            return $"Entry Date: {EntryDate.ToString("dd/MM/yy")}, Release Date: {ReleaseDate.ToString("dd/MM/yy")}";
         }
 
 

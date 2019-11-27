@@ -119,9 +119,9 @@ namespace mini_project_targil_2
                 {
                     if (flag == true)
                     {
-                        //string EntryDate = firstDate.ToString("dd/MM");
-                        //string ReleaseDate = date.AddDays(-1).ToString("dd/MM");
-                        result += $"Entry Date: {firstDate}, Release Date: {date.AddDays(-1)}\n";
+                        string EntryDate = firstDate.ToString("dd/MM/yy");
+                        string ReleaseDate = date.AddDays(-1).ToString("dd/MM/yy");
+                        result += $"Entry Date: {EntryDate}, Release Date: {ReleaseDate}\n";
                         // {(date - firstDate).Days}
                         flag = false;
                     }
