@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace mini_project_targil_3
 {
+    //HostingUnit class presentation:
     public class HostingUnit
     {
+        //propertis:
         public string UnitName { get; set; }
         public int Rooms { get; set; }
         public bool IsSwimmimgPool { get; set; }
