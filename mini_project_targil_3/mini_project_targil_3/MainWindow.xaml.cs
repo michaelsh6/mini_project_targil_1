@@ -1,4 +1,9 @@
-﻿using System;
+﻿
+  
+//michael shachor 206197733
+//Shimon Mizrahi 203375563
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,12 +27,12 @@ namespace mini_project_targil_3
     {
         List<Host> hostsList = new List<Host>()
             {
-                new Host()
+                new Host()//new host.
                 {
                     HostName="micahel",
                     Units = new List<HostingUnit>()
                     {
-                        new HostingUnit()
+                        new HostingUnit()//new hosting unit.
                         {
                             UnitName = "הצימר של שמעון",
                             Rooms = 4,
@@ -41,7 +46,7 @@ namespace mini_project_targil_3
                             }
 
                         },
-                         new HostingUnit()
+                         new HostingUnit()//new hosting unit.
                         {
                             UnitName = "הצימר של מיכאל",
                             Rooms = 5,
@@ -55,7 +60,7 @@ namespace mini_project_targil_3
                             }
 
                         },
-                         new HostingUnit()
+                         new HostingUnit()//new hosting unit.
                         {
                             UnitName = "הצימר של מיכאל",
                             Rooms = 5,
@@ -72,12 +77,12 @@ namespace mini_project_targil_3
                     }
 
                 },
-                new Host()
+                new Host()//new hosting unit.
                 {
                     HostName="shimon",
                     Units = new List<HostingUnit>()
                     {
-                        new HostingUnit()
+                        new HostingUnit()//new hosting unit.
                         {
                             UnitName = "הצימר של שמעון1",
                             Rooms = 7,
@@ -91,7 +96,7 @@ namespace mini_project_targil_3
                             }
 
                         },
-                         new HostingUnit()
+                         new HostingUnit()//new h osting unit.
                         {
                             UnitName = "1הצימר של מיכאל",
                             Rooms = 2,
@@ -108,12 +113,12 @@ namespace mini_project_targil_3
                     }
 
                 },
-                new Host()
+                new Host()//new host.
                 {
                     HostName="micahel2",
                     Units = new List<HostingUnit>()
                     {
-                        new HostingUnit()
+                        new HostingUnit()//new hosting unit.
                         {
                             UnitName = "2הצימר של שמעון",
                             Rooms = 4,
@@ -127,7 +132,7 @@ namespace mini_project_targil_3
                             }
 
                         },
-                         new HostingUnit()
+                         new HostingUnit()//new hosting unit.
                         {
                             UnitName = "2הצימר של מיכאל",
                             Rooms = 5,
@@ -141,7 +146,7 @@ namespace mini_project_targil_3
                             }
 
                         },
-                          new HostingUnit()
+                          new HostingUnit()//new hosting unit.
                         {
                             UnitName = "2שחור הצימר של מיכאל",
                             Rooms = 5,
@@ -160,27 +165,26 @@ namespace mini_project_targil_3
                 }
             };
         private Host currentHost;
-        public MainWindow()
+        
+        public MainWindow()//main window.
         {
             InitializeComponent();
             cbHostList.ItemsSource = hostsList;
             cbHostList.DisplayMemberPath = "HostName";
             cbHostList.SelectedIndex = 0;
             //tbHostName.Text =  "abc";
-
-
         }
 
-        private void CbHostList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void CbHostList_SelectionChanged(object sender, SelectionChangedEventArgs e)//HostList selection.
         {
             InitializeHost(cbHostList.SelectedIndex);
         }
-        private void InitializeHost(int index)
+        private void InitializeHost(int index)//Initialize Host grid.
         {
             MainGrid.Children.RemoveRange(1, 3);
             currentHost = hostsList[index];
             UpGrid.DataContext = currentHost;
-            for (int i = 0; i < currentHost.Units.Count; i++)
+            for (int i = 0; i < currentHost.Units.Count; i++)//run on total units for creating main grid (user control).
             {
                 HostingUnitUserControl a = new HostingUnitUserControl(currentHost.Units[i]);
                 MainGrid.Children.Add(a);
