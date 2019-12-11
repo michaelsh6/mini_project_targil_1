@@ -24,7 +24,7 @@ namespace mini_project_targil_3
         Viewbox vbImage;
         Image MyImage;
 
-
+        //propertis:
         private Calendar MyCalendar;
 
         public HostingUnit CurrentHostingUnit { get; set; }
