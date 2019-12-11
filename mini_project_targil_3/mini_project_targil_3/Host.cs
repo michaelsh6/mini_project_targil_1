@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace mini_project_targil_3
 {
+    //Host class presentation:
     public class Host
     {
+        //propertis:
         public string HostName { get; set; }
         public List<HostingUnit> Units { get; set; }
         //public override string ToString()
