@@ -28,8 +28,9 @@ namespace mini_project_targil_3
         private Calendar MyCalendar;
 
         public HostingUnit CurrentHostingUnit { get; set; }
-
-        public HostingUnitUserControl(HostingUnit hostingUnit)
+       
+       
+        public HostingUnitUserControl(HostingUnit hostingUnit)//ctor style.
         {
             vbImage = new Viewbox();
             InitializeComponent();
@@ -41,11 +42,7 @@ namespace mini_project_targil_3
             UserControlGrid.Children.Add(vbImage);
             Grid.SetColumn(vbImage, 2);
             Grid.SetRow(vbImage, 0);
-
-            
-
-
-
+       
             this.CurrentHostingUnit = hostingUnit;
             UserControlGrid.DataContext = hostingUnit;
 
@@ -53,8 +50,6 @@ namespace mini_project_targil_3
             vbCalendar.Child = null;
             vbCalendar.Child = MyCalendar;
             SetBlackOutDates();
-
-
 
             MyImage = CreateViewImage();
             vbImage.Child = null;
@@ -85,10 +80,10 @@ namespace mini_project_targil_3
             MonthlyCalendar.DisplayMode = CalendarMode.Month;
             MonthlyCalendar.SelectionMode = CalendarSelectionMode.SingleRange;
             MonthlyCalendar.IsTodayHighlighted = true;
-            MonthlyCalendar.SelectedDatesChanged += new EventHandler<SelectionChangedEventArgs>(BtOrder_Click);
+            MonthlyCalendar.SelectedDatesChanged += new EventHandler<SelectionChangedEventArgs>(BtOrder_Click);//new event when made date range. 
             return MonthlyCalendar;
-
         }
+        
         private void SetBlackOutDates()
         {
             foreach (DateTime date in CurrentHostingUnit.AllOrders)
