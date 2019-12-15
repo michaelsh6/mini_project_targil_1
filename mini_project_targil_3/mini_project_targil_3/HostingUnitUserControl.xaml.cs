@@ -58,6 +58,13 @@ namespace mini_project_targil_3
             vbImage.MouseUp += vbImage_MouseUp;
             vbImage.MouseEnter += vbImage_MouseEnter;
             vbImage.MouseLeave += vbImage_MouseLeave;
+            vbCalendar.PreviewMouseUp  += vbCalendar_PreviewMouseUp;
+        }
+
+        //event to release the mouse
+        private void vbCalendar_PreviewMouseUp(object sender, MouseEventArgs e)
+        {
+            Mouse.Capture(null);
         }
 
         private Image CreateViewImage()
@@ -80,7 +87,7 @@ namespace mini_project_targil_3
             MonthlyCalendar.DisplayMode = CalendarMode.Month;
             MonthlyCalendar.SelectionMode = CalendarSelectionMode.SingleRange;
             MonthlyCalendar.IsTodayHighlighted = true;
-            MonthlyCalendar.SelectedDatesChanged += new EventHandler<SelectionChangedEventArgs>(BtOrder_Click);//new event when made date range. 
+           // MonthlyCalendar.SelectedDatesChanged += new EventHandler<SelectionChangedEventArgs>(BtOrder_Click);//new event when made date range. 
             return MonthlyCalendar;
         }
         
