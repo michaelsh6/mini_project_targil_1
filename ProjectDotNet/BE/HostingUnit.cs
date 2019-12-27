@@ -8,10 +8,10 @@ namespace BE
 {
     public class HostingUnit
     {
-        int HostingUnitKey { get; set; }
-        Host Owner { get; set; }
-        string HostingUnitName { get; set; }
-        bool[,] Diary { get; set; }
+        public int HostingUnitKey { get; set; }
+        public Host Owner { get; set; }
+        public string HostingUnitName { get; set; }
+        public bool[,] Diary { get; set; }
 
         public override string ToString()
         {

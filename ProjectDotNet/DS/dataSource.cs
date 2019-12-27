@@ -8,9 +8,28 @@ namespace DS
 {
     public class dataSource
     {
-        List<BE.HostingUnit> hostingUnits;
-        List<BE.Host> hosts;
-        List<BE.Order> orders;
+        public static List<BE.HostingUnit> hostingUnits = new List<BE.HostingUnit>()
+        {
+            new BE.HostingUnit()
+            {
+
+                HostingUnitKey= 1,
+                HostingUnitName = "",
+                //Diary =
+                Owner=new BE.Host()
+                {
+
+                }
+                
+            }
+            //new BE.HostingUnit();
+            //new BE.HostingUnit();
+            //new BE.HostingUnit();
+        };
+            
+        //public static List<BE.Host> hosts;
+        public static List<BE.Guest> guests;
+        public static List<BE.Order> orders;
         //TODO add info for testing
     }
 }

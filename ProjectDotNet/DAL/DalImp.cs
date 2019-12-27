@@ -11,7 +11,16 @@ namespace DAL
     {
         public void addGuest(Guest guest)
         {
-            throw new NotImplementedException();
+            //IEnumerable<Guest> result = from item in DS.dataSource.guests
+            //             where item.GuestRequestKey == guest.GuestRequestKey
+            //             select item;
+            //    if(DS.dataSource.guests.Count(x => x.GuestRequestKey == guest.GuestRequestKey)==0)
+            //    {
+            //        throw new Exception("dssf"); //TODO // DuplicateIdException()
+            //    }
+
+            //    throw new NotImplementedException();
+            //
         }
 
         public void updateGuest(Guest guest)
