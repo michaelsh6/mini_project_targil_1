@@ -37,6 +37,16 @@ namespace BE
             closed_Request_expired,//נסגרה כי פג תוקפה
             closed_Order_accepted//נסגרה עסקה דרך האת
         }
+        
+        
+         public enum LuxusOption
+        {
+            necessary,
+            possible,
+            notInterested
+        }
+
+        
 
     }
 }
