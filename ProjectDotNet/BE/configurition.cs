@@ -9,12 +9,12 @@ namespace BE
     public class configurition
     {
         private static int GuestRequestKey = 10000000;
-        public static int GetGuestRequestKey() { return ++GuestRequestKey; }
+        public static int GetGuestRequestKey() { return GuestRequestKey++; }
 
         private static int HostingUnitKey = 10000000;
-        public static int GetHostingUnitKey() { return ++HostingUnitKey; }
+        public static int GetHostingUnitKey() { return HostingUnitKey++; }
 
         private static int OrderKey = 10000000;
-        public static int GetOrderKey() { return ++OrderKey; }
+        public static int GetOrderKey() { return OrderKey++; }
     }
 }
