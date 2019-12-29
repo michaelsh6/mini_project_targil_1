@@ -21,10 +21,10 @@ namespace BE
         public enums.HostingUnitType Type { get; set; }
         public int Adults { get; set; }
         public int Children { get; set; }
-        public bool Pool { get; set; }
-        public bool Jacuzzi { get; set; }
-        public bool Garden { get; set; }
-        public bool ChildrensAttractions { get; set; }
+        public enums.LuxusOption Pool { get; set; }
+        public enums.LuxusOption Jacuzzi { get; set; }
+        public enums.LuxusOption Garden { get; set; }
+        public enums.LuxusOption ChildrensAttractions { get; set; }
         //Etc
 
         public override string ToString()
