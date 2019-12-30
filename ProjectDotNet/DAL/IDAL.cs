@@ -18,9 +18,9 @@ namespace DAL
         void addOrder(Order order);
         void updateOrder(Order order);
 
-        IEnumerable<HostingUnit> getAllHostingUnits();//TODO Func<Guest,bool> predicat=null
-        IEnumerable<Guest> getAllGuest();//TODO Func<Guest,bool> predicat=null
-        IEnumerable<Order> getAllOrders();//TODO Func<Guest,bool> predicat=null
+        IEnumerable<HostingUnit> getAllHostingUnits(Func<HostingUnit, bool> predicat = null);
+        IEnumerable<Guest> getAllGuest(Func<Guest, bool> predicat = null);
+        IEnumerable<Order> getAllOrders(Func<Order, bool> predicat = null);
         IEnumerable<BankAccunt> getAllBankBranches(); 
     }
 }

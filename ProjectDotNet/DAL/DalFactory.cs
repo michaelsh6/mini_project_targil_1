@@ -8,8 +8,8 @@ namespace DAL
 {
     class DalFactory
     {
-        static DalImp dal = null;
-        public static DalImp GetDal()
+        static IDAL dal = null;
+        public static IDAL GetDal()
         {
             if (dal == null)
                 dal = new DalImp();

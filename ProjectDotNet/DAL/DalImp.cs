@@ -101,21 +101,24 @@ namespace DAL
             addOrder(ord);
         }
 
-        public IEnumerable<Order> getAllOrders()//TODO Func<Guest,bool> predicat=null
+        public IEnumerable<Order> getAllOrders(Func<Order, bool>  predicat = null)//TODO Func<Guest,bool> predicat=null
         {
-            return from allArd in dataSource.orders
-                   select allArd.Clone();
+            return from order in dataSource.orders
+                   where predicat == null ?true:predicat(order)
+                   select order.Clone();
         }
 
-        public IEnumerable<Guest> getAllGuest()//TODO Func<Guest,bool> predicat=null
+        public IEnumerable<Guest> getAllGuest(Func<Guest, bool>  predicat = null)//TODO Func<Guest,bool> predicat=null
         {
-            return from gst in dataSource.guests 
+            return from gst in dataSource.guests
+                   where predicat == null ? true : predicat(gst)
                    select gst.Clone();
         }
         
-        public IEnumerable<HostingUnit> getAllHostingUnits()//TODO Func<Guest,bool> predicat=null
+        public IEnumerable<HostingUnit> getAllHostingUnits(Func<HostingUnit, bool>  predicat = null)//TODO Func<Guest,bool> predicat=null
         {
             return from hstUnit in dataSource.hostingUnits
+                   where predicat == null ? true : predicat(hstUnit)
                    select hstUnit.Clone();
         }
         public IEnumerable<BankAccunt> getAllBankBranches() 
