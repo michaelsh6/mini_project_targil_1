@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    public class DalFactory
+    class DalFactory
     {
+        static DalImp dal = null;
+        public static DalImp GetDal()
+        {
+            if (dal == null)
+                dal = new DalImp();
+            return dal;
+        }
     }
 }
