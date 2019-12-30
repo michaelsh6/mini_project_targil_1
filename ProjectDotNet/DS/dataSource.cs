@@ -184,8 +184,52 @@ namespace DS
                 Status=BE.enums.OrderStatus.Not_yet_addressed,
                 CreateDate=new DateTime(2013,02,12),
                 OrderDate=new DateTime(2019,05,12)
-            }
+               }
         };
-       
+
+        public static List<BE.BankAccunt> bankAccunt = new List<BE.BankAccunt>
+        {
+                new BE.BankAccunt()
+                {
+                         BankNumber=1,
+                         BankName="Leumi",
+                         BranchNumber=747,
+                         BranchAddress="Hayarkot st",
+                         BranchCity="Tel Aviv"
+                },
+                new BE.BankAccunt()
+                {
+                         BankNumber=2,
+                         BankName="Poalim",
+                         BranchNumber=123,
+                         BranchAddress="lev st",
+                         BranchCity="jerusalem"
+                },
+                new BE.BankAccunt()
+                {
+                         BankNumber=3,
+                         BankName="Mizrahi",
+                         BranchNumber=321,
+                         BranchAddress="yehuda st",
+                         BranchCity="hipfa"
+                },
+                new BE.BankAccunt()
+                {
+                         BankNumber=4,
+                         BankName="Doar",
+                         BranchNumber=222,
+                         BranchAddress="ben st",
+                         BranchCity="Tel Aviv"
+                },
+                new BE.BankAccunt()
+                {
+                         BankNumber=5,
+                         BankName="Discount",
+                         BranchNumber=111,
+                         BranchAddress="via st",
+                         BranchCity="eilat"
+                }
+        };
     }
 }
+
