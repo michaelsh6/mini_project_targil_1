@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DAL
 {
-    class DalFactory
+    public class DalFactory
     {
         static IDAL dal = null;
         public static IDAL GetDal()

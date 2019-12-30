@@ -11,7 +11,7 @@ namespace BE
         public int HostKey { get; set; }
         public string PrivateName { get; set; }
         public string FamilyName { get; set; }
-        public string FhoneNumber { get; set; }
+        public string phoneNumber { get; set; }
         public string MailAddress { get; set; }
         public BankAccunt BankBranchDetails { get; set; }
         public int BankAccountNumber { get; set; }

@@ -12,7 +12,7 @@ namespace BL
         public static IBL GetBL()
         {
             if (bl == null)
-                bl = new BL_basic();
+                bl = new BL_Imp();
             return bl;
         }
     }

@@ -11,6 +11,19 @@ namespace DAL
     public class DalImp :IDAL
     {
 
+        public Guest GetGuest(int GuestRequestKey)
+        {
+            return dataSource.guests.FirstOrDefault(x => x.GuestRequestKey == GuestRequestKey);
+        }
+        public HostingUnit GetHostingUnit(int HostingUnitKey)
+        {
+            return dataSource.hostingUnits.FirstOrDefault(x => x.HostingUnitKey == HostingUnitKey);
+        }
+        public Order GetOrder(int OrderKey)
+        {
+            return dataSource.orders.FirstOrDefault(x => x.OrderKey == OrderKey);
+        }
+
         private bool CheckGuest(int id)
         {
             return dataSource.guests.Any(x => x.GuestRequestKey == id);

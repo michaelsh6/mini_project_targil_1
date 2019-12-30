@@ -27,23 +27,26 @@ namespace BL
         void addOrder(Order order);
         void updateOrder(Order order);
         Order GetOrder(int OrderKey);
-        IEnumerable<HostingUnit> getAllOrders(Func<Order, bool> predicat = null);
+        IEnumerable<Order> getAllOrders(Func<Order, bool> predicat = null);
         #endregion
 
-        int GetNumOfDays(DateTime dateFrom,DateTime? dateTo=null);
+        
 
 
         #region Grouping Function
-        IGrouping<enums.CountryAreas, Guest> GetGroupingGuestByCountryAreas();
-        IGrouping<int, Guest> GetGroupingGuestByNumOdPeoples();
-        IGrouping<int, Host> GetGroupingHostByNumOfHostingUnit();
-        IGrouping<enums.CountryAreas, HostingUnit> GetGroupingHostingUnitByCountryAreas();
+        IEnumerable<IGrouping<enums.CountryAreas, Guest>> GetGroupingGuestByCountryAreas();
+        IEnumerable<IGrouping<int, Guest>> GetGroupingGuestByNumOfPeoples();
+        IEnumerable<IGrouping<int, Host>> GetGroupingHostByNumOfHostingUnit();
+        IEnumerable<IGrouping<enums.CountryAreas, HostingUnit>> GetGroupingHostingUnitByCountryAreas();
         #endregion
 
 
         #region others
+        //פונקציה שמקבלת תאריך ומספר ימי נופש ומחזירה את רשימת כל יחידות האירוח הפנויות בתאריך זה.
         IEnumerable<HostingUnit> getAllAvailableHostingUnits(DateTime date,int num_of_dats);
+
         IEnumerable<Order> GetOrderOldersThen(int num_of_days);
+        int GetNumOfDays(DateTime dateFrom, DateTime? dateTo = null);
         int GuestNunOfOpenOrders(int GuestRequestKeyt);
         int GuestOpenOrSuccessfullyClosedOrders(int GuestRequestKeyt);
         #endregion
@@ -51,6 +54,6 @@ namespace BL
 
 
 
-        void getAllBankBranches();
+        IEnumerable<BankAccunt> getAllBankBranches();
     }
 }
