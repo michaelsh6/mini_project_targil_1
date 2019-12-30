@@ -1,36 +1,26 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BE;
+using DS;
 
 namespace DAL
 {
     public interface IDAL
     {
-        void addGuest(BE.Guest guest);
-        void updateGuest(BE.Guest guest);
+        void addGuest(Guest guest);
+        void updateGuest(Guest guest);
+        void addHostingUnit(HostingUnit hostingUnit);
+        void updateHostingUnit(HostingUnit hostingUnit);
+        void deleteHostingUnit(int hostingUnit);
+        void addOrder(Order order);
+        void updateOrder(Order order);
 
-        void addHostingUnit(BE.HostingUnit hostingUnit);
-        void updateHostingUnit(BE.HostingUnit hostingUnit);
-        void deleteHostingUnit(BE.HostingUnit hostingUnit);
-
-        void addOrder(BE.Order order);
-        void updateOrder(BE.Order order);
-
-
-        void getAllHostingUnits();
-        void getAllGuests();
-        void getAllOrders();
-
-
-        void getAllBankBranches();
-
-        
-
-
-
-
+        IEnumerable<HostingUnit> getAllHostingUnits();//TODO Func<Guest,bool> predicat=null
+        IEnumerable<Guest> getAllGuest();//TODO Func<Guest,bool> predicat=null
+        IEnumerable<Order> getAllOrders();//TODO Func<Guest,bool> predicat=null
+        IEnumerable<BankAccunt> getAllBankBranches(); 
     }
-
 }
