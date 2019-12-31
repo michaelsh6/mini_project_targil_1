@@ -19,7 +19,7 @@ namespace DS
                      HostKey=203376655,
                      PrivateName="shay",
                      FamilyName="patito",
-                     FhoneNumber="0544655345",
+                     phoneNumber="0544655345",
                      MailAddress="shay@gmail.com",
                      BankBranchDetails=new BE.BankAccunt()
                      {
@@ -44,7 +44,7 @@ namespace DS
                      HostKey=203378894,
                      PrivateName="dov",
                      FamilyName="hash",
-                     FhoneNumber="0544788521",
+                     phoneNumber="0544788521",
                      MailAddress="dov@gmail.com",
                      BankBranchDetails=new BE.BankAccunt()
                      {
@@ -70,7 +70,7 @@ namespace DS
                      HostKey=123456789,
                      PrivateName="eav",
                      FamilyName="cohen",
-                     FhoneNumber="0546987414",
+                     phoneNumber="0546987414",
                      MailAddress="eav@gmail.com",
                      BankBranchDetails=new BE.BankAccunt()
                      {
