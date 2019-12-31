@@ -47,8 +47,8 @@ namespace BL
 
         IEnumerable<Order> GetOrderOldersThen(int num_of_days);
         int GetNumOfDays(DateTime dateFrom, DateTime? dateTo = null);
-        int GuestNunOfOpenOrders(int GuestRequestKeyt);
-        int GuestOpenOrSuccessfullyClosedOrders(int GuestRequestKeyt);
+        int GuestNunOfOrders(int GuestRequestKey);
+        int GuestOpenOrSuccessfullyClosedOrders(int GuestRequestKey);
         #endregion
 
 

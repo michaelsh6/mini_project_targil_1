@@ -41,7 +41,9 @@ namespace BL
 
             if (!UnitIsAvailabl(unit, guest.EntryDate, guest.ReleaseDate))
                 throw new Exception("Unit not Availabl"); //TODO UnitIsAvailablException
-            addOrder(order);
+            if (order.Status != enums.OrderStatus.Not_yet_addressed)
+                throw new Exception("status mast start with Not_yet_addressed"); //TODO  Exception
+            dal.addOrder(order);
 
         }
 
@@ -138,20 +140,23 @@ namespace BL
             return ((DateTime)dateTo - dateFrom).Days;
         }
 
-
+        //פונקציה שמקבלת מספר ימים, ומחזירה את כל ההזמנות שמשך הזמן שעבר מאז שנוצרו / מאז שנשלח מייל ללקוח גדול או שווה למספר הימים שהפונקציה קיבלה.
         public IEnumerable<Order> GetOrderOldersThen(int num_of_days)
         {
-            throw new NotImplementedException();
+            Func<Order, bool> OrderOlderThen = order => new DateTime(Math.Min(order.OrderDate.Ticks, order.CreateDate.Ticks)).AddDays(num_of_days)
+              <=DateTime.Today;
+            return getAllOrders(OrderOlderThen);
         }
 
-        public int GuestNunOfOpenOrders(int GuestRequestKeyt)
+        public int GuestNunOfOrders(int GuestRequestKey)
         {
-            throw new NotImplementedException();
+            return getAllOrders(x => x.GuestRequestKey == GuestRequestKey).Count();
         }
-
-        public int GuestOpenOrSuccessfullyClosedOrders(int GuestRequestKeyt)
+        
+        public int GuestOpenOrSuccessfullyClosedOrders(int GuestRequestKey)
         {
-            throw new NotImplementedException();
+            return getAllOrders(x => x.GuestRequestKey == GuestRequestKey && 
+            (x.Status == enums.OrderStatus.mail_has_been_sent || x.Status == enums.OrderStatus.closed_Order_accepted)).Count();
         }
 
         public void updateGuest(Guest guest)
@@ -162,6 +167,8 @@ namespace BL
         public void updateHostingUnit(HostingUnit hostingUnit)
         {
             // לא ניתן לבטל הרשאה לחיוב חשבון כאשר יש הצעה הקשורה אליה במצב פתוח
+            //int hostKey = hostingUnit.Owner.HostKey;
+            //get(x=>x.Owner.HostKey == hostKey)
             throw new NotImplementedException();
         }
 
@@ -173,6 +180,14 @@ namespace BL
             //כאשר סטטוס ההזמנה משתנה בגלל סגירת עסקה – יש לסמן במטריצה את התאריכים הרלוונטיים
             //כאשר סטטוס הזמנה משתנה עקב סגירת עסקה – יש לשנות את הסטטוס של דרישת הלקוח בהתאם, וכן לשנות את הסטטוס של כל ההזמנות האחרות של אותו לקוח
             //כאשר סטטוס ההזמנה משתנה ל"נשלח מייל" – המערכת תשלח באופן אוטומטי מייל  עם פרטי ההזמנה
+
+            bool CollectionClearance = GetHostingUnit(order.HostingUnitKey).Owner.CollectionClearance;
+            if (!CollectionClearance)
+                throw new Exception("Collection Clearance not given"); //TODO CollectionClearanceException
+            if (GetOrder(order.OrderKey) == null)
+                addOrder(order);
+                
+
             throw new NotImplementedException();
         }
     }
