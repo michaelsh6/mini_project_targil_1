@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using BE;
 namespace BL
 {
-    interface IBL
+    public interface IBL
     {
         #region Guest Function
         void addGuest(Guest guest);
@@ -56,4 +56,10 @@ namespace BL
 
         IEnumerable<BankAccunt> getAllBankBranches();
     }
+
+
+
+
+
+
 }

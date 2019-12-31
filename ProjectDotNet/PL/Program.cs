@@ -66,7 +66,7 @@ namespace PL
 
         static void Main(string[] args)
         {
-           
+            IBL bl = FactoryBL.GetBL();
             Console.WriteLine("Menu:");
             Console.WriteLine("For adding guest request press 1");
 
@@ -97,4 +97,6 @@ namespace PL
 
         }
     }
+
+    
 }
