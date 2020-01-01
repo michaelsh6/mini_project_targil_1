@@ -38,7 +38,7 @@ namespace BE
 
         public override string ToString()
         {
-            return "";
+            return string.Format("HostingUnitKey={0}, HostingUnitName={1}, Area={2}, Type={3},  Pool={4}, Jacuzzi={5},Garden={6},ChildrensAttractions={7}", HostingUnitKey, HostingUnitName, Area, Type, Pool, Jacuzzi, Garden, ChildrensAttractions) + this.Owner.ToString();
         }
 
     }

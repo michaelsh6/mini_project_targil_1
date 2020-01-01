@@ -18,7 +18,8 @@ namespace BE
 
         public override string ToString()
         {
-            return "";
+            return string.Format("HostingUnitKey={0}, GuestRequestKey={1}, OrderKey={2}, Status={3}, CreateDate={4}, OrderDate={5}", HostingUnitKey, GuestRequestKey, OrderKey, Status, CreateDate, OrderDate);
+
         }
 
 

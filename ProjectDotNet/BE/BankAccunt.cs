@@ -17,7 +17,7 @@ namespace BE
 
         public override string ToString()
         {
-            return " ";
+            return string.Format("BankNumber={0}, BankName={1}, BranchNumber={2}, BranchAddress={3}, BranchCity={4}", BankNumber, BankName, BranchNumber, BranchAddress, BranchCity);
         }
     }
 }

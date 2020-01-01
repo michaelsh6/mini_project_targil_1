@@ -73,8 +73,9 @@ namespace BL
             return dal.getAllBankBranches();
         }
 
-        public IEnumerable<HostingUnit> getAllGuests(Func<Guest, bool> predicat = null)
+        public IEnumerable<Guest> getAllGuests(Func<Guest, bool> predicat = null)
         {
+            return dal.getAllGuest(predicat);
             throw new NotImplementedException();
         }
 
@@ -176,17 +177,24 @@ namespace BL
         {
             //בעל יחידת אירוח יוכל לשלוח הזמנה ללקוח  (שינוי הסטטוס ל "נשלח מייל")  רק אם חתם על הרשאה לחיוב חשבון בנק.
             //לאחר שסטטוס ההזמנה השתנה לסגירת עיסקה – לא ניתן לשנות יותר את הסטטוס שלה
+
             // כאשר סטטוס ההזמנה משתנה בגלל סגירת עסקה – יש לבצע חישוב עמלה בגובה של 10 ₪ ליום אירוח
-            //כאשר סטטוס ההזמנה משתנה בגלל סגירת עסקה – יש לסמן במטריצה את התאריכים הרלוונטיים
             //כאשר סטטוס הזמנה משתנה עקב סגירת עסקה – יש לשנות את הסטטוס של דרישת הלקוח בהתאם, וכן לשנות את הסטטוס של כל ההזמנות האחרות של אותו לקוח
             //כאשר סטטוס ההזמנה משתנה ל"נשלח מייל" – המערכת תשלח באופן אוטומטי מייל  עם פרטי ההזמנה
+            //כאשר סטטוס ההזמנה משתנה בגלל סגירת עסקה – יש לסמן במטריצה את התאריכים הרלוונטיים
 
             bool CollectionClearance = GetHostingUnit(order.HostingUnitKey).Owner.CollectionClearance;
             if (!CollectionClearance)
                 throw new Exception("Collection Clearance not given"); //TODO CollectionClearanceException
-            if (GetOrder(order.OrderKey) == null)
+            Order OldOrder = GetOrder(order.OrderKey);
+            if (OldOrder == null)
                 addOrder(order);
-                
+            if ((OldOrder.Status == enums.OrderStatus.closed_Order_accepted ||
+                OldOrder.Status == enums.OrderStatus.closed_Request_expired) &&
+                order.Status != OldOrder.Status)
+                throw new Exception("Status cannot change after closing");//TODO StatusChangeException
+
+
 
             throw new NotImplementedException();
         }

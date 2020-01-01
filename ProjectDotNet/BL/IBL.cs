@@ -12,7 +12,7 @@ namespace BL
         void addGuest(Guest guest);
         void updateGuest(Guest guest);
         Guest GetGuest(int GuestRequestKey);
-        IEnumerable<HostingUnit> getAllGuests(Func<Guest, bool> predicat = null);
+        IEnumerable<Guest> getAllGuests(Func<Guest, bool> predicat = null);
         #endregion
 
         #region HostingUnit Function

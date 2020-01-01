@@ -19,7 +19,7 @@ namespace BE
 
         public override string ToString()
         {
-            return "";
+            return string.Format("HostKey={0}, PrivateName={1}, FamilyName={2}, phoneNumber={3}, MailAddress={4},BankAccountNumber={5},CollectionClearance={6}", HostKey, PrivateName, FamilyName, phoneNumber, MailAddress, BankAccountNumber, CollectionClearance) + this.BankBranchDetails.ToString();
         }
 
     }

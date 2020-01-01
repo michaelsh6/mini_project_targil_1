@@ -29,7 +29,7 @@ namespace BE
 
         public override string ToString()
         {
-            return "";
+            return string.Format("GuestRequestKey={0}, PrivateName={1}, FamilyName={2}, MailAddress={3}, Status={4}, RegistrationDate={5}, EntryDate={6},ReleaseDate={7},Area={8},Type={9},Adults={10},Children={11},Pool={12},Jacuzzi={13},Garden={14},ChildrensAttractions={15}", GuestRequestKey, PrivateName, FamilyName, MailAddress, Status, RegistrationDate, EntryDate, ReleaseDate, Area, Type, Adults, Children, Pool, Jacuzzi, Garden, ChildrensAttractions);
         }
     }
 }

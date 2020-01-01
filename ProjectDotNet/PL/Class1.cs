@@ -28,8 +28,8 @@ namespace PL
                     break;
                 case myFunc.deleteHostingUnit:
                     break;
-                case myFunc.HostingUnit:
-                    break;
+                //case myFunc.HostingUnit:
+                //    break;
                 case myFunc.GetHostingUnit:
                     break;
                 case myFunc.getAllHostingUnits:
@@ -84,7 +84,8 @@ namespace PL
         addHostingUnit,
         updateHostingUnit,
         deleteHostingUnit,
-        HostingUnit GetHostingUnit,
+        //HostingUnit
+        GetHostingUnit,
         getAllHostingUnits,
 
 
