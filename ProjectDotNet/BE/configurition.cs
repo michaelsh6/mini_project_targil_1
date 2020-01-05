@@ -16,5 +16,7 @@ namespace BE
 
         private static int OrderKey = 10000000;
         public static int GetOrderKey() { return OrderKey++; }
+
+        public const int commission = 10; 
     }
 }

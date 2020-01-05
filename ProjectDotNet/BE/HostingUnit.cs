@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace BE
 {
+    [Serializable]
     public class HostingUnit
     {
         

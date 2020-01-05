@@ -170,7 +170,7 @@ namespace BL
             // לא ניתן לבטל הרשאה לחיוב חשבון כאשר יש הצעה הקשורה אליה במצב פתוח
             //int hostKey = hostingUnit.Owner.HostKey;
             //get(x=>x.Owner.HostKey == hostKey)
-            throw new NotImplementedException();
+            dal.updateHostingUnit(hostingUnit);
         }
 
         public void updateOrder(Order order)
@@ -194,9 +194,54 @@ namespace BL
                 order.Status != OldOrder.Status)
                 throw new Exception("Status cannot change after closing");//TODO StatusChangeException
 
+            Guest guest = GetGuest(order.GuestRequestKey);
+            if(OldOrder.Status != order.Status)
+            {
+                IEnumerable<Order> orders = getAllOrders(x => x.GuestRequestKey == order.GuestRequestKey && x.OrderKey!=order.OrderKey);
+                switch (order.Status)
+                {
+                    case enums.OrderStatus.Not_yet_addressed:
+                        break;
+                    case enums.OrderStatus.mail_has_been_sent:
+                        Console.WriteLine("mail_has_been_sent");
+                        break;
+                    case enums.OrderStatus.closed_Request_expired:
+                        guest.Status = enums.GuestStatus.closed_Request_expired;
+                        updateGuest(guest);
+                        
+                        foreach (var ord in orders)
+                        {
+                            ord.Status = enums.OrderStatus.closed_Request_expired;
+                            updateOrder(ord);
+                        }
 
+                        break;
+                    case enums.OrderStatus.closed_Order_accepted:
+                        int num_of_days = GetNumOfDays(guest.EntryDate, guest.ReleaseDate);
+                        int commission = configurition.commission * num_of_days;
 
-            throw new NotImplementedException();
+                        guest.Status = enums.GuestStatus.closed_Order_accepted;
+                        updateGuest(guest);
+                        foreach(var ord in orders)
+                        {
+                            ord.Status = enums.OrderStatus.closed_Request_expired;
+                            updateOrder(ord);
+                        }
+
+                        HostingUnit hostingUnit = GetHostingUnit(order.HostingUnitKey);
+                        for(DateTime corrent = guest.EntryDate; corrent<=guest.ReleaseDate;corrent.AddDays(1))
+                        {
+                            hostingUnit[corrent] = true;
+                        }
+                        updateHostingUnit(hostingUnit);
+                        break;
+                    default:
+                        break;
+
+                    
+                }
+            }
+            updateOrder(order);
         }
     }
 }

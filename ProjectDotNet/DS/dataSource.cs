@@ -33,7 +33,7 @@ namespace DS
                      CollectionClearance=true
                  },
                 HostingUnitName = "negev",
-                Diary=new bool[12,31]
+                Diary=new bool[31,12]
             },
 
             new BE.HostingUnit()
@@ -58,7 +58,7 @@ namespace DS
                      CollectionClearance=true
                  },
                 HostingUnitName = "The golshim",
-                Diary=new bool[12,31]
+                Diary=new bool[31,12]
             },
 
 
@@ -85,7 +85,7 @@ namespace DS
                  },
                 HostingUnitName = "mercaz",
 
-                Diary=new bool[12,31]
+                Diary=new bool[31,12]
             }
 
         };
