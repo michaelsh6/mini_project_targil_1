@@ -10,7 +10,7 @@ namespace PL
 {
     class Program
     {
-
+       
         enum myFunc
         {
             Exit,
@@ -18,8 +18,7 @@ namespace PL
             updateGuest,
             GetGuest,
             getAllGuests,
-
-
+            
             addHostingUnit,
             updateHostingUnit,
             deleteHostingUnit,
@@ -132,124 +131,237 @@ namespace PL
             return ord;
         }
 
-        static void menu()
+        static public void PrintOpenScreen()
         {
-            Console.WriteLine("Menu:");
-            Console.WriteLine("For exit press 0");
+            Console.WriteLine("For get to Client operations area press 1");
+            Console.WriteLine("For get to Hosting unit area press 2");
+            Console.WriteLine("For get to Webmaster area press 3");
+            Console.WriteLine("For Exit press 0");
+        }
+
+        static public void PrintClientOperations()
+        {
             Console.WriteLine("For adding guest request press 1");
             Console.WriteLine("For update guest request press 2");
-            Console.WriteLine("For getting guest by id press 3");
-            Console.WriteLine("For getting all guests press 4");
-            //
-            Console.WriteLine("For adding hosting unit press 5");
-            Console.WriteLine("For update hosting unit press 6");
-            Console.WriteLine("For getting hosting unit by id press 7");
-            Console.WriteLine("For getting all hosting unit 8");
-            //
-            Console.WriteLine("For adding order press 9");
-            Console.WriteLine("For update order press 10");
-            Console.WriteLine("For getting order by id press 11");
-            Console.WriteLine("For getting all order 12");
-            //
-
-
-
+            Console.WriteLine("For get to the previous screen press 0");
         }
-        static void Main(string[] args)
+
+        static public void PrintHostingUnitOperations()
+        {
+            Console.WriteLine("For adding hosting unit press 1");
+            Console.WriteLine("For get to Personal Area press 2");
+            Console.WriteLine("For get to the previous screen press 0");
+        }
+
+        static public void PrintPersonalArea()
+        {
+            Console.WriteLine("For update hosting unit press 1");
+            Console.WriteLine("For delete unit press 2");
+            Console.WriteLine("For adding order press 3");
+            Console.WriteLine("For update order press 4");
+            Console.WriteLine("For get to the previous screen press 0");
+        }
+
+        static public void PrintWebmaster()
+        {
+            Console.WriteLine("For get guest by Id press 1");
+            Console.WriteLine("For get all guests press 2");
+            Console.WriteLine("For get hosting units by Id press 3");
+            Console.WriteLine("For get all hosting units press 4");
+            Console.WriteLine("For get order by Id press 5");
+            Console.WriteLine("For get all orders press 6");
+            Console.WriteLine("For get all available hosting units press 7");
+            Console.WriteLine("For get order that olders then date press 8");  
+            Console.WriteLine("For get num of days press 9");
+            Console.WriteLine("For get guest nun of orders press 10");
+            Console.WriteLine("For get guest open or successfully closed orders press 11");
+            Console.WriteLine("For get all bank branches press 12");
+            Console.WriteLine("For get get grouping guest by country areas press 13");
+            Console.WriteLine("For get  get grouping guest by num of peoples 14");
+            Console.WriteLine("For get grouping host by num of hosting unit 15");
+            Console.WriteLine("For get grouping hosting unit by country areas  16");
+            Console.WriteLine("For get to the previous screen press 0");
+        }
+         
+            static void Main(string[] args)
         {
             IBL bl = FactoryBL.GetBL();
             //
-            menu();
-
-
-            myFunc func = 0;
-
-            while (func != myFunc.Exit)
+            Console.WriteLine("Hello and wellcome to our project!");
+            string openScreen = "";
+            string clientOperations = "";
+            string hostingUnitOperations = "";
+            string PersonalArea = "";
+            string printWebmaster = "";
+            //
+            do
             {
-
-                switch (func)
+                PrintOpenScreen();
+                openScreen = Console.ReadLine();
+                //
+                switch (openScreen)
                 {
-                    case myFunc.addGuest:
-                        bl.addGuest(UserInputGuest());
+                    case "0":
                         break;
-                    case myFunc.updateGuest:
-                        Guest gst = bl.GetGuest(10000003);
-                        gst.Children = 16;
-                        bl.updateGuest(gst);
-                        break;
-                    case myFunc.GetGuest:
-                        Guest gst1 = bl.GetGuest(10000003);
-                        break;
-                    case myFunc.getAllGuests:
-                        IEnumerable<Guest> ieGuest = bl.getAllGuests();
-                        break;
-                    case myFunc.addHostingUnit:
-                        bl.addHostingUnit(UserInputHostingUnit());
-                        break;
-                    case myFunc.updateHostingUnit:
-                        HostingUnit hUnit = bl.GetHostingUnit(10000003);
-                        hUnit.HostingUnitName = "normal name";
-                        bl.updateHostingUnit(hUnit);
-                        break;
-                    case myFunc.deleteHostingUnit:
-                        bl.deleteHostingUnit(10000000);
-                        break;
-                    case myFunc.GetHostingUnit:
-                        HostingUnit hUnit1 = bl.GetHostingUnit(10000003);
-                        break;
-                    case myFunc.getAllHostingUnits:
-                        DateTime hUnitGetAll = new DateTime(2020, 09, 08);
-                        IEnumerable<HostingUnit> iehUnit = bl.getAllAvailableHostingUnits(hUnitGetAll, 7);
-                        break;
-                    case myFunc.addOrder:
-                        bl.addOrder(addOrder());
-                        break;
-                    case myFunc.updateOrder:
-                        Order ord = bl.GetOrder(10000003);
-                        ord.GuestRequestKey = 10000003;
-                        bl.updateOrder(ord);
-                        break;
-                    case myFunc.GetOrder:
-                        Order ord1 = bl.GetOrder(10000003);
-                        break;
-                    case myFunc.getAllOrders:
-                        IEnumerable<Order> ieOrd = bl.getAllOrders();
-                        break;
+                    case "1":
+                        do
+                        {
+                            PrintClientOperations();
+                            //
+                            clientOperations = Console.ReadLine();
+                            //
+                            switch (clientOperations)
+                            {
+                                case "0":
+                                    break;
+                                case "1":
+                                    bl.addGuest(UserInputGuest());
+                                    break;
+                                case "2":
+                                    Guest gst = bl.GetGuest(10000003);
+                                    gst.Children = 16;
+                                    bl.updateGuest(gst);
+                                    break;
+                                default:
+                                    Console.WriteLine("not an option");
+                                    break;
+                            }
 
-                    case myFunc.GetGroupingGuestByCountryAreas:
+                        } while (clientOperations != "0");
                         break;
-                    case myFunc.GetGroupingGuestByNumOfPeoples:
-                        break;
-                    case myFunc.GetGroupingHostByNumOfHostingUnit:
-                        break;
-                    case myFunc.GetGroupingHostingUnitByCountryAreas:
-                        break;
+                    case "2":
+                        do
+                        {
+                            PrintHostingUnitOperations();
+                            //
+                            hostingUnitOperations = Console.ReadLine();
+                            //
+                            switch (hostingUnitOperations)
+                            {
+                                case "0":
+                                    break;
+                                case "1":
+                                    bl.addHostingUnit(UserInputHostingUnit());
+                                    break;
+                                case "2":
+                                    do
+                                    {
+                                        PrintPersonalArea();
+                                        //
+                                        PersonalArea = Console.ReadLine();
+                                        //
+                                        switch (PersonalArea)
+                                        {
+                                            case "0":
+                                                break;
+                                            case "1":
+                                                HostingUnit hUnit = bl.GetHostingUnit(10000003);
+                                                hUnit.HostingUnitName = "normal name";
+                                                bl.updateHostingUnit(hUnit);
+                                                break;
+                                            case "2":
+                                                bl.deleteHostingUnit(10000000);
+                                                break;
+                                            case "3":
+                                                bl.addOrder(addOrder());
+                                                break;
+                                            case "4":
+                                                Order ord = bl.GetOrder(10000003);
+                                                ord.GuestRequestKey = 10000003;
+                                                bl.updateOrder(ord);
+                                                break;
+                                            default:
+                                                Console.WriteLine("not an option");
+                                                break;
+                                        }
 
-                    case myFunc.getAllAvailableHostingUnits:
-                        DateTime iehUnitDate = new DateTime(2020, 07, 08);
-                        IEnumerable<HostingUnit> iehUnit2 = bl.getAllAvailableHostingUnits(iehUnitDate, 4);
+                                    } while (PersonalArea != "0");
+                                    break;
+                                default:
+                                    Console.WriteLine("not an option");
+                                    break;
+                            }
+
+                        } while (hostingUnitOperations != "0");
                         break;
-                    case myFunc.GetOrderOldersThen:
-                        IEnumerable<Order> ieOrder2 = bl.GetOrderOldersThen(5);
-                        break;
-                    case myFunc.GetNumOfDays:
-                        DateTime numOfDayDate = new DateTime(2020, 07, 08);
-                        int numOfDay = bl.GetNumOfDays(numOfDayDate);
-                        break;
-                    case myFunc.GuestNunOfOrders:
-                        int numOfOrders = bl.GuestNunOfOrders(10000003);
-                        break;
-                    case myFunc.GuestOpenOrSuccessfullyClosedOrders:
-                        int SuccessfullyClosedOrders = bl.GuestOpenOrSuccessfullyClosedOrders(5);
-                        break;
-                    case myFunc.getAllBankBranches:
-                        IEnumerable<BankAccunt> ieAllBankBranches = bl.getAllBankBranches();
+                    case "3":
+                        do
+                        {
+                            PrintWebmaster();
+                            //
+                            printWebmaster = Console.ReadLine();
+                            //
+                            switch (printWebmaster)
+                            {
+                                case "0":
+                                    break;
+                                case "1":
+                                    Guest gst1 = bl.GetGuest(10000003);
+                                    break;
+                                case "2":
+                                    IEnumerable<Guest> ieGuest = bl.getAllGuests();
+                                    break;
+                                case "3":
+                                    HostingUnit hUnit1 = bl.GetHostingUnit(10000003);
+                                    break;
+                                case "4":
+                                    DateTime hUnitGetAll = new DateTime(2020, 09, 08);
+                                    IEnumerable<HostingUnit> iehUnit = bl.getAllAvailableHostingUnits(hUnitGetAll, 7);
+                                    break;
+                                case "5":
+                                    Order ord1 = bl.GetOrder(10000003);
+                                    break;
+                                case "6":
+                                    IEnumerable<Order> ieOrd = bl.getAllOrders();
+                                    break;
+                                case "7":
+                                    DateTime iehUnitDate = new DateTime(2020, 07, 08);
+                                    IEnumerable<HostingUnit> iehUnit2 = bl.getAllAvailableHostingUnits(iehUnitDate, 4);
+                                    break;
+                                case "8":
+                                    IEnumerable<Order> ieOrder2 = bl.GetOrderOldersThen(5);
+                                    break;
+                                case "9":
+                                    DateTime numOfDayDate = new DateTime(2020, 07, 08);
+                                    int numOfDay = bl.GetNumOfDays(numOfDayDate);
+                                    break;
+                                case "10":
+                                    int numOfOrders = bl.GuestNunOfOrders(10000003);
+                                    break;
+                                case "11":
+                                    int SuccessfullyClosedOrders = bl.GuestOpenOrSuccessfullyClosedOrders(5);
+                                    break;
+                                case "12":
+                                    IEnumerable<BankAccunt> ieAllBankBranches = bl.getAllBankBranches();
+                                    break;
+                                case "13":
+                                    //GetGroupingGuestByCountryAreas todo.
+                                    break;
+                                case "14":
+                                    //GetGroupingGuestByNumOfPeoples todo.
+                                    break;
+                                case "15":
+                                    //GetGroupingHostByNumOfHostingUnit todo.
+                                    break;
+                                case "16":
+                                  //  GetGroupingHostingUnitByCountryAreas todo.
+                                    break;
+
+                                default:
+                                    Console.WriteLine("not an option");
+                                    break;
+                            }
+
+                        } while (printWebmaster != "0");
                         break;
                     default:
+                        Console.WriteLine("not an option");
                         break;
                 }
-            }
 
+            } while (openScreen != "0");
+
+           
         }
     }
 }
