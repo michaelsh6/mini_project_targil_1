@@ -243,5 +243,11 @@ namespace BL
             }
             updateOrder(order);
         }
+        
+        public bool MailValidition(string email)
+        {         
+             var addr = new System.Net.Mail.MailAddress(email);
+              return addr.Address == email;
+        }
     }
 }
