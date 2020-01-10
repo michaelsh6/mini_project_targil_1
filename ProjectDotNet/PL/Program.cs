@@ -196,6 +196,8 @@ namespace PL
             //
             do
             {
+                try
+                {
                 PrintOpenScreen();
                 openScreen = Console.ReadLine();
                 //
@@ -218,7 +220,7 @@ namespace PL
                                     bl.addGuest(UserInputGuest());
                                     break;
                                 case "2":
-                                    Guest gst = bl.GetGuest(10000003);
+                                    Guest gst = bl.GetGuest(10000002);
                                     gst.Children = 16;
                                     bl.updateGuest(gst);
                                     Console.WriteLine( gst);
@@ -413,6 +415,12 @@ namespace PL
                     default:
                         Console.WriteLine("not an option");
                         break;
+                }
+                    
+              }
+                catch(Exception e)
+                {
+                    Console.WriteLine(e);
                 }
 
             } while (openScreen != "0");
