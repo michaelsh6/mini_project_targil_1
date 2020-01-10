@@ -1,3 +1,6 @@
+//203375563
+//206197733
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -87,6 +90,7 @@ namespace PL
             //
             hUnit.HostingUnitKey = configurition.GetHostingUnitKey();
             //
+            
             Owner.HostKey = 123456874;
             Owner.PrivateName = "david";
             Owner.FamilyName = "miz";
@@ -103,6 +107,8 @@ namespace PL
             Owner.BankBranchDetails = bank;
             Owner.CollectionClearance = true;
             //
+            hUnit.Owner = Owner;
+ 
             hUnit.HostingUnitName = "kk";
             hUnit.Diary = diary;
             hUnit.Area = enums.CountryAreas.Center;
@@ -121,8 +127,8 @@ namespace PL
             DateTime cDate = new DateTime(2020, 08, 09);
             DateTime oDate = new DateTime(2020, 04, 12);
             //
-            ord.HostingUnitKey = 10000003;
-            ord.GuestRequestKey = 10000003;
+            ord.HostingUnitKey = 10000002;
+            ord.GuestRequestKey = 10000002;
             ord.OrderKey = configurition.GetOrderKey();
             ord.Status = enums.OrderStatus.Not_yet_addressed;
             //
@@ -220,7 +226,7 @@ namespace PL
                                     bl.addGuest(UserInputGuest());
                                     break;
                                 case "2":
-                                    Guest gst = bl.GetGuest(10000002);
+                                    Guest gst = bl.GetGuest(10000003);
                                     gst.Children = 16;
                                     bl.updateGuest(gst);
                                     Console.WriteLine( gst);
@@ -258,21 +264,24 @@ namespace PL
                                             case "0":
                                                 break;
                                             case "1":
-                                                HostingUnit hUnit = bl.GetHostingUnit(10000003);
+                                                HostingUnit hUnit = bl.GetHostingUnit(10000002);
                                                 hUnit.HostingUnitName = "normal name";
                                                 bl.updateHostingUnit(hUnit);
                                                 Console.WriteLine(hUnit);
                                                 break;
                                             case "2":
-                                                bl.deleteHostingUnit(10000000);
+                                                bl.deleteHostingUnit(10000001);
                                                 break;
                                             case "3":
                                                 bl.addOrder(addOrder());
                                                 Console.WriteLine(addOrder());
                                                 break;
                                             case "4":
-                                                Order ord = bl.GetOrder(10000003);
-                                                ord.GuestRequestKey = 10000003;
+                                                Order ord = bl.GetOrder(10000002);
+                                                ord.Status = enums.OrderStatus.mail_has_been_sent;
+                                                //ord.GuestRequestKey = 10000002;
+
+
                                                 bl.updateOrder(ord);
                                                 Console.WriteLine(ord);
                                                 break;
@@ -351,16 +360,16 @@ namespace PL
                                     }
                                     break;
                                 case "9":
-                                    DateTime numOfDayDate = new DateTime(2020, 07, 08);
+                                    DateTime numOfDayDate = new DateTime(2020, 01, 08);
                                     int numOfDay = bl.GetNumOfDays(numOfDayDate);
                                     Console.WriteLine(numOfDay);
                                     break;
                                 case "10":
-                                    int numOfOrders = bl.GuestNunOfOrders(10000003);
+                                    int numOfOrders = bl.GuestNunOfOrders(10000002);
                                     Console.WriteLine(numOfOrders);
                                     break;
                                 case "11":
-                                    int SuccessfullyClosedOrders = bl.GuestOpenOrSuccessfullyClosedOrders(5);
+                                    int SuccessfullyClosedOrders = bl.GuestOpenOrSuccessfullyClosedOrders(10000002);
                                     Console.WriteLine(SuccessfullyClosedOrders);
                                     break;
                                 case "12":

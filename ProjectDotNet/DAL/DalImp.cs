@@ -90,7 +90,7 @@ namespace DAL
         {
             int count = dataSource.hostingUnits.RemoveAll(x => x.HostingUnitKey == hstUnitId);
             if (count == 0)
-                throw new Exception("a"); //TODO // DuplicateIdException()
+                throw new Exception("not exist"); //TODO // DuplicateIdException()
         }
 
         public void addOrder(Order ord)

@@ -169,8 +169,9 @@ namespace BL
         
         public int GuestOpenOrSuccessfullyClosedOrders(int GuestRequestKey)
         {
-            return getAllOrders(x => x.GuestRequestKey == GuestRequestKey && 
-            (x.Status == enums.OrderStatus.mail_has_been_sent || x.Status == enums.OrderStatus.closed_Order_accepted)).Count();
+            return getAllOrders(x => x.GuestRequestKey == GuestRequestKey &&
+            (x.Status != enums.OrderStatus.closed_Request_expired)).Count();
+            //(x.Status == enums.OrderStatus.mail_has_been_sent || x.Status == enums.OrderStatus.closed_Order_accepted)).Count();
         }
 
         public void updateGuest(Guest guest)
