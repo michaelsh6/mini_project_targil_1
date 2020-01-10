@@ -15,8 +15,6 @@ namespace BL
       public void addGuest(Guest guest)
         {
             // תאריך תחילת הנופש קודם לפחות ביום אחד לתאריך סיום הנופש
-            if (guest.EntryDate >= guest.ReleaseDate)
-                throw new Exception("Date mismatch");//TODO DateMismatchException
             //if date distance more than 11 month, or EntryDate earler than today.
             if (!ValidDate(guest.EntryDate,guest.ReleaseDate))
                 throw new Exception("Date mismatch");//TODO DateMismatchException
@@ -35,7 +33,7 @@ namespace BL
             //
             //incorrect Phon                                  
             if (!IsDigitsOnly(hostingUnit.Owner.phoneNumber))
-                throw new Exception("incorrect mail");//TODO DateMismatchException }
+                throw new Exception("incorrect phone");//TODO DateMismatchException }
             //
             dal.addHostingUnit(hostingUnit);
         }
@@ -183,7 +181,15 @@ namespace BL
         public void updateHostingUnit(HostingUnit hostingUnit)
         {
             // לא ניתן לבטל הרשאה לחיוב חשבון כאשר יש הצעה הקשורה אליה במצב פתוח
-            //int hostKey = hostingUnit.Owner.HostKey;
+            bool newOwnerCollectionClearance = hostingUnit.Owner.CollectionClearance;
+            bool oldOwnerCollectionClearance = GetHostingUnit(hostingUnit.HostingUnitKey).Owner.CollectionClearance;
+            if (oldOwnerCollectionClearance == true && hostingUnit.Owner.CollectionClearance == false)
+            {
+                int hostKey = hostingUnit.Owner.HostKey;
+                IEnumerable<Order> orderOrders = getAllOrders(x => GetHostingUnit(x.HostingUnitKey).Owner.HostKey == hostKey);
+                if (orderOrders.Any(x => x.Status == enums.OrderStatus.mail_has_been_sent || x.Status == enums.OrderStatus.Not_yet_addressed))
+                    throw new Exception("There is an open offer for the owner so account authorization cannot be revoked");
+            }
             //get(x=>x.Owner.HostKey == hostKey)
             dal.updateHostingUnit(hostingUnit);
         }
@@ -277,11 +283,11 @@ namespace BL
 	//if date distance more than 11 month, or EntryDate earler than today.
         public static bool ValidDate(DateTime first, DateTime end)
         {
-            DateTime localDate = DateTime.Now;
+            DateTime localDate = DateTime.Today;
             //
-            if (end < first)
+            if (end <= first)
                 return false;
-            if (first < localDate)
+            if (first <= localDate)
                 return false;
             if (end.Year - first.Year > 1)
                 return false;
