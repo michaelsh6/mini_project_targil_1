@@ -12,16 +12,31 @@ namespace BL
     {
          IDAL dal = DalFactory.GetDal();
 
-        public void addGuest(Guest guest)
+      public void addGuest(Guest guest)
         {
             // תאריך תחילת הנופש קודם לפחות ביום אחד לתאריך סיום הנופש
             if (guest.EntryDate >= guest.ReleaseDate)
                 throw new Exception("Date mismatch");//TODO DateMismatchException
+            //if date distance more than 11 month, or EntryDate earler than today.
+            if (!ValidDate(guest.EntryDate,guest.ReleaseDate))
+                throw new Exception("Date mismatch");//TODO DateMismatchException
+            //incorrect mail                                  
+            if (!MailValidition(guest.MailAddress))
+                throw new Exception("incorrect mail");//TODO DateMismatchException }
+            //
             dal.addGuest(guest);
         }
 
         public void addHostingUnit(HostingUnit hostingUnit)
         {
+            //incorrect mail                                  
+            if (!MailValidition(hostingUnit.Owner.MailAddress))
+                throw new Exception("incorrect mail");//TODO DateMismatchException }
+            //
+            //incorrect Phon                                  
+            if (!IsDigitsOnly(hostingUnit.Owner.phoneNumber))
+                throw new Exception("incorrect mail");//TODO DateMismatchException }
+            //
             dal.addHostingUnit(hostingUnit);
         }
 
@@ -243,13 +258,13 @@ namespace BL
             }
             updateOrder(order);
         }
-        
+         //mail validition    
         public bool MailValidition(string email)
         {         
              var addr = new System.Net.Mail.MailAddress(email);
               return addr.Address == email;
         }
-        
+        //phon digit only
         public bool IsDigitsOnly(string str)
         {
              foreach (char c in str)
@@ -259,6 +274,24 @@ namespace BL
                }
             return true;
          }
+	//if date distance more than 11 month, or EntryDate earler than today.
+        public static bool ValidDate(DateTime first, DateTime end)
+        {
+            DateTime localDate = DateTime.Now;
+            //
+            if (end < first)
+                return false;
+            if (first < localDate)
+                return false;
+            if (end.Year - first.Year > 1)
+                return false;
+            if (end.Year - first.Year == 1)
+                if (end.Month >= first.Month)
+                    return false;
+            //
+            return true;
+        }
+	 
 	
     }
 }
