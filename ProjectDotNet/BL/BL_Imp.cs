@@ -151,7 +151,7 @@ namespace BL
         public int GetNumOfDays(DateTime dateFrom, DateTime? dateTo = null)
         {
             dateTo = dateTo == null ? DateTime.Today : dateTo; 
-            return ((DateTime)dateTo - dateFrom).Days+1;
+            return ((DateTime)dateTo - dateFrom).Days;
         }
 
         //פונקציה שמקבלת מספר ימים, ומחזירה את כל ההזמנות שמשך הזמן שעבר מאז שנוצרו / מאז שנשלח מייל ללקוח גדול או שווה למספר הימים שהפונקציה קיבלה.
@@ -255,7 +255,7 @@ namespace BL
                         }
 
                         HostingUnit hostingUnit = GetHostingUnit(order.HostingUnitKey);
-                        for(DateTime corrent = guest.EntryDate; corrent<=guest.ReleaseDate; corrent = corrent.AddDays(1))
+                        for(DateTime corrent = guest.EntryDate; corrent<guest.ReleaseDate; corrent = corrent.AddDays(1))
                         {
                             hostingUnit[corrent] = true;
                         }
