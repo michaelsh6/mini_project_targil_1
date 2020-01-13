@@ -1,5 +1,5 @@
-//203375563
-//206197733
+//203375563 Shimon Mizrahi
+//206197733 Michael Shachor
 
 using System;
 using System.Collections.Generic;
@@ -278,7 +278,7 @@ namespace PL
                                                 break;
                                             case "4":
                                                 Order ord = bl.GetOrder(10000002);
-                                                ord.Status = enums.OrderStatus.mail_has_been_sent;
+                                                ord.Status = enums.OrderStatus.closed_Order_accepted;
                                                 //ord.GuestRequestKey = 10000002;
 
 
@@ -326,7 +326,7 @@ namespace PL
                                     Console.WriteLine(hUnit1);
                                     break;
                                 case "4":
-                                    DateTime hUnitGetAll = new DateTime(2020, 09, 08);
+                                    DateTime hUnitGetAll = new DateTime(2020, 01, 12);
                                     IEnumerable<HostingUnit> iehUnit = bl.getAllAvailableHostingUnits(hUnitGetAll, 7);
                                     foreach (var item in iehUnit)
                                     {
@@ -345,8 +345,8 @@ namespace PL
                                     }
                                     break;
                                 case "7":
-                                    DateTime iehUnitDate = new DateTime(2019, 07, 08);
-                                    IEnumerable<HostingUnit> iehUnit2 = bl.getAllAvailableHostingUnits(iehUnitDate, 4);
+                                    DateTime iehUnitDate = new DateTime(2020, 01, 012);
+                                    IEnumerable<HostingUnit> iehUnit2 = bl.getAllAvailableHostingUnits(iehUnitDate, 8);
                                     foreach (var item in iehUnit2)
                                     {
                                         Console.WriteLine("{0}\n\n", item);

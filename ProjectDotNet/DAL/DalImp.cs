@@ -13,15 +13,15 @@ namespace DAL
 
         public Guest GetGuest(int GuestRequestKey)
         {
-            return dataSource.guests.FirstOrDefault(x => x.GuestRequestKey == GuestRequestKey);
+            return dataSource.guests.FirstOrDefault(x => x.GuestRequestKey == GuestRequestKey).Clone();
         }
         public HostingUnit GetHostingUnit(int HostingUnitKey)
         {
-            return dataSource.hostingUnits.FirstOrDefault(x => x.HostingUnitKey == HostingUnitKey);
+            return dataSource.hostingUnits.FirstOrDefault(x => x.HostingUnitKey == HostingUnitKey).Clone();
         }
         public Order GetOrder(int OrderKey)
         {
-            return dataSource.orders.FirstOrDefault(x => x.OrderKey == OrderKey);
+            return dataSource.orders.FirstOrDefault(x => x.OrderKey == OrderKey).Clone();
         }
 
         private bool CheckGuest(int id)

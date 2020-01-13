@@ -151,7 +151,7 @@ namespace BL
         public int GetNumOfDays(DateTime dateFrom, DateTime? dateTo = null)
         {
             dateTo = dateTo == null ? DateTime.Today : dateTo; 
-            return ((DateTime)dateTo - dateFrom).Days;
+            return ((DateTime)dateTo - dateFrom).Days+1;
         }
 
         //פונקציה שמקבלת מספר ימים, ומחזירה את כל ההזמנות שמשך הזמן שעבר מאז שנוצרו / מאז שנשלח מייל ללקוח גדול או שווה למספר הימים שהפונקציה קיבלה.
@@ -210,7 +210,11 @@ namespace BL
                 throw new Exception("Collection Clearance not given"); //TODO CollectionClearanceException
             Order OldOrder = GetOrder(order.OrderKey);
             if (OldOrder == null)
+            {
                 addOrder(order);
+                return;
+            }
+
             if ((OldOrder.Status == enums.OrderStatus.closed_Order_accepted ||
                 OldOrder.Status == enums.OrderStatus.closed_Request_expired) &&
                 order.Status != OldOrder.Status)
@@ -251,7 +255,7 @@ namespace BL
                         }
 
                         HostingUnit hostingUnit = GetHostingUnit(order.HostingUnitKey);
-                        for(DateTime corrent = guest.EntryDate; corrent<=guest.ReleaseDate;corrent.AddDays(1))
+                        for(DateTime corrent = guest.EntryDate; corrent<=guest.ReleaseDate; corrent = corrent.AddDays(1))
                         {
                             hostingUnit[corrent] = true;
                         }
@@ -263,7 +267,7 @@ namespace BL
                     
                 }
             }
-            updateOrder(order);
+            dal.updateOrder(order);
         }
          //mail validition    
         public bool MailValidition(string email)
