@@ -374,7 +374,10 @@ namespace PL
                                     break;
                                 case "12":
                                     IEnumerable<BankAccunt> ieAllBankBranches = bl.getAllBankBranches();
-                                    Console.WriteLine(ieAllBankBranches);
+                                    foreach (var item in ieAllBankBranches)
+                                    {
+                                        Console.WriteLine("{0}\n\n", item);
+                                    }
                                     break;
                                 case "13":
                                     var Grouping0 = bl.GetGroupingGuestByCountryAreas(); //todo.
