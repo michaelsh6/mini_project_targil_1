@@ -5,80 +5,292 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLWPF"
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.HostingUnitWindow"
+        WindowStartupLocation = "CenterScreen"
         mc:Ignorable="d"
-        Title="HostingUnitWindow" Height="450" Width="800">
-    <Window.Background>
-        <ImageBrush ImageSource="hosting_unit.jpg" Stretch="UniformToFill" />
-    </Window.Background>
+    
+        Title="HostingUnitWindow" Height="450" Width="800" >
 
     <Window.Resources>
+        <Style TargetType="{x:Type Label}">
+            <!--<Setter Property="FontSize" Value="32" />-->
 
+            <!--<Setter Property="Background" Value="#00000000" />-->
+            <Setter Property="Foreground" Value="#FFFFFFFF" />
+        </Style>
+
+      
     </Window.Resources>
 
 
+
+
     <Grid>
-        <Grid.RowDefinitions>
+        <!--<Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <Border Grid.Row="0" Background="#FFEEEEEE"/>
+        </Grid.RowDefinitions>-->
+        <!--<Border Grid.Row="0" Background="#FFEEEEEE"/>-->
 
-        <!--<TabControl Height="413" Margin="5,1,0,0" VerticalAlignment="Top" FlowDirection="RightToLeft" >-->
-        <!--<TabItem Header="איזור אישי" Height="30" Width="100">
-            
-        </TabItem>
-        <TabItem Header="הזמנות" Height="30" Width="100">
+        <TabControl Height="413" Margin="5,1,0,0" VerticalAlignment="Top" FlowDirection="RightToLeft"  BorderBrush="#FFACACAC" SelectionChanged="TabControl_SelectionChanged">
+            <TabControl.Background>
+                <ImageBrush ImageSource="hosting_unit.jpg" Stretch="UniformToFill" />
+            </TabControl.Background>
+            <TabItem Header="איזור אישי" Height="30" Width="100">
+                <Grid>
+                    <RichTextBox HorizontalAlignment="Left" Height="311" Margin="408,26,0,0" VerticalAlignment="Top" Width="296">
+                        <FlowDocument>
+                            <Paragraph>
+                                <Run Text="RichTextBox"/>
+                            </Paragraph>
+                        </FlowDocument>
+                    </RichTextBox>
+                    <Grid x:Name="HostingUnitGrid"  VerticalAlignment="Top" Margin="26,26,243,29" HorizontalAlignment="Left" Background="#99000000" Height="292" Width="276">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="10.5"/>
+                            <RowDefinition Height="21.5"/>
+                            <RowDefinition Height="14"/>
+                            <RowDefinition Height="18"/>
+                            <RowDefinition Height="2"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="29"/>
+                            <RowDefinition Height="3"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="112"/>
+                            <ColumnDefinition Width="27"/>
+                            <ColumnDefinition Width="Auto" MinWidth="152"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Resources>
+                            
+                          
 
-        </TabItem>-->
+                            <Style TargetType="Label" >
+                                <!--<Setter Property="FontSize" Value="32" />-->
+                                <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                            </Style>
+                        </Grid.Resources>
 
-        <!--</TabControl>-->
-        <Grid x:Name="grid1" Grid.Row="1" VerticalAlignment="Top" Margin="477,50,0,0" HorizontalAlignment="Left" Background="#99000000" Height="293" Width="275">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="10.5"/>
-                <RowDefinition Height="21.5"/>
-                <RowDefinition Height="14"/>
-                <RowDefinition Height="18"/>
-                <RowDefinition Height="2"/>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="29"/>
-                <RowDefinition Height="3"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="105.5"/>
-                <ColumnDefinition Width="30.5"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
-            <Grid.Resources>
-                <Style TargetType="Label" >
-                    <!--<Setter Property="FontSize" Value="32" />-->
-                    <Setter Property="Foreground" Value="#FFFFFFFF"/>
-                </Style>
-            </Grid.Resources>
+                        <Label VerticalAlignment="Center" Grid.Row="0" Margin="3,4,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="Hosting Unit Key:" Grid.RowSpan="2" Height="26" Width="100"/>
+                        <Label x:Name="hostingUnitKeyLabel" VerticalAlignment="Center" Grid.Row="1" Margin="3,2,0,13" HorizontalAlignment="Left" Grid.Column="2" Content="{Binding HostingUnitKey}" Height="8" Width="10"/>
+                        <Label VerticalAlignment="Center" Grid.Row="2" Margin="3,5,0,5" HorizontalAlignment="Left" Grid.Column="0" Content="Hosting Unit Name:" Grid.RowSpan="2" Grid.ColumnSpan="2" Height="24" Width="114"/>
+                        <TextBox x:Name="hostingUnitNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding HostingUnitName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3,5,0,5" Height="24" HorizontalAlignment="Left" Grid.Column="2" Grid.RowSpan="2"/>
+                        <Label VerticalAlignment="Center" Grid.Row="5" Margin="3,2,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="Bank Account Number:" Grid.ColumnSpan="2" Height="25" Width="132"/>
+                        <TextBox x:Name="bankAccountNumberTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Owner.BankAccountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3,1,0,5" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
+                        <Label VerticalAlignment="Center" Grid.Row="6" Margin="3,3,0,4" HorizontalAlignment="Left" Grid.Column="0" Content="Collection Clearance:" Grid.ColumnSpan="2" Height="26" Width="120"/>
+                        <CheckBox x:Name="collectionClearanceCheckBox" VerticalAlignment="Center" Grid.Row="6" Margin="3,9,0,9" IsChecked="{Binding Owner.CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="2" Content="" Height="15" Width="20"/>
+                        <Label VerticalAlignment="Center" Grid.Row="7" Margin="3,3,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="Family Name:" Height="26" Width="81"/>
+                        <TextBox x:Name="familyNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Owner.FamilyName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="7" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
+                        <Label VerticalAlignment="Center" Grid.Row="8" Margin="3,3,0,0" HorizontalAlignment="Left" Grid.Column="0" Content="Host Key:" Height="26" Width="59"/>
+                        <TextBox x:Name="hostKeyTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Owner.HostKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="8" Margin="3,4,0,1" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
+                        <Label VerticalAlignment="Center" Grid.Row="10" Margin="3,3,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="Mail Address:" Height="26" Width="81"/>
+                        <TextBox x:Name="mailAddressTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Owner.MailAddress, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="10" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
+                        <Label VerticalAlignment="Center" Grid.Row="11" Margin="3,3,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="phone Number:" Height="26" Width="93"/>
+                        <TextBox x:Name="phoneNumberTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Owner.phoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="11" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
+                        <Label VerticalAlignment="Center" Grid.Row="12" Margin="3,3,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="Private Name:" Height="26" Width="84"/>
+                        <TextBox x:Name="privateNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Owner.PrivateName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="12" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
+                    </Grid>
+                    <Button Content="מחק יחידת אירוח" Margin="27,341,651,10"/>
 
-            <Label VerticalAlignment="Center" Grid.Row="0" Margin="3,4,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="Hosting Unit Key:" Grid.RowSpan="2"/>
-            <Label x:Name="hostingUnitKeyLabel" VerticalAlignment="Center" Grid.Row="1" Margin="3,1,0,12" HorizontalAlignment="Left" Grid.Column="2" Content="{Binding HostingUnitKey}"/>
-            <Label VerticalAlignment="Center" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Left" Grid.Column="0" Content="Hosting Unit Name:" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-            <TextBox x:Name="hostingUnitNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding HostingUnitName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3,5,0,5" Height="24" HorizontalAlignment="Left" Grid.Column="2" Grid.RowSpan="2"/>
-            <Label VerticalAlignment="Center" Grid.Row="5" Margin="3,2,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="Bank Account Number:" Grid.ColumnSpan="2"/>
-            <TextBox x:Name="bankAccountNumberTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Owner.BankAccountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3,2,0,5" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
-            <Label VerticalAlignment="Center" Grid.Row="6" Margin="3,3,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="Collection Clearance:" Grid.ColumnSpan="2"/>
-            <CheckBox x:Name="collectionClearanceCheckBox" VerticalAlignment="Center" Grid.Row="6" Margin="3,9,0,9" IsChecked="{Binding Owner.CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="2" Content=""/>
-            <Label VerticalAlignment="Center" Grid.Row="7" Margin="3,3,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="Family Name:"/>
-            <TextBox x:Name="familyNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Owner.FamilyName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="7" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
-            <Label VerticalAlignment="Center" Grid.Row="8" Margin="3,3,0,0" HorizontalAlignment="Left" Grid.Column="0" Content="Host Key:"/>
-            <TextBox x:Name="hostKeyTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Owner.HostKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="8" Margin="3,4,0,1" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
-            <Label VerticalAlignment="Center" Grid.Row="10" Margin="3,3,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="Mail Address:"/>
-            <TextBox x:Name="mailAddressTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Owner.MailAddress, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="10" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
-            <Label VerticalAlignment="Center" Grid.Row="11" Margin="3,3,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="phone Number:"/>
-            <TextBox x:Name="phoneNumberTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Owner.phoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="11" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
-            <Label VerticalAlignment="Center" Grid.Row="12" Margin="3,3,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="Private Name:"/>
-            <TextBox x:Name="privateNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Owner.PrivateName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="12" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
-        </Grid>
+                </Grid>
+
+            </TabItem>
+            <TabItem Header="הזמנות" Height="30" Width="100">
+                <ListView x:Name="orderListView" ItemsSource="{Binding}" Margin="26,26,243,29" SelectionMode="Single" Background="#99000000" >
+                    <ListView.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+
+                        </Style>
+
+                    </ListView.ItemContainerStyle>
+
+
+
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn x:Name="createDateColumn" Header="Create Date" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding CreateDate}" Margin="6,-1,-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="guestRequestKeyColumn" Header="Guest Request Key" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding GuestRequestKey}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="hostingUnitKeyColumn" Header="Hosting Unit Key" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding HostingUnitKey}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="orderDateColumn" Header="Order Date" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding OrderDate}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="orderKeyColumn" Header="Order Key" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding OrderKey}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="statusColumn" Header="Status" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Status}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+
+            <TabItem Header="בקשות אירוח" Height="30" Width="100">
+                <ListView x:Name="guestListView" ItemsSource="{Binding}" Margin="26,26,243,29" Grid.Row="1" SelectionMode="Single" Background="#99000000" >
+                    <ListView.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn x:Name="adultsColumn" Header="Adults" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Adults}" Margin="6,-1,-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="areaColumn" Header="Area" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Area}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="childrenColumn" Header="Children" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Children}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="childrensAttractionsColumn" Header="Childrens Attractions" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding ChildrensAttractions}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="entryDateColumn" Header="Entry Date" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding EntryDate}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="familyNameColumn" Header="Family Name" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding FamilyName}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="gardenColumn" Header="Garden" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Garden}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="guestRequestKeyColumnGuest" Header="Guest Request Key" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding GuestRequestKey}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="jacuzziColumn" Header="Jacuzzi" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Jacuzzi}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="mailAddressColumn" Header="Mail Address" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding MailAddress}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="poolColumn" Header="Pool" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Pool}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="privateNameColumn" Header="Private Name" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding PrivateName}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="registrationDateColumn" Header="Registration Date" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding RegistrationDate}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="releaseDateColumn" Header="Release Date" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding ReleaseDate}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="statusColumnGuest" Header="Status" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Status}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn x:Name="typeColumn" Header="Type" Width="80">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <Label Content="{Binding Type}" Margin="-6,-1"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+
+        </TabControl>
+
+
     </Grid>
 
 

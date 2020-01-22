@@ -302,7 +302,18 @@ namespace BL
             //
             return true;
         }
-	 
-	
+
+        public Order guestToOrder(Guest guest, HostingUnit hostingUnit)
+        {
+            Order order = new Order();
+            order.HostingUnitKey = hostingUnit.HostingUnitKey;
+            order.GuestRequestKey = guest.GuestRequestKey;
+            order.OrderKey = configurition.GetOrderKey();
+            order.Status = enums.OrderStatus.mail_has_been_sent;
+            order.CreateDate = DateTime.Today;
+            order.OrderDate = DateTime.Today;
+            return order;
+            
+        }
     }
 }

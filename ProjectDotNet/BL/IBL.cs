@@ -8,6 +8,7 @@ namespace BL
 {
     public interface IBL
     {
+
         #region Guest Function
         void addGuest(Guest guest);
         void updateGuest(Guest guest);
@@ -49,6 +50,7 @@ namespace BL
         int GetNumOfDays(DateTime dateFrom, DateTime? dateTo = null);
         int GuestNunOfOrders(int GuestRequestKey);
         int GuestOpenOrSuccessfullyClosedOrders(int GuestRequestKey);
+        Order guestToOrder(Guest guest, HostingUnit hostingUnit);
         #endregion
 
 

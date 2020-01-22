@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PLWPF"
         mc:Ignorable="d"
-
+        WindowStartupLocation = "CenterScreen"
 
     Title="MainWindow" Height="450" Width="800" >
     <Window.Resources>
@@ -16,16 +16,12 @@
             <Setter Property="Foreground" Value="#FF000000"/>
             <Setter Property="BorderBrush" Value="#00000000"/>
 
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#FFFFFFFF"/>
-                </Trigger>
-            </Style.Triggers>
+            
         </Style>
     </Window.Resources>
 
     <Window.Background>
-        <ImageBrush ImageSource="home_page.jpg" />
+        <ImageBrush ImageSource="home_page2.jpg" />
     </Window.Background>
 
 
@@ -39,9 +35,9 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="63"/>
-            <RowDefinition Height="63*"/>
-            <RowDefinition Height="77*"/>
-            <RowDefinition Height="111*"/>
+            <RowDefinition Height="47*"/>
+            <RowDefinition Height="57*"/>
+            <RowDefinition Height="147*"/>
             <RowDefinition Height="105*"/>
         </Grid.RowDefinitions>
 
@@ -76,9 +72,9 @@
             <Button Style="{StaticResource ButtonStyle}" Content="הכנס כמנהל" Grid.Column="0"  Width="106" HorizontalAlignment="Right" VerticalAlignment="Center" Height="38" Margin="0,12,0,13" />
 
         </Grid>
-        <Label Content="ברוכים הבאים לאתר " HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" FontWeight="Bold" FontSize="30" Foreground =" #FFFFFFFF" Height="42" Margin="247,11,247,10" Width="298" />
+        <Label Content="ברוכים הבאים לאתר " HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" FontWeight="Bold" FontSize="30" Foreground =" #FFFFFFFF" Height="42" Margin="247,3,247,2" Width="298" />
         <Label Content="האתר הטוב במדינה " HorizontalAlignment="Center" Grid.Row="2" FontSize="25" VerticalAlignment="Top" Foreground =" #FFFFFFFF" Height="42" Margin="282,0" Width="228" />
-        <Button Style="{StaticResource ButtonStyle}" Content="הזמן אירוח" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Top" Width="176" Height="53" FontSize="22" Click="AddGuestButton_Click" Margin="0,0" Background="#FFCA690A" Foreground="#FFFFFFFF" FontFamily="Guttman Yad-Brush" />
+        <Button Style="{StaticResource ButtonStyle}" Content="הזמן אירוח" HorizontalAlignment="Center" Grid.Row="4" VerticalAlignment="Top" Width="176" Height="53" FontSize="22" Click="AddGuestButton_Click" Margin="308,0" Background="#FFCA690A" Foreground="#FFFFFFFF" FontFamily="Guttman Yad-Brush" />
     </Grid>
 
 </Window>

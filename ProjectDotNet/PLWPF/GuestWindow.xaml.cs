@@ -23,33 +23,32 @@ namespace PLWPF
         Guest guest;
         BL.IBL bl;
 
-        static public Guest UserInputGuest()
+        static public Guest DefultValueGuest()
         {
             //
             Guest gst = new Guest();
             //
             gst.GuestRequestKey = configurition.GetGuestRequestKey();
-            gst.PrivateName = "Dan";
-            gst.FamilyName = "patito";
-            gst.MailAddress = "patito@gmail.com";
+            gst.PrivateName = "";
+            gst.FamilyName = "";
+            gst.MailAddress = "";
             gst.Status = enums.GuestStatus.open;
             //
-            gst.RegistrationDate = DateTime.Now;
+            gst.RegistrationDate = DateTime.Today;
             //
-            DateTime entryDate = new DateTime(2020, 08, 09);
-            gst.EntryDate = entryDate;
+
+            gst.EntryDate = DateTime.Today;
             //
-            DateTime releaseDate = new DateTime(2020, 09, 09);
-            gst.ReleaseDate = releaseDate;
+            gst.ReleaseDate = DateTime.Today;
             //
-            gst.Area = enums.CountryAreas.Center;
-            gst.Type = enums.HostingUnitType.Camping;
-            gst.Adults = 2;
-            gst.Children = 0;
-            gst.Pool = enums.LuxusOption.necessary;
-            gst.Jacuzzi = enums.LuxusOption.notInterested;
-            gst.Garden = enums.LuxusOption.necessary;
-            gst.ChildrensAttractions = enums.LuxusOption.necessary;
+            gst.Area = enums.CountryAreas.All;
+            //gst.Type = enums.HostingUnitType;
+            //gst.Adults = 2;
+            //gst.Children = 0;
+            gst.Pool = enums.LuxusOption.possible;
+            gst.Jacuzzi = enums.LuxusOption.possible;
+            gst.Garden = enums.LuxusOption.possible;
+            gst.ChildrensAttractions = enums.LuxusOption.possible;
             //
             return gst;
         }
@@ -59,8 +58,8 @@ namespace PLWPF
         {
             InitializeComponent();
             //guest = new Guest();
-            guest = UserInputGuest();
             bl = BL.FactoryBL.GetBL();
+            guest = DefultValueGuest();
             guestInfoGrid.DataContext = guest;
             this.areaComboBox.ItemsSource = Enum.GetValues(typeof(enums.CountryAreas));
             this.gardenComboBox.ItemsSource = Enum.GetValues(typeof(enums.LuxusOption));
@@ -68,6 +67,19 @@ namespace PLWPF
             this.poolComboBox.ItemsSource = Enum.GetValues(typeof(enums.LuxusOption));
             this.childrensAttractionsComboBox.ItemsSource = Enum.GetValues(typeof(enums.LuxusOption));
             this.typeComboBox.ItemsSource = Enum.GetValues(typeof(enums.HostingUnitType));
+        }
+
+        private void addGuestButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.addGuest(guest);
+                this.Close();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

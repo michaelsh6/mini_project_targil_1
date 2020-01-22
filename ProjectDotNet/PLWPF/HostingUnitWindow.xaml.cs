@@ -22,13 +22,24 @@ namespace PLWPF
 
         HostingUnit hostingUnit;
         BL.IBL bl;
+      
 
         public HostingUnitWindow()
         {
             InitializeComponent();
             hostingUnit = new HostingUnit();
             bl = BL.FactoryBL.GetBL();
+            HostingUnitGrid.DataContext = bl.GetHostingUnit(10000001);
+            guestListView.ItemsSource = bl.getAllGuests();
+            orderListView.ItemsSource = bl.getAllOrders();
         }
 
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+       
     }
 }
