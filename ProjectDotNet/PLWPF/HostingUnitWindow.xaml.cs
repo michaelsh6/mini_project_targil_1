@@ -14,24 +14,60 @@ using System.Windows.Shapes;
 using BE;
 namespace PLWPF
 {
+
+
+
     /// <summary>
     /// Interaction logic for HostingUnitWindow.xaml
     /// </summary>
     public partial class HostingUnitWindow : Window
     {
+        private HostingUnit getHostingUnit()
+        {
+            return new BE.HostingUnit()
+            {
+                HostingUnitKey = 10000001,//configurition.GetHostingUnitKey(),
+                Owner = new BE.Host()
+                {
+                    HostKey = 203376655,
+                    PrivateName = "shay",
+                    FamilyName = "patito",
+                    phoneNumber = "0544655345",
+                    MailAddress = "shay@gmail.com",
+                    BankBranchDetails = new BE.BankAccunt()
+                    {
+                        BankNumber = 1,
+                        BankName = "Leumi",
+                        BranchNumber = 747,
+                        BranchAddress = "Hayarkot st",
+                        BranchCity = "Tel Aviv"
+                    },
+                    BankAccountNumber = 456789,
+                    CollectionClearance = true
+                },
+                HostingUnitName = "negev",
+                Diary = new bool[12, 31]
+            };
+        }
 
         HostingUnit hostingUnit;
         BL.IBL bl;
-      
+        IEnumerable<Guest> guests;
+        IEnumerable<Order> orders;
 
         public HostingUnitWindow()
         {
             InitializeComponent();
             hostingUnit = new HostingUnit();
             bl = BL.FactoryBL.GetBL();
-            HostingUnitGrid.DataContext = bl.GetHostingUnit(10000001);
-            guestListView.ItemsSource = bl.getAllGuests();
-            orderListView.ItemsSource = bl.getAllOrders();
+
+            guests = bl.getAllGuests();
+            hostingUnit = getHostingUnit();
+            orders = bl.getAllOrders();
+
+            HostingUnitGrid.DataContext = hostingUnit;
+            guestListView.ItemsSource = guests;
+            orderListView.ItemsSource = orders;
         }
 
 
@@ -40,6 +76,11 @@ namespace PLWPF
 
         }
 
-       
+        private void createOrder_Button_Click(object sender, RoutedEventArgs e)
+        {
+            Guest selectedGuest = guests.ElementAtOrDefault(guestListView.SelectedIndex);
+            Order order = bl.guestToOrder(selectedGuest, hostingUnit);
+            bl.addOrder(order);
+        }
     }
 }

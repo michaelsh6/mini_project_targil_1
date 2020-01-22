@@ -111,12 +111,12 @@ namespace PL
  
             hUnit.HostingUnitName = "kk";
             hUnit.Diary = diary;
-            hUnit.Area = enums.CountryAreas.Center;
-            hUnit.Type = enums.HostingUnitType.Etc;
-            hUnit.Pool = enums.LuxusOption.notInterested;
-            hUnit.Jacuzzi = enums.LuxusOption.notInterested;
-            hUnit.Garden = enums.LuxusOption.necessary;
-            hUnit.ChildrensAttractions = enums.LuxusOption.necessary;
+            //hUnit.Area = enums.CountryAreas.Center;
+            //hUnit.Type = enums.HostingUnitType.Etc;
+            //hUnit.Pool = enums.LuxusOption.notInterested;
+            //hUnit.Jacuzzi = enums.LuxusOption.notInterested;
+            //hUnit.Garden = enums.LuxusOption.necessary;
+            //hUnit.ChildrensAttractions = enums.LuxusOption.necessary;
             //
             return hUnit;
         }

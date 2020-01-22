@@ -129,8 +129,11 @@ namespace BL
 
         public IEnumerable<IGrouping<enums.CountryAreas, HostingUnit>> GetGroupingHostingUnitByCountryAreas()
         {
-            var hostingUnits = dal.getAllHostingUnits();
-            return from hostingUnit in hostingUnits group hostingUnit by hostingUnit.Area;
+
+            //var hostingUnits = dal.getAllHostingUnits();
+            //return from hostingUnit in hostingUnits group hostingUnit by hostingUnit.Area;
+            var orders = dal.getAllOrders();
+            return from order in orders group GetHostingUnit(order.HostingUnitKey) by GetGuest(order.GuestRequestKey).Area;
         }
 
         public Guest GetGuest(int GuestRequestKey)
@@ -309,7 +312,7 @@ namespace BL
             order.HostingUnitKey = hostingUnit.HostingUnitKey;
             order.GuestRequestKey = guest.GuestRequestKey;
             order.OrderKey = configurition.GetOrderKey();
-            order.Status = enums.OrderStatus.mail_has_been_sent;
+            order.Status = enums.OrderStatus.Not_yet_addressed;
             order.CreateDate = DateTime.Today;
             order.OrderDate = DateTime.Today;
             return order;

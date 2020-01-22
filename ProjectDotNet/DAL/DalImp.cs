@@ -101,7 +101,7 @@ namespace DAL
             }
             else
             {
-                throw new Exception("a"); //TODO // DuplicateIdException()
+                throw new Exception("DuplicateIdException"); //TODO // DuplicateIdException()
             }
         }
 
