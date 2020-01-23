@@ -35,5 +35,19 @@ namespace PLWPF
         {
             new HostingUnitWindow().ShowDialog();
         }
+
+        private void CreateHostingUnitButton_click(object sender, RoutedEventArgs e)
+        {
+            HostingUnitWindow hst = new HostingUnitWindow();
+            hst.HostingUnitGrid.IsEnabled = true;
+            hst.DeleteHostingUnit.IsEnabled = false;
+            hst.upDateHostingUnit.Content = "שלח";
+            hst.orderTabItem.IsEnabled = false;
+            hst.guestTabItem.IsEnabled = false;
+            hst.ShowDialog();
+
+
+
+        }
     }
 }

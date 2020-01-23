@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -12,15 +14,24 @@ namespace DAL
 {
     class imp_XML_Dal : IDAL
     {
+        Thread bankAccunDownload = new Thread(DownloadBankXml);
+
         XElement ConfigRoot;
         XElement OrderRoot;
+        XElement bankAccuntsRoot;
         public static List<Guest> guests;
         public static List<HostingUnit> hostingUnits;
         public static List<Order> orders;
-        private readonly string configPath = "config.xml";
-        private readonly string HostingUnitPath = "HostingUnit.xml";
-        private readonly string OrderPath = "Order.xml";
-        private readonly string GuestPath = "Guest.xml";
+        public static List<BankAccunt> bankAccunts;
+
+
+        private static readonly string configPath = "config.xml";
+        private static readonly string HostingUnitPath = "HostingUnit.xml";
+        private static readonly string OrderPath = "Order.xml";
+        private static readonly string GuestPath = "Guest.xml";
+
+        private static readonly string BankAccuntPath = "atm.xml";
+
 
         internal imp_XML_Dal()
         {
@@ -36,6 +47,7 @@ namespace DAL
                 configurition.HostingUnitKey = Convert.ToInt32(ConfigRoot.Element("HostingUnitKey").Value);
                 configurition.OrderKey = Convert.ToInt32(ConfigRoot.Element("OrderKey").Value);
                 configurition.commission = Convert.ToInt32(ConfigRoot.Element("commission").Value);
+                configurition.LastApdate = Convert.ToDateTime(ConfigRoot.Element("LastApdate").Value);
             }
 
             if (!File.Exists(OrderPath))
@@ -55,6 +67,11 @@ namespace DAL
             OrderRoot = XElement.Load(OrderPath);
             guests = LoadFromXML<List<Guest>>(GuestPath);
             hostingUnits = LoadFromXML<List<HostingUnit>>(HostingUnitPath);
+
+            bankAccuntsRoot = XElement.Load(BankAccuntPath);
+            bankAccunts = XmlToBankAccunt(bankAccuntsRoot);
+            SaveToXML(bankAccunts, "banks.xml");
+
         }
 
         private void SaveConfigToXml()
@@ -66,7 +83,8 @@ namespace DAL
                     new XElement("GuestRequestKey", configurition.GuestRequestKey),
                     new XElement("HostingUnitKey", configurition.HostingUnitKey),
                     new XElement("OrderKey", configurition.OrderKey),
-                    new XElement("commission", configurition.commission));
+                    new XElement("commission", configurition.commission),
+                    new XElement("LastApdate", configurition.LastApdate));
                 ConfigRoot.Save(configPath);
             }
             catch (Exception) { }
@@ -79,6 +97,53 @@ namespace DAL
             //SaveToXML<List<HostingUnit>>(hostingUnits, GuestPath);
 
            // OrderRoot.Save(OrderPath);
+        }
+
+
+
+
+        public static void DownloadBankXml()
+        {
+            WebClient wc = new WebClient();
+            try
+            {
+                string xmlServerPath =
+               @"http://www.boi.org.il/he/BankingSupervision/BanksAndBranchLocations/Lists/BoiBankBranchesDocs/atm.xml";
+                wc.DownloadFile(xmlServerPath, BankAccuntPath);
+            }
+            catch (Exception)
+            {
+                string xmlServerPath = @"http://www.jct.ac.il/~coshri/atm.xml";
+                wc.DownloadFile(xmlServerPath, BankAccuntPath);
+            }
+            finally
+            {
+                wc.Dispose();
+            }
+            configurition.BanksXmlFinish = true;
+
+        }
+
+        public List<BankAccunt> XmlToBankAccunt(XElement bankAccuntsRoot)
+        {
+            try
+            {
+                return (from bankAccunt in bankAccuntsRoot.Elements()
+                        select new BankAccunt()
+                        {
+                            BankName = bankAccunt.Element("שם_בנק").Value,
+                            BankNumber = Convert.ToInt32(bankAccunt.Element("קוד_בנק").Value),
+                            BranchAddress = bankAccunt.Element("כתובת_ה-ATM").Value,
+                            BranchCity = bankAccunt.Element("ישוב").Value,
+                            BranchNumber = Convert.ToInt32(bankAccunt.Element("קוד_סניף").Value)
+                        }
+                        ).Distinct().ToList().Clone();
+            }
+            catch (Exception ex)
+            {
+                // throw new Exception("file_problem_Order");
+                throw ex;
+            }
         }
 
 
@@ -272,56 +337,59 @@ namespace DAL
 
         public IEnumerable<BankAccunt> getAllBankBranches()
         {
-            return new List<BE.BankAccunt>
-            {
-                new BE.BankAccunt()
-                {
-                         BankNumber=1,
-                         BankName="Leumi",
-                         BranchNumber=747,
-                         BranchAddress="Hayarkot st",
-                         BranchCity="Tel Aviv"
-                },
-                new BE.BankAccunt()
-                {
-                         BankNumber=2,
-                         BankName="Poalim",
-                         BranchNumber=123,
-                         BranchAddress="lev st",
-                         BranchCity="jerusalem"
-                },
-                new BE.BankAccunt()
-                {
-                         BankNumber=3,
-                         BankName="Mizrahi",
-                         BranchNumber=321,
-                         BranchAddress="yehuda st",
-                         BranchCity="hipfa"
-                },
-                new BE.BankAccunt()
-                {
-                         BankNumber=4,
-                         BankName="Doar",
-                         BranchNumber=222,
-                         BranchAddress="ben st",
-                         BranchCity="Tel Aviv"
-                },
-                new BE.BankAccunt()
-                {
-                         BankNumber=5,
-                         BankName="Discount",
-                         BranchNumber=111,
-                         BranchAddress="via st",
-                         BranchCity="eilat"
-                }
-            };
+           
+            return from BankAccunt in bankAccunts
+
+                   select BankAccunt.Clone();
 
         }
     }
 
 
 
-
+     //return new List<BE.BankAccunt>
+     //       {
+     //           new BE.BankAccunt()
+     //           {
+     //                    BankNumber=1,
+     //                    BankName="Leumi",
+     //                    BranchNumber=747,
+     //                    BranchAddress="Hayarkot st",
+     //                    BranchCity="Tel Aviv"
+     //           },
+     //           new BE.BankAccunt()
+     //           {
+     //                    BankNumber=2,
+     //                    BankName="Poalim",
+     //                    BranchNumber=123,
+     //                    BranchAddress="lev st",
+     //                    BranchCity="jerusalem"
+     //           },
+     //           new BE.BankAccunt()
+     //           {
+     //                    BankNumber=3,
+     //                    BankName="Mizrahi",
+     //                    BranchNumber=321,
+     //                    BranchAddress="yehuda st",
+     //                    BranchCity="hipfa"
+     //           },
+     //           new BE.BankAccunt()
+     //           {
+     //                    BankNumber=4,
+     //                    BankName="Doar",
+     //                    BranchNumber=222,
+     //                    BranchAddress="ben st",
+     //                    BranchCity="Tel Aviv"
+     //           },
+     //           new BE.BankAccunt()
+     //           {
+     //                    BankNumber=5,
+     //                    BankName="Discount",
+     //                    BranchNumber=111,
+     //                    BranchAddress="via st",
+     //                    BranchCity="eilat"
+     //           }
+     //       };
 
 
 }

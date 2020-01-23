@@ -46,7 +46,7 @@ namespace PLWPF
                     CollectionClearance = true
                 },
                 HostingUnitName = "negev",
-                Diary = new bool[12, 31]
+                Diary = new bool[31, 12]
             };
         }
 
@@ -66,7 +66,7 @@ namespace PLWPF
             guests = bl.getAllGuests();
             orders = bl.getAllOrders();
 
-            
+
 
             HostingUnitGrid.DataContext = hostingUnit;
             guestListView.ItemsSource = guests;
@@ -87,9 +87,50 @@ namespace PLWPF
                 Order order = bl.guestToOrder(selectedGuest, hostingUnit);
                 bl.addOrder(order);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void UpDateHostingUnit(object sender, RoutedEventArgs e)
+        {
+            if (HostingUnitGrid.IsEnabled == false)
+            {
+                HostingUnitGrid.IsEnabled = true;
+                upDateHostingUnit.Content = "שלח"
+;
+            }
+            else
+            {
+                MessageBox.Show("הפעולה בוצעה בהצלחה", "עידכון יחידת אירוח");
+                upDateHostingUnit.Content = "ערוך יחידת אירוח";
+                HostingUnitGrid.IsEnabled = false;
+                if (DeleteHostingUnit.IsEnabled == false)
+                {
+                    DeleteHostingUnit.IsEnabled = true;
+                    orderTabItem.IsEnabled = true;
+                    guestTabItem.IsEnabled = true;
+                }
+            }
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("?" + "האם ברצונך למחוק יחידת אירוח", "מחיקת יחידת אירוח", MessageBoxButton.YesNoCancel);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    MessageBox.Show("הפעולה בוצעה בהצלחה", "מחיקת יחידת אירוח");
+                    this.Close();
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("!" + "הפעולה לא בוצעה", "מחיקת יחידת אירוח");
+                    break;
+                case MessageBoxResult.Cancel:
+                    MessageBox.Show("!" + "הפעולה לא בוצעה", "מחיקת יחידת אירוח");
+                    break;
             }
         }
     }

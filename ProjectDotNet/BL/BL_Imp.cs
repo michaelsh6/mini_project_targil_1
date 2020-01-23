@@ -1,15 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+
 using BE;
 using DAL;
-
 namespace BL
 {
+
+
+
     public class BL_Imp : IBL
     {
+       internal BL_Imp()
+        {
+            updateMatrixs();
+             
+        }
+
          IDAL dal = DalFactory.GetDal();
 
       public void addGuest(Guest guest)
@@ -38,10 +48,13 @@ namespace BL
             dal.addHostingUnit(hostingUnit);
         }
 
-        private bool UnitIsAvailabl(HostingUnit unit,DateTime EntryDate,DateTime ReleaseDate)
+        private bool UnitIsAvailabl(HostingUnit hostingUnit, DateTime EntryDate,DateTime ReleaseDate)
         {
-            for (DateTime CurrentDay = EntryDate; CurrentDay <= ReleaseDate; CurrentDay = CurrentDay.AddDays(1))
-                if (unit[CurrentDay] ==true)
+            int day = EntryDate.Day;
+            int month = EntryDate.Month;
+            hostingUnit[new DateTime(2020,3,2)] = true;
+            for (DateTime CurrentDay = EntryDate; CurrentDay < ReleaseDate; CurrentDay = CurrentDay.AddDays(1))
+                if (hostingUnit[CurrentDay] ==true)
                     return false;
             return true;
         }
@@ -258,10 +271,9 @@ namespace BL
                         }
 
                         HostingUnit hostingUnit = GetHostingUnit(order.HostingUnitKey);
-                        for(DateTime corrent = guest.EntryDate; corrent<guest.ReleaseDate; corrent = corrent.AddDays(1))
-                        {
-                            hostingUnit[corrent] = true;
-                        }
+                        insertDates(hostingUnit, guest.EntryDate, guest.ReleaseDate);
+
+                        
                         updateHostingUnit(hostingUnit);
                         break;
                     default:
@@ -272,6 +284,15 @@ namespace BL
             }
             dal.updateOrder(order);
         }
+
+        public void insertDates(HostingUnit hostingUnit, DateTime from,DateTime To,bool val =true)
+        {
+            for (DateTime corrent = from; corrent < To; corrent = corrent.AddDays(1))
+            {
+                hostingUnit[corrent] = val;
+            }
+        }
+
          //mail validition    
         public bool MailValidition(string email)
         {         
@@ -318,5 +339,84 @@ namespace BL
             return order;
             
         }
+
+        public void sendMail(Order order)
+        {
+            configurition.mailFinish = false;
+
+            HostingUnit hostingUnit = GetHostingUnit(order.HostingUnitKey);
+            Guest guest = GetGuest(order.GuestRequestKey);
+            string To = guest.MailAddress;
+            string Subject = string.Format( ": {0} הצעת חופשה ביחידת האירוח ", hostingUnit.HostingUnitName );
+            string Body = string.Format("שלום {0} מייל נשלח אילך בהמשך לבקשתך לחופשה דרך האתר שלנו. יחידת האירוח {1} שלחה אילך הצעת אירוח. להמשך טיפוך ניתן לפנות למייל {2}. יום טוב ",guest.PrivateName+" "+guest.FamilyName,hostingUnit.HostingUnitName,hostingUnit.Owner.MailAddress);
+
+            configurition.mailFinish = sendMail(To,Subject,Body,false);
+
+        }
+
+        public static bool sendMail(string To, string Subject, string Body, bool isHtml)
+        {
+            MailMessage mail = new MailMessage();
+            mail.To.Add(To);
+            mail.From = new MailAddress("israelhostingservice@gmail.com");
+            mail.Subject = Subject;
+            mail.Body = Body;
+
+            mail.IsBodyHtml = isHtml;
+            SmtpClient smtp = new SmtpClient();
+
+            smtp.Host = "smtp.gmail.com";
+            smtp.Port = 587;
+            smtp.Credentials = new System.Net.NetworkCredential("israelhostingservice@gmail.com", "israel0000");
+
+            smtp.EnableSsl = true;
+            try
+            {
+                //שליחת ההודעה //
+                smtp.Send(mail);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
+
+
+
+
+        //עדכון המטריצות של כל יחידות האירוח ל11 חודשים קדימה
+        private void updateMatrixs()
+        {
+            
+            DateTime now = DateTime.Today;
+            DateTime startDate = configurition.LastApdate;
+            int diffrence = diffrenceOfMonths(startDate, now);
+            if (diffrence > 0)
+            {
+                if (diffrence > 12)
+                    diffrence = 12;
+                DateTime from = new DateTime(startDate.Year, startDate.Month, 1);
+                DateTime to = from.AddMonths(diffrence);
+                IEnumerable<HostingUnit> hostingUnits = getAllHostingUnits();
+                foreach(var unit in hostingUnits)
+                {
+                    insertDates(unit, from, to, false);
+                    updateHostingUnit(unit);
+                }
+
+                
+                configurition.LastApdate = now;
+            }
+        }
+        //הפונקציה מחזירה את מספר החודשים שבין שני התאריכים שמתקבלים
+        private int diffrenceOfMonths(DateTime time2, DateTime time1)
+        {
+            return 12 * (time1.Year - time2.Year) + (time1.Month - time2.Month);
+        }
+
+
+
     }
 }

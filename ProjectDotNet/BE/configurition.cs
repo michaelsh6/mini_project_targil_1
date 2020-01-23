@@ -18,5 +18,10 @@ namespace BE
         public static int GetOrderKey() { return ++OrderKey; }
 
         public static int commission = 10; 
+
+        public static DateTime LastApdate;
+
+        public static bool BanksXmlFinish = true;
+        public static bool mailFinish;
     }
 }

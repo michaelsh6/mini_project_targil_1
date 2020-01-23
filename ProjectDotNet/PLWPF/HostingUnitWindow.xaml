@@ -19,7 +19,34 @@
         </Style>
 
 
+        <SolidColorBrush x:Key="DisabledForegroundBrush" Color="Red" />
+        <SolidColorBrush x:Key="DisabledBackgroundBrush" Color="White" />
+
+
+
+
     </Window.Resources>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -37,14 +64,13 @@
             </TabControl.Background>
             <TabItem Header="איזור אישי" Height="30" Width="100">
                 <Grid>
-                    <RichTextBox HorizontalAlignment="Left" Height="311" Margin="408,26,0,0" VerticalAlignment="Top" Width="296">
-                        <FlowDocument>
-                            <Paragraph>
-                                <Run Text="RichTextBox"/>
-                            </Paragraph>
-                        </FlowDocument>
-                    </RichTextBox>
-                    <Grid x:Name="HostingUnitGrid"  VerticalAlignment="Top" Margin="27,26,0,0" HorizontalAlignment="Left" Background="#99000000" Height="310" Width="275">
+
+
+
+
+
+                    <Grid x:Name="HostingUnitGrid" IsEnabled="False" VerticalAlignment="Top" Margin="27,26,0,0" HorizontalAlignment="Left" Background="#99000000" Height="310" Width="275" IsHitTestVisible="False">
+
                         <Grid.RowDefinitions>
                             <RowDefinition Height="9"/>
                             <RowDefinition Height="auto"/>
@@ -65,41 +91,50 @@
                             <ColumnDefinition Width="27"/>
                             <ColumnDefinition Width="Auto" MinWidth="152"/>
                         </Grid.ColumnDefinitions>
+
                         <Grid.Resources>
 
 
 
-                            <Style TargetType="Label" >
+                            <Style TargetType="Label">
                                 <!--<Setter Property="FontSize" Value="32" />-->
                                 <Setter Property="Foreground" Value="#FFFFFFFF"/>
                             </Style>
                         </Grid.Resources>
 
                         <Label VerticalAlignment="Center"  HorizontalAlignment="Left" Grid.Column="0" Content="Hosting Unit Key:" Height="26" Width="104" Margin="8,3,0,2" Grid.Row="1"/>
+
                         <Label x:Name="hostingUnitKeyLabel" VerticalAlignment="Center" Grid.Row="1" Margin="3,6,0,2" HorizontalAlignment="Left" Grid.Column="2" Content="{Binding HostingUnitKey}" Height="24" Width="120"/>
                         <Label VerticalAlignment="Center" Grid.Row="2" Margin="3,4,0,4" HorizontalAlignment="Left" Grid.Column="0" Content="Hosting Unit Name:" Grid.RowSpan="2" Grid.ColumnSpan="2" Height="24" Width="114"/>
-                        <TextBox x:Name="hostingUnitNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding HostingUnitName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="2" Grid.RowSpan="2"/>
+                        <TextBox x:Name="hostingUnitNameTextBox"   Width="120" VerticalAlignment="Center" Text="{Binding HostingUnitName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="2" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="2" Grid.RowSpan="2"/>
                         <Label VerticalAlignment="Center" Grid.Row="5" Margin="3,2,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="Bank Account Number:" Grid.ColumnSpan="2" Height="25" Width="132"/>
-                        <TextBox x:Name="bankAccountNumberTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Owner.BankAccountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3,1,0,5" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
+                        <TextBox x:Name="bankAccountNumberTextBox"   Width="120" VerticalAlignment="Center" Text="{Binding Owner.BankAccountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="5" Margin="3,1,0,5" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
                         <Label VerticalAlignment="Center" Grid.Row="6" Margin="3,3,0,4" HorizontalAlignment="Left" Grid.Column="0" Content="Collection Clearance:" Grid.ColumnSpan="2" Height="26" Width="120"/>
-                        <CheckBox x:Name="collectionClearanceCheckBox" VerticalAlignment="Center" Grid.Row="6" Margin="3,9,0,9" IsChecked="{Binding Owner.CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="2" Content="" Height="15" Width="20"/>
-                        <Label VerticalAlignment="Center" Grid.Row="7" Margin="3,3,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="Family Name:" Height="26" Width="81"/>
-                        <TextBox x:Name="familyNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Owner.FamilyName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="7" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
-                        <Label VerticalAlignment="Center" Grid.Row="8" Margin="3,3,0,0" HorizontalAlignment="Left" Grid.Column="0" Content="Host Key:" Height="26" Width="59"/>
-                        <TextBox x:Name="hostKeyTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Owner.HostKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="8" Margin="3,4,0,1" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
+                        <CheckBox x:Name="collectionClearanceCheckBox"   VerticalAlignment="Center" Grid.Row="6" Margin="3,9,0,9" IsChecked="{Binding Owner.CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="2" Content="" Height="15" Width="20"/>
+                        <Label VerticalAlignment="Center" Grid.Row="7"   Margin="3,3,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="Family Name:" Height="26" Width="81"/>
+                        <TextBox x:Name="familyNameTextBox" Width="120"   VerticalAlignment="Center" Text="{Binding Owner.FamilyName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="7" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
+                        <Label VerticalAlignment="Center" Grid.Row="8"  Margin="3,3,0,0" HorizontalAlignment="Left" Grid.Column="0" Content="Host Key:" Height="26" Width="59"/>
+                        <TextBox x:Name="hostKeyTextBox" Width="120"  VerticalAlignment="Center" Text="{Binding Owner.HostKey, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="8" Margin="3,4,0,1" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
                         <Label VerticalAlignment="Center" Grid.Row="10" Margin="3,3,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="Mail Address:" Height="26" Width="81"/>
-                        <TextBox x:Name="mailAddressTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Owner.MailAddress, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="10" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
-                        <Label VerticalAlignment="Center" Grid.Row="11" Margin="3,3,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="phone Number:" Height="26" Width="93"/>
-                        <TextBox x:Name="phoneNumberTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Owner.phoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="11" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
+                        <TextBox x:Name="mailAddressTextBox" Width="120"   VerticalAlignment="Center" Text="{Binding Owner.MailAddress, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="10" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
+                        <Label VerticalAlignment="Center" Grid.Row="11"  Margin="3,3,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="phone Number:" Height="26" Width="93"/>
+                        <TextBox x:Name="phoneNumberTextBox"   Width="120" VerticalAlignment="Center" Text="{Binding Owner.phoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="11" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
                         <Label VerticalAlignment="Center" Grid.Row="12" Margin="3,3,0,3" HorizontalAlignment="Left" Grid.Column="0" Content="Private Name:" Height="26" Width="84"/>
-                        <TextBox x:Name="privateNameTextBox" Width="120" VerticalAlignment="Center" Text="{Binding Owner.PrivateName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="12" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
+                        <TextBox x:Name="privateNameTextBox"  Width="120" VerticalAlignment="Center" Text="{Binding Owner.PrivateName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="12" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
+
+
                     </Grid>
-                    <Button Content="מחק יחידת אירוח" Margin="27,341,651,10"/>
+
+
+                    <Button x:Name="DeleteHostingUnit" Content="מחק יחידת אירוח" Margin="27,341,651,10" Click="Button_Click"/>
+                    <Button x:Name="upDateHostingUnit" Content="ערוך יחידת אירוח" Margin="143,341,526,10" Click="UpDateHostingUnit" />
+
+
 
                 </Grid>
 
             </TabItem>
-            <TabItem Header="הזמנות" Height="30" Width="100">
+            <TabItem x:Name="orderTabItem" Header="הזמנות" Height="30" Width="100">
                 <ListView x:Name="orderListView" ItemsSource="{Binding}" Margin="26,26,243,29" SelectionMode="Single" Background="#99000000" >
                     <ListView.ItemContainerStyle>
                         <Style>
@@ -161,7 +196,7 @@
                 </ListView>
             </TabItem>
 
-            <TabItem Header="בקשות אירוח" Height="30" Width="100">
+            <TabItem x:Name="guestTabItem" Header="בקשות אירוח" Height="30" Width="100">
                 <Grid>
 
                     <ListView x:Name="guestListView" ItemsSource="{Binding}" Margin="26,26,243,29" Grid.Row="1" SelectionMode="Single" Background="#99000000" >

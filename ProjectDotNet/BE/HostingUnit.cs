@@ -18,8 +18,8 @@ namespace BE
 
 
 
-        [XmlIgnoreAttribute]
-        public bool[,] Diary { get; set; }
+
+        [XmlIgnoreAttribute] public bool[,] Diary { get; set; }
         public String TempDiary
         {
             get
