@@ -18,13 +18,6 @@
             <Setter Property="Foreground" Value="#FFFFFFFF" />
         </Style>
 
-
-        <SolidColorBrush x:Key="DisabledForegroundBrush" Color="Red" />
-        <SolidColorBrush x:Key="DisabledBackgroundBrush" Color="White" />
-
-
-
-
     </Window.Resources>
 
 
@@ -64,9 +57,6 @@
             </TabControl.Background>
             <TabItem Header="איזור אישי" Height="30" Width="100">
                 <Grid>
-
-
-
 
 
                     <Grid x:Name="HostingUnitGrid" IsEnabled="False" VerticalAlignment="Top" Margin="27,26,0,0" HorizontalAlignment="Left" Background="#99000000" Height="310" Width="275" IsHitTestVisible="False">
@@ -126,7 +116,7 @@
                     </Grid>
 
 
-                    <Button x:Name="DeleteHostingUnit" Content="מחק יחידת אירוח" Margin="27,341,651,10" Click="Button_Click"/>
+                    <Button x:Name="DeleteHostingUnit" Content="מחק יחידת אירוח" Margin="27,341,651,10" Click="DelButton_Click"/>
                     <Button x:Name="upDateHostingUnit" Content="ערוך יחידת אירוח" Margin="143,341,526,10" Click="UpDateHostingUnit" />
 
 

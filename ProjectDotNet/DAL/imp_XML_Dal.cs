@@ -21,7 +21,7 @@ namespace DAL
         XElement bankAccuntsRoot;
         public static List<Guest> guests;
         public static List<HostingUnit> hostingUnits;
-        public static List<Order> orders;
+        //public static List<Order> orders;
         public static List<BankAccunt> bankAccunts;
 
 

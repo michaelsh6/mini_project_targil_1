@@ -22,50 +22,25 @@ namespace PLWPF
     /// </summary>
     public partial class HostingUnitWindow : Window
     {
-        private HostingUnit getHostingUnit()
-        {
-            return new BE.HostingUnit()
-            {
-                HostingUnitKey = configurition.GetHostingUnitKey(),
-                Owner = new BE.Host()
-                {
-                    HostKey = 203376655,
-                    PrivateName = "shay",
-                    FamilyName = "patito",
-                    phoneNumber = "0544655345",
-                    MailAddress = "shay@gmail.com",
-                    BankBranchDetails = new BE.BankAccunt()
-                    {
-                        BankNumber = 1,
-                        BankName = "Leumi",
-                        BranchNumber = 747,
-                        BranchAddress = "Hayarkot st",
-                        BranchCity = "Tel Aviv"
-                    },
-                    BankAccountNumber = 456789,
-                    CollectionClearance = true
-                },
-                HostingUnitName = "negev",
-                Diary = new bool[31, 12]
-            };
-        }
+        
+       
 
-        HostingUnit hostingUnit;
+        public HostingUnit hostingUnit;
         BL.IBL bl;
         IEnumerable<Guest> guests;
         IEnumerable<Order> orders;
 
-        public HostingUnitWindow()
+        public HostingUnitWindow(HostingUnit Unit)
         {
             InitializeComponent();
+            this.hostingUnit = Unit;
             bl = BL.FactoryBL.GetBL();
             //hostingUnit = new HostingUnit();
-            hostingUnit = getHostingUnit();
-            bl.addHostingUnit(hostingUnit);
+            //hostingUnit = getHostingUnit();
+            //bl.addHostingUnit(hostingUnit);
 
             guests = bl.getAllGuests();
             orders = bl.getAllOrders();
-
 
 
             HostingUnitGrid.DataContext = hostingUnit;
@@ -116,7 +91,7 @@ namespace PLWPF
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void DelButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("?" + "האם ברצונך למחוק יחידת אירוח", "מחיקת יחידת אירוח", MessageBoxButton.YesNoCancel);
             switch (result)
