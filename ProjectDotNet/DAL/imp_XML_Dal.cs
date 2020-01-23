@@ -72,14 +72,14 @@ namespace DAL
             catch (Exception) { }
         }
 
-        //~imp_XML_Dal()
-        //{
-        //    SaveConfigToXml();
-        //    SaveToXML<List<Guest>>(guests, GuestPath);
-        //    SaveToXML<List<HostingUnit>>(hostingUnits, GuestPath);
+        ~imp_XML_Dal()
+        {
+            SaveConfigToXml();
+            //SaveToXML<List<Guest>>(guests, GuestPath);
+            //SaveToXML<List<HostingUnit>>(hostingUnits, GuestPath);
 
-        //    OrderRoot.Save(OrderPath);
-        //}
+           // OrderRoot.Save(OrderPath);
+        }
 
 
 
@@ -113,7 +113,7 @@ namespace DAL
             }
             else
             {
-                throw new Exception("DuplicateIdException"); //TODO // DuplicateIdException()
+                throw new Exception("DuplicateIdExceptionGuest"); //TODO // DuplicateIdException()
             }
         }
 
@@ -132,7 +132,7 @@ namespace DAL
             }
             else
             {
-                throw new Exception("DuplicateIdException"); //TODO // DuplicateIdException()
+                throw new Exception("DuplicateIdExceptionHostinUnit"); //TODO // DuplicateIdException()
             }
         }
 
@@ -146,7 +146,7 @@ namespace DAL
         {
             int count = hostingUnits.RemoveAll(x => x.HostingUnitKey == hostingUnitId);
             if (count == 0)
-                throw new Exception("not exist"); //TODO // DuplicateIdException()
+                throw new Exception("HostinUnit not exist"); //TODO // DuplicateIdException()
             SaveToXML<List<HostingUnit>>(hostingUnits, HostingUnitPath);
 
         }
@@ -183,9 +183,9 @@ namespace DAL
 
         public void addOrder(Order order)
         {
-            if (GetOrder(order.OrderKey) == null)
+            if (GetOrder(order.OrderKey) != null)
             {
-                throw new Exception("DuplicateIdException"); //TODO // DuplicateIdException()
+                throw new Exception("DuplicateIdExceptionOrder"); //TODO // DuplicateIdException()
             }
             try
             {
@@ -193,6 +193,8 @@ namespace DAL
                 orderXml.Add(
                     new XElement("OrderKey", order.OrderKey),
                     new XElement("GuestRequestKey", order.GuestRequestKey),
+                    new XElement("HostingUnitKey", order.HostingUnitKey),
+
                     new XElement("OrderDate", order.OrderDate),
                     new XElement("Status", order.Status),
                     new XElement("CreateDate", order.CreateDate)
@@ -200,7 +202,10 @@ namespace DAL
                 OrderRoot.Add(orderXml);
                 OrderRoot.Save(OrderPath);
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                throw new Exception("file_problem_Order");
+            }
 
         }
 
@@ -214,6 +219,7 @@ namespace DAL
             oldorder.Element("OrderKey").Value = order.OrderKey.ToString();
             oldorder.Element("OrderDate").Value = order.OrderDate.ToString();
             oldorder.Element("GuestRequestKey").Value = order.GuestRequestKey.ToString();
+            oldorder.Element("HostingUnitKey").Value = order.HostingUnitKey.ToString();
             oldorder.Element("Status").Value = order.Status.ToString();
             oldorder.Element("CreateDate").Value = order.CreateDate.ToString();
 
@@ -224,11 +230,13 @@ namespace DAL
 
         public Order GetOrder(int OrderKey)
         {
+            //OrderRoot = XElement.Load(OrderPath);
             return (from order in OrderRoot.Elements().Where(x => x.Element("OrderKey").Value == OrderKey.ToString())
                     select new Order()
                     {
                         OrderKey = Convert.ToInt32(order.Element("OrderKey").Value),
                         GuestRequestKey = Convert.ToInt32(order.Element("GuestRequestKey").Value),
+                        HostingUnitKey = Convert.ToInt32(order.Element("HostingUnitKey").Value),
                         Status = (enums.OrderStatus)Enum.Parse(typeof(enums.OrderStatus), order.Element("Status").Value),
                         CreateDate = DateTime.Parse(order.Element("CreateDate").Value),
                         OrderDate = DateTime.Parse(order.Element("OrderDate").Value)
@@ -246,16 +254,19 @@ namespace DAL
                         {
                             OrderKey = Convert.ToInt32(order.Element("OrderKey").Value),
                             GuestRequestKey = Convert.ToInt32(order.Element("GuestRequestKey").Value),
+                            HostingUnitKey = Convert.ToInt32(order.Element("HostingUnitKey").Value),
+
                             Status = (enums.OrderStatus)Enum.Parse(typeof(enums.OrderStatus), order.Element("Status").Value),
                             CreateDate = DateTime.Parse(order.Element("CreateDate").Value),
                             OrderDate = DateTime.Parse(order.Element("OrderDate").Value)
                         }
-                        where predicat(orderObj)
+                        where predicat == null ? true : predicat(orderObj)
                         select orderObj).ToList().Clone();
             }
             catch (Exception ex)
             {
-                throw new Exception("file_problem");
+               // throw new Exception("file_problem_Order");
+                throw ex;
             }
         }
 

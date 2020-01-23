@@ -26,7 +26,7 @@ namespace PLWPF
         {
             return new BE.HostingUnit()
             {
-                HostingUnitKey = 10000001,//configurition.GetHostingUnitKey(),
+                HostingUnitKey = configurition.GetHostingUnitKey(),
                 Owner = new BE.Host()
                 {
                     HostKey = 203376655,
@@ -58,12 +58,15 @@ namespace PLWPF
         public HostingUnitWindow()
         {
             InitializeComponent();
-            hostingUnit = new HostingUnit();
             bl = BL.FactoryBL.GetBL();
+            //hostingUnit = new HostingUnit();
+            hostingUnit = getHostingUnit();
+            bl.addHostingUnit(hostingUnit);
 
             guests = bl.getAllGuests();
-            hostingUnit = getHostingUnit();
             orders = bl.getAllOrders();
+
+            
 
             HostingUnitGrid.DataContext = hostingUnit;
             guestListView.ItemsSource = guests;
@@ -78,9 +81,16 @@ namespace PLWPF
 
         private void createOrder_Button_Click(object sender, RoutedEventArgs e)
         {
-            Guest selectedGuest = guests.ElementAtOrDefault(guestListView.SelectedIndex);
-            Order order = bl.guestToOrder(selectedGuest, hostingUnit);
-            bl.addOrder(order);
+            try
+            {
+                Guest selectedGuest = guests.ElementAtOrDefault(guestListView.SelectedIndex);
+                Order order = bl.guestToOrder(selectedGuest, hostingUnit);
+                bl.addOrder(order);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
