@@ -67,10 +67,13 @@ namespace DAL
             OrderRoot = XElement.Load(OrderPath);
             guests = LoadFromXML<List<Guest>>(GuestPath);
             hostingUnits = LoadFromXML<List<HostingUnit>>(HostingUnitPath);
+            if(File.Exists(BankAccuntPath))
+            {
+                bankAccuntsRoot = XElement.Load(BankAccuntPath);
+                bankAccunts = XmlToBankAccunt(bankAccuntsRoot);
+                SaveToXML(bankAccunts, "banks.xml");
+            }
 
-            bankAccuntsRoot = XElement.Load(BankAccuntPath);
-            bankAccunts = XmlToBankAccunt(bankAccuntsRoot);
-            SaveToXML(bankAccunts, "banks.xml");
 
         }
 
