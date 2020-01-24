@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,8 +29,8 @@ namespace PLWPF
         public HostingUnit hostingUnit;
         BL.IBL bl;
 
-        List<Guest> guests;
-        List<Order> orders;
+        ObservableCollection<Guest> guests;
+        ObservableCollection<Order> orders;
 
         public HostingUnitWindow(HostingUnit Unit)
         {
@@ -40,8 +41,8 @@ namespace PLWPF
             //hostingUnit = getHostingUnit();
             //bl.addHostingUnit(hostingUnit);
 
-            guests = bl.getAllGuests().ToList();
-            orders = bl.getAllOrders().ToList();
+            guests = new ObservableCollection<Guest>(bl.getAllGuests());
+            orders = new ObservableCollection<Order>(bl.getAllOrders());
 
 
             HostingUnitGrid.DataContext = hostingUnit;

@@ -198,8 +198,14 @@ namespace BL
         public void updateHostingUnit(HostingUnit hostingUnit)
         {
             // לא ניתן לבטל הרשאה לחיוב חשבון כאשר יש הצעה הקשורה אליה במצב פתוח
+            HostingUnit OldhostingUnit = GetHostingUnit(hostingUnit.HostingUnitKey);
+            if (OldhostingUnit == null)
+            {
+                addHostingUnit(hostingUnit);
+                return;
+            }
             bool newOwnerCollectionClearance = hostingUnit.Owner.CollectionClearance;
-            bool oldOwnerCollectionClearance = GetHostingUnit(hostingUnit.HostingUnitKey).Owner.CollectionClearance;
+            bool oldOwnerCollectionClearance = OldhostingUnit.Owner.CollectionClearance;
             if (oldOwnerCollectionClearance == true && hostingUnit.Owner.CollectionClearance == false)
             {
                 int hostKey = hostingUnit.Owner.HostKey;

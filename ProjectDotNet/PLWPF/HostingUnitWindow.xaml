@@ -36,7 +36,7 @@
             </TabControl.Background>
             <TabItem Header="איזור אישי" Height="30" Width="100">
                 <Grid>
-                    <Grid x:Name="HostingUnitGrid"  IsEnabled="False" VerticalAlignment="Top" Margin="27,26,0,0" HorizontalAlignment="Left" Background="#99000000" Height="310" Width="275" IsHitTestVisible="False">
+                    <Grid x:Name="HostingUnitGrid"  IsEnabled="False" VerticalAlignment="Top" Margin="27,26,0,0" HorizontalAlignment="Left" Background="#99000000" Height="310" Width="275">
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="9"/>

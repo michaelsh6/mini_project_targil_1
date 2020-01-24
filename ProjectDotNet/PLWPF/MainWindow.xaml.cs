@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,12 +22,14 @@ namespace PLWPF
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<HostingUnit> hostingUnits;
+        ObservableCollection<HostingUnit> hostingUnits;
         IBL bl;
         public MainWindow()
         {
             bl = FactoryBL.GetBL();
-            hostingUnits = bl.getAllHostingUnits().ToList();
+
+            hostingUnits = new ObservableCollection<HostingUnit>(bl.getAllHostingUnits());
+
             InitializeComponent();
             hostingUnitCB.ItemsSource = hostingUnits;
             hostingUnitCB.DisplayMemberPath = "HostingUnitKey";
@@ -59,7 +62,7 @@ namespace PLWPF
         private void CreateHostingUnitButton_click(object sender, RoutedEventArgs e)
         {
             HostingUnit hostingUnit = getHostingUnit();
-            bl.addHostingUnit(hostingUnit);
+           // bl.addHostingUnit(hostingUnit);
            // hostingUnits.Add(hostingUnit);
             HostingUnitWindow hst = new HostingUnitWindow(hostingUnit);
             hst.HostingUnitGrid.IsEnabled = true;
@@ -102,5 +105,13 @@ namespace PLWPF
                 Diary = new bool[31, 12]
             };
         }
+
+        private void GotFocus_event(object sender, RoutedEventArgs e)
+        {
+            hostingUnits =new ObservableCollection<HostingUnit>(bl.getAllHostingUnits());
+
+        }
+
+
     }
 }
