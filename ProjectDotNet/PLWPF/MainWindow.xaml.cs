@@ -22,9 +22,10 @@ namespace PLWPF
     public partial class MainWindow : Window
     {
         List<HostingUnit> hostingUnits;
+        IBL bl;
         public MainWindow()
         {
-            IBL bl = FactoryBL.GetBL();
+            bl = FactoryBL.GetBL();
             hostingUnits = bl.getAllHostingUnits().ToList();
             InitializeComponent();
             hostingUnitCB.ItemsSource = hostingUnits;
@@ -42,20 +43,32 @@ namespace PLWPF
 
         private void HostingUnitsButton_click(object sender, RoutedEventArgs e)
         {
+            int index = hostingUnitCB.SelectedIndex;
+            if(index<0)
+            {
+                MessageBox.Show("לא נבחרה יחידת אירוח");
+            }
+            else
+            {
             HostingUnitWindow hostingUnitWindow = new HostingUnitWindow(hostingUnits[hostingUnitCB.SelectedIndex]);
             //hostingUnitWindow.hostingUnit = hostingUnits[hostingUnitCB.SelectedIndex];
             hostingUnitWindow.ShowDialog();
+            }
         }
 
         private void CreateHostingUnitButton_click(object sender, RoutedEventArgs e)
         {
-            HostingUnitWindow hst = new HostingUnitWindow(getHostingUnit());
+            HostingUnit hostingUnit = getHostingUnit();
+            bl.addHostingUnit(hostingUnit);
+           // hostingUnits.Add(hostingUnit);
+            HostingUnitWindow hst = new HostingUnitWindow(hostingUnit);
             hst.HostingUnitGrid.IsEnabled = true;
             hst.DeleteHostingUnit.IsEnabled = false;
             hst.upDateHostingUnit.Content = "שלח";
             hst.orderTabItem.IsEnabled = false;
             hst.guestTabItem.IsEnabled = false;
             hst.ShowDialog();
+            
 
 
 

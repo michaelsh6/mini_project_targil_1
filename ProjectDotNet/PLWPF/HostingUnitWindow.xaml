@@ -23,27 +23,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <Grid>
         <!--<Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -57,9 +36,7 @@
             </TabControl.Background>
             <TabItem Header="איזור אישי" Height="30" Width="100">
                 <Grid>
-
-
-                    <Grid x:Name="HostingUnitGrid" IsEnabled="False" VerticalAlignment="Top" Margin="27,26,0,0" HorizontalAlignment="Left" Background="#99000000" Height="310" Width="275" IsHitTestVisible="False">
+                    <Grid x:Name="HostingUnitGrid"  IsEnabled="False" VerticalAlignment="Top" Margin="27,26,0,0" HorizontalAlignment="Left" Background="#99000000" Height="310" Width="275" IsHitTestVisible="False">
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="9"/>
@@ -115,17 +92,14 @@
 
                     </Grid>
 
-
                     <Button x:Name="DeleteHostingUnit" Content="מחק יחידת אירוח" Margin="27,341,651,10" Click="DelButton_Click"/>
                     <Button x:Name="upDateHostingUnit" Content="ערוך יחידת אירוח" Margin="143,341,526,10" Click="UpDateHostingUnit" />
-
-
 
                 </Grid>
 
             </TabItem>
             <TabItem x:Name="orderTabItem" Header="הזמנות" Height="30" Width="100">
-                <ListView x:Name="orderListView" ItemsSource="{Binding}" Margin="26,26,243,29" SelectionMode="Single" Background="#99000000" >
+                <ListView x:Name="orderListView"  Margin="26,26,243,29" SelectionMode="Single" Background="#99000000" >
                     <ListView.ItemContainerStyle>
                         <Style>
                             <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>

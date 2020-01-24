@@ -22,13 +22,14 @@ namespace PLWPF
     /// </summary>
     public partial class HostingUnitWindow : Window
     {
-        
-       
+
+
 
         public HostingUnit hostingUnit;
         BL.IBL bl;
-        IEnumerable<Guest> guests;
-        IEnumerable<Order> orders;
+
+        List<Guest> guests;
+        List<Order> orders;
 
         public HostingUnitWindow(HostingUnit Unit)
         {
@@ -39,8 +40,8 @@ namespace PLWPF
             //hostingUnit = getHostingUnit();
             //bl.addHostingUnit(hostingUnit);
 
-            guests = bl.getAllGuests();
-            orders = bl.getAllOrders();
+            guests = bl.getAllGuests().ToList();
+            orders = bl.getAllOrders().ToList();
 
 
             HostingUnitGrid.DataContext = hostingUnit;
@@ -51,7 +52,7 @@ namespace PLWPF
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            
         }
 
         private void createOrder_Button_Click(object sender, RoutedEventArgs e)
@@ -61,6 +62,8 @@ namespace PLWPF
                 Guest selectedGuest = guests.ElementAtOrDefault(guestListView.SelectedIndex);
                 Order order = bl.guestToOrder(selectedGuest, hostingUnit);
                 bl.addOrder(order);
+                orders.Add(order);
+                orderListView.ItemsSource = orders;
             }
             catch (Exception ex)
             {
@@ -80,6 +83,7 @@ namespace PLWPF
             {
                 MessageBox.Show("הפעולה בוצעה בהצלחה", "עידכון יחידת אירוח");
                 upDateHostingUnit.Content = "ערוך יחידת אירוח";
+                bl.updateHostingUnit(hostingUnit);
                 HostingUnitGrid.IsEnabled = false;
                 if (DeleteHostingUnit.IsEnabled == false)
                 {
