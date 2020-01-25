@@ -1,0 +1,28 @@
+﻿<Window x:Class="PLWPF.ManagementWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PLWPF"
+        mc:Ignorable="d"
+        Title="ManagementWindow" Height="450" Width="800">
+    <Grid>
+        <TabControl Height="413" Margin="5,1,0,0" VerticalAlignment="Top" FlowDirection="RightToLeft"  BorderBrush="#FFACACAC" SelectionChanged="TabControl_SelectionChanged">
+            <TabControl.Background>
+                <ImageBrush ImageSource="home_page.jpg" Stretch="UniformToFill" />
+            </TabControl.Background>
+            <TabItem Header="איזור אישי" Height="30" Width="100">
+                
+            </TabItem>
+            <TabItem Header="איזור אישי" Height="30" Width="100">
+
+            </TabItem>
+            <TabItem Header="איזור אישי" Height="30" Width="100">
+
+            </TabItem>
+            <TabItem Header="איזור אישי" Height="30" Width="100">
+
+            </TabItem>
+        </TabControl>     
+    </Grid>
+</Window>
