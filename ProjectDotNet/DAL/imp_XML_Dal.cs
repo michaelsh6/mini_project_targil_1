@@ -33,6 +33,9 @@ namespace DAL
 
         internal imp_XML_Dal()
         {
+            //DownloadBankXml();
+            Thread threadBanks = new Thread(DownloadBankXml);
+            //threadBanks.Start();
             /// config file
             if (!File.Exists(configPath))
             {
@@ -65,13 +68,7 @@ namespace DAL
             OrderRoot = XElement.Load(OrderPath);
             guests = LoadFromXML<List<Guest>>(GuestPath);
             hostingUnits = LoadFromXML<List<HostingUnit>>(HostingUnitPath);
-            if (File.Exists(BankAccuntPath))
-            {
-                bankAccuntsRoot = XElement.Load(BankAccuntPath);
-                bankAccunts =  XmlToBankAccunt(bankAccuntsRoot);
-                SaveToXML(bankAccunts, "banks.xml");
-            }
-
+           
 
         }
 
@@ -255,10 +252,19 @@ namespace DAL
 
         public IEnumerable<BankAccunt> getAllBankBranches()
         {
-           
-            return from BankAccunt in bankAccunts
 
-                   select BankAccunt.Clone();
+            if (File.Exists(BankAccuntPath) && configurition.BanksXmlFinish == true)
+            {
+                bankAccuntsRoot = XElement.Load(BankAccuntPath);
+                bankAccunts = XmlToBankAccunt(bankAccuntsRoot);
+                //SaveToXML(bankAccunts, "banks.xml");
+                return from BankAccunt in bankAccunts
+
+                       select BankAccunt.Clone();
+            }
+            throw new Exception("banks file problem");
+
+            
 
         }
     }

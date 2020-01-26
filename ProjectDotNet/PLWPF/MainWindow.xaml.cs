@@ -26,7 +26,10 @@ namespace PLWPF
         IBL bl;
         public MainWindow()
         {
+            
             bl = FactoryBL.GetBL();
+
+            //Tools.sendMail("michaelsh6@gmail.com", "testing", "testing works", false);
 
             hostingUnits = new ObservableCollection<HostingUnit>(bl.getAllHostingUnits());
 

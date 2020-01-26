@@ -26,23 +26,33 @@ namespace BE
 
         public static void DownloadBankXml()
         {
+            configurition.BanksXmlFinish = false;
+
             WebClient wc = new WebClient();
             try
             {
                 string xmlServerPath =
                @"http://www.boi.org.il/he/BankingSupervision/BanksAndBranchLocations/Lists/BoiBankBranchesDocs/atm.xml";
                 wc.DownloadFile(xmlServerPath, BankAccuntPath);
+                
             }
             catch (Exception)
             {
+                try
+                {
                 string xmlServerPath = @"http://www.jct.ac.il/~coshri/atm.xml";
                 wc.DownloadFile(xmlServerPath, BankAccuntPath);
+                }
+                catch(Exception)
+                {
+                    
+                }
             }
             finally
             {
                 wc.Dispose();
+                configurition.BanksXmlFinish = true;
             }
-            configurition.BanksXmlFinish = true;
 
         }
 
@@ -53,11 +63,11 @@ namespace BE
                 return (from bankAccunt in bankAccuntsRoot.Elements()
                         select new BankAccunt()
                         {
-                            BankName = bankAccunt.Element("שם_בנק").Value,
-                            BankNumber = Convert.ToInt32(bankAccunt.Element("קוד_בנק").Value),
-                            BranchAddress = bankAccunt.Element("כתובת_ה-ATM").Value,
-                            BranchCity = bankAccunt.Element("ישוב").Value,
-                            BranchNumber = Convert.ToInt32(bankAccunt.Element("קוד_סניף").Value)
+                            BankName = bankAccunt.Element("שם_בנק").Value.Trim(),
+                            BankNumber = Convert.ToInt32(bankAccunt.Element("קוד_בנק").Value.Trim()),
+                            BranchAddress = bankAccunt.Element("כתובת_ה-ATM").Value.Trim(),
+                            BranchCity = bankAccunt.Element("ישוב").Value.Trim(),
+                            BranchNumber = Convert.ToInt32(bankAccunt.Element("קוד_סניף").Value.Trim())
                         }
                         ).Distinct().ToList();
             }

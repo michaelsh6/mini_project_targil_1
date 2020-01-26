@@ -44,7 +44,16 @@ namespace PLWPF
             guests = new ObservableCollection<Guest>(bl.getAllGuests());
             orders = new ObservableCollection<Order>(bl.getAllOrders());
 
+            List<string> bankNames = (from bank in bl.getAllBankBranches() select bank.BankName).Distinct().ToList();
+            List<int> BankNumbers = (from bank in bl.getAllBankBranches() select bank.BankNumber).Distinct().ToList();
 
+            BankNameComboBox.ItemsSource = bankNames;
+            BankNumberComboBox.ItemsSource = BankNumbers;
+
+            //   Enum.GetValues(typeof(enums.HostingUnitType));
+
+            SetBlackOutDates();
+            
             HostingUnitGrid.DataContext = hostingUnit;
             guestListView.ItemsSource = guests;
             orderListView.ItemsSource = orders;
@@ -63,10 +72,10 @@ namespace PLWPF
                 Guest selectedGuest = guests.ElementAtOrDefault(guestListView.SelectedIndex);
                 Order order = bl.guestToOrder(selectedGuest, hostingUnit);
                 bl.addOrder(order);
-                order.Status = enums.OrderStatus.closed_Order_accepted;
-                bl.updateOrder(order);
+                //order.Status = enums.OrderStatus.closed_Order_accepted;
+                //bl.updateOrder(order);
                 orders.Add(order);
-                orderListView.ItemsSource = orders;
+                //orderListView.ItemsSource = orders;
             }
             catch (Exception ex)
             {
@@ -113,6 +122,19 @@ namespace PLWPF
                 case MessageBoxResult.Cancel:
                     MessageBox.Show("!" + "הפעולה לא בוצעה", "מחיקת יחידת אירוח");
                     break;
+            }
+        }
+
+
+        private void SetBlackOutDates()
+        {
+            //MyCalendar.DisplayDate = DateTime.Today;
+            DateTime from = DateTime.Today;
+            DateTime To = new DateTime(from.Year + 1, from.Month, 1).AddDays(-1);
+            for (DateTime corrent = DateTime.Today; corrent <To; corrent = corrent.AddDays(1))
+            {
+                if(hostingUnit[corrent] ==true)
+                    MyCalendar.BlackoutDates.Add(new CalendarDateRange(corrent));
             }
         }
     }

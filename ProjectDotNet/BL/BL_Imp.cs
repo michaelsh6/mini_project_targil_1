@@ -16,7 +16,8 @@ namespace BL
        internal BL_Imp()
         {
             updateMatrixs();
-             
+            
+
         }
 
          IDAL dal = DalFactory.GetDal();
@@ -68,7 +69,9 @@ namespace BL
                 throw new Exception("Unit not Availabl"); //TODO UnitIsAvailablException
             if (order.Status != enums.OrderStatus.Not_yet_addressed)
                 throw new Exception("status mast start with Not_yet_addressed"); //TODO  Exception
+
             dal.addOrder(order);
+            sendMail(order);
 
         }
 
@@ -250,6 +253,7 @@ namespace BL
                     case enums.OrderStatus.Not_yet_addressed:
                         break;
                     case enums.OrderStatus.mail_has_been_sent:
+                        //sendMail(order);
                         Console.WriteLine("mail_has_been_sent");
                         break;
                     case enums.OrderStatus.closed_Request_expired:
@@ -384,7 +388,7 @@ namespace BL
 
         public void sendMail(Order order)
         {
-            configurition.mailFinish = false;
+            
 
             HostingUnit hostingUnit = GetHostingUnit(order.HostingUnitKey);
             Guest guest = GetGuest(order.GuestRequestKey);
@@ -392,7 +396,12 @@ namespace BL
             string Subject = string.Format(": {0} הצעת חופשה ביחידת האירוח ", hostingUnit.HostingUnitName);
             string Body = string.Format("שלום {0} מייל נשלח אילך בהמשך לבקשתך לחופשה דרך האתר שלנו. יחידת האירוח {1} שלחה אילך הצעת אירוח. להמשך טיפוך ניתן לפנות למייל {2}. יום טוב ", guest.PrivateName + " " + guest.FamilyName, hostingUnit.HostingUnitName, hostingUnit.Owner.MailAddress);
 
-            configurition.mailFinish = Tools.sendMail(To, Subject, Body, false);
+            if (Tools.sendMail(To, Subject, Body, false))
+            {
+                order.Status = enums.OrderStatus.mail_has_been_sent;
+                updateOrder(order);
+            }
+
 
         }
 
