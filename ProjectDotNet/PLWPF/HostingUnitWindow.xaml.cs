@@ -137,5 +137,10 @@ namespace PLWPF
                     MyCalendar.BlackoutDates.Add(new CalendarDateRange(corrent));
             }
         }
+
+        private void close_window(object sender, EventArgs e)
+        {
+            new MainWindow().Show();
+        }
     }
 }
