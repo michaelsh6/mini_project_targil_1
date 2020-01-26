@@ -229,11 +229,10 @@
                 </Grid>
             </TabItem>
 
-
-            <TabItem x:Name="guestTabItem" Header="בקשות אירוח" Height="30" Width="100">
+ <TabItem x:Name="guestTabItem" Header="בקשות אירוח" Height="30" Width="100">
                 <Grid>
 
-                    <ListView x:Name="guestListView" ItemsSource="{Binding}" Margin="26,26,243,29" Grid.Row="1" SelectionMode="Single" Background="#99000000" >
+                    <ListView x:Name="guestListView" Width="770" Height="300" ItemsSource="{Binding}"  SelectionMode="Single" Background="#99000000" >
                         <ListView.ItemContainerStyle>
                             <Style>
                                 <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
@@ -242,105 +241,118 @@
                         </ListView.ItemContainerStyle>
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn x:Name="adultsColumn" Header="Adults" Width="80">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label Content="{Binding Adults}" Margin="6,-1,-6,-1"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn x:Name="areaColumn" Header="Area" Width="80">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label Content="{Binding Area}" Margin="-6,-1"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn x:Name="childrenColumn" Header="Children" Width="80">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label Content="{Binding Children}" Margin="-6,-1"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn x:Name="childrensAttractionsColumn" Header="Childrens Attractions" Width="80">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label Content="{Binding ChildrensAttractions}" Margin="-6,-1"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn x:Name="entryDateColumn" Header="Entry Date" Width="80">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label Content="{Binding EntryDate}" Margin="-6,-1"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn x:Name="familyNameColumn" Header="Family Name" Width="80">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label Content="{Binding FamilyName}" Margin="-6,-1"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn x:Name="gardenColumn" Header="Garden" Width="80">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label Content="{Binding Garden}" Margin="-6,-1"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn x:Name="guestRequestKeyColumnGuest" Header="Guest Request Key" Width="80">
+                                <GridViewColumn x:Name="guestRequestKeyColumnGuest" Header="Guest Key" Width="60">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <Label Content="{Binding GuestRequestKey}" Margin="-6,-1"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn x:Name="jacuzziColumn" Header="Jacuzzi" Width="80">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label Content="{Binding Jacuzzi}" Margin="-6,-1"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn x:Name="mailAddressColumn" Header="Mail Address" Width="80">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label Content="{Binding MailAddress}" Margin="-6,-1"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn x:Name="poolColumn" Header="Pool" Width="80">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label Content="{Binding Pool}" Margin="-6,-1"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn x:Name="privateNameColumn" Header="Private Name" Width="80">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label Content="{Binding PrivateName}" Margin="-6,-1"/>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn x:Name="registrationDateColumn" Header="Registration Date" Width="80">
+
+                                <GridViewColumn x:Name="registrationDateColumn" Header="Registration Date" Width="95">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <Label Content="{Binding RegistrationDate}" Margin="-6,-1"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn x:Name="releaseDateColumn" Header="Release Date" Width="80">
+
+                                <GridViewColumn x:Name="privateNameColumn" Header="P-Name" Width="48">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding PrivateName}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn x:Name="familyNameColumn" Header="F-Name" Width="48">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding FamilyName}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="mailAddressColumn" Header="Mail" Width="44">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding MailAddress}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="entryDateColumn" Header="Entry Date" Width="58">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding EntryDate}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="releaseDateColumn" Header="Release Date" Width="74">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <Label Content="{Binding ReleaseDate}" Margin="-6,-1"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                <GridViewColumn x:Name="statusColumnGuest" Header="Status" Width="80">
+                                
+                                   
+
+                                <GridViewColumn x:Name="adultsColumn" Header="Adults" Width="37">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Adults}" Margin="6,-1,-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="areaColumn" Header="Area" Width="29">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Area}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="childrenColumn" Header="Children" Width="49">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Children}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="childrensAttractionsColumn" Header="Attractions" Width="63">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding ChildrensAttractions}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                               
+                               
+                                <GridViewColumn x:Name="gardenColumn" Header="Garden" Width="42">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Garden}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                
+                                <GridViewColumn x:Name="jacuzziColumn" Header="Jacuzzi" Width="39">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Jacuzzi}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                               
+                                <GridViewColumn x:Name="poolColumn" Header="Pool" Width="40">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Pool}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                
+                               
+                                
+                                <GridViewColumn x:Name="statusColumnGuest" Header="Status" Width="40">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
                                             <Label Content="{Binding Status}" Margin="-6,-1"/>
