@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 using BE;
@@ -13,14 +14,32 @@ namespace BL
 
     public class BL_Imp : IBL
     {
+        IDAL dal = DalFactory.GetDal();
+
        internal BL_Imp()
         {
             updateMatrixs();
-            
+            if (configurition.LastApdateDaily.AddDays(1) < DateTime.Now)
+            {
+                
+                Thread threadDaily = new Thread(UpdateOldOrder);
+                threadDaily.Start();
+            }
 
         }
 
-         IDAL dal = DalFactory.GetDal();
+
+        private void UpdateOldOrder()
+        {
+            IEnumerable<Order> oldOrders = GetOrderOldersThen(31);
+            foreach(var order in oldOrders)
+            {
+                order.Status = enums.OrderStatus.closed_Request_expired;
+                updateOrder(order);
+            }
+            configurition.LastApdateDaily = DateTime.Now;
+        }
+
 
       public void addGuest(Guest guest)
         {
@@ -360,7 +379,7 @@ namespace BL
         {
             
             DateTime now = DateTime.Today;
-            DateTime startDate = configurition.LastApdate;
+            DateTime startDate = configurition.LastApdateMonthly;
             int diffrence = diffrenceOfMonths(startDate, now);
             if (diffrence > 0)
             {
@@ -377,7 +396,7 @@ namespace BL
                 }
 
                 
-                configurition.LastApdate = now;
+                configurition.LastApdateMonthly = now;
             }
         }
         //הפונקציה מחזירה את מספר החודשים שבין שני התאריכים שמתקבלים

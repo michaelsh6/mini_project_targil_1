@@ -10,6 +10,7 @@ using System.Threading;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Net.NetworkInformation;
 
 namespace BE
 {
@@ -23,6 +24,25 @@ namespace BE
 
         public static XElement ConfigRoot;
 
+        public static string xmlServerPath =
+               @"http://www.boi.org.il/he/BankingSupervision/BanksAndBranchLocations/Lists/BoiBankBranchesDocs/atm.xml";
+
+        public static void DownloadBankXmlLoop()
+        {
+            while(true)
+            {
+                Thread.Sleep(1000);
+                if(new Ping().Send("google.com").Status == IPStatus.Success)
+                {
+                    DownloadBankXml();
+                    long length = new FileInfo(BankAccuntPath).Length;
+                    if (length > 20000) break;
+                   
+
+                }
+            }   
+        }
+
 
         public static void DownloadBankXml()
         {
@@ -31,8 +51,7 @@ namespace BE
             WebClient wc = new WebClient();
             try
             {
-                string xmlServerPath =
-               @"http://www.boi.org.il/he/BankingSupervision/BanksAndBranchLocations/Lists/BoiBankBranchesDocs/atm.xml";
+                
                 wc.DownloadFile(xmlServerPath, BankAccuntPath);
                 
             }
@@ -88,7 +107,8 @@ namespace BE
                     new XElement("HostingUnitKey", configurition.HostingUnitKey),
                     new XElement("OrderKey", configurition.OrderKey),
                     new XElement("commission", configurition.commission),
-                    new XElement("LastApdate", configurition.LastApdate));
+                    new XElement("LastApdateMonthly", configurition.LastApdateMonthly),
+                    new XElement("LastApdateDaily", configurition.LastApdateDaily));
                 ConfigRoot.Save(configPath);
             }
             catch (Exception) { }

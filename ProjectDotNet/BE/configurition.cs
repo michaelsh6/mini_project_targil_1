@@ -35,7 +35,8 @@ namespace BE
 
         public static int commission = 10; 
 
-        public static DateTime LastApdate;
+        public static DateTime LastApdateMonthly;
+        public static DateTime LastApdateDaily;
 
         public static bool BanksXmlFinish = true;
         public static bool mailFinish;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,6 +23,10 @@ namespace PLWPF
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        //private System.ComponentModel.BackgroundWorker backgroundWorker;
+
+
         ObservableCollection<HostingUnit> hostingUnits;
         IBL bl;
         public MainWindow()
@@ -43,8 +48,9 @@ namespace PLWPF
 
         private void AddGuestButton_Click(object sender, RoutedEventArgs e)
         {
-
+            
             new GuestWindow().ShowDialog();
+            
         }
 
         private void HostingUnitsButton_click(object sender, RoutedEventArgs e)
@@ -58,12 +64,14 @@ namespace PLWPF
             {
             HostingUnitWindow hostingUnitWindow = new HostingUnitWindow(hostingUnits[hostingUnitCB.SelectedIndex]);
             //hostingUnitWindow.hostingUnit = hostingUnits[hostingUnitCB.SelectedIndex];
+            this.Close();
             hostingUnitWindow.ShowDialog();
             }
         }
 
         private void CreateHostingUnitButton_click(object sender, RoutedEventArgs e)
         {
+
             HostingUnit hostingUnit = getHostingUnit();
            // bl.addHostingUnit(hostingUnit);
            // hostingUnits.Add(hostingUnit);
@@ -73,6 +81,7 @@ namespace PLWPF
             hst.upDateHostingUnit.Content = "שלח";
             hst.orderTabItem.IsEnabled = false;
             hst.guestTabItem.IsEnabled = false;
+            this.Close();
             hst.ShowDialog();
             
 
@@ -80,6 +89,18 @@ namespace PLWPF
 
 
         }
+
+
+
+        //private void InitializeBackgroundWorker()
+        //{
+        //    backgroundWorker.DoWork +=
+        //        new DoWorkEventHandler(backgroundWorker_DoWork);
+        //    backgroundWorker.RunWorkerCompleted +=
+        //        new RunWorkerCompletedEventHandler(
+        //    backgroundWorker_RunWorkerCompleted);
+            
+        //}
 
         private HostingUnit getHostingUnit()
         {

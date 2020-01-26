@@ -26,7 +26,7 @@ namespace DAL
         public static List<BankAccunt> bankAccunts;
 
 
-
+        
 
        
 
@@ -34,8 +34,10 @@ namespace DAL
         internal imp_XML_Dal()
         {
             //DownloadBankXml();
-            //Thread threadBanks = new Thread(DownloadBankXml);
+            //Thread threadBanks = new Thread(DownloadBankXmlLoop);
             //threadBanks.Start();
+
+           
             /// config file
             if (!File.Exists(configPath))
             {
@@ -48,7 +50,8 @@ namespace DAL
                 configurition.HostingUnitKey = Convert.ToInt32(ConfigRoot.Element("HostingUnitKey").Value);
                 configurition.OrderKey = Convert.ToInt32(ConfigRoot.Element("OrderKey").Value);
                 configurition.commission = Convert.ToInt32(ConfigRoot.Element("commission").Value);
-                configurition.LastApdate = Convert.ToDateTime(ConfigRoot.Element("LastApdate").Value);
+                configurition.LastApdateMonthly = Convert.ToDateTime(ConfigRoot.Element("LastApdateMonthly").Value);
+                configurition.LastApdateDaily = Convert.ToDateTime(ConfigRoot.Element("LastApdateDaily").Value);
             }
 
             if (!File.Exists(OrderPath))
@@ -76,6 +79,7 @@ namespace DAL
         ~imp_XML_Dal()
         {
             SaveConfigToXml();
+
             //SaveToXML<List<Guest>>(guests, GuestPath);
             //SaveToXML<List<HostingUnit>>(hostingUnits, GuestPath);
 
