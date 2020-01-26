@@ -147,5 +147,8 @@
   <ItemGroup>
     <Resource Include="home_page2.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="atm1.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

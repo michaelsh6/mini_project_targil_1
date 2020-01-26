@@ -255,12 +255,18 @@ namespace DAL
 
             if (File.Exists(BankAccuntPath) && configurition.BanksXmlFinish == true)
             {
-                bankAccuntsRoot = XElement.Load(BankAccuntPath);
+                string BankAccuntPath_temp = BankAccuntPath;
+                long length = new FileInfo(BankAccuntPath).Length;
+                if( length < 10000)
+                    BankAccuntPath_temp = "atm1.xml";
+             
+                bankAccuntsRoot = XElement.Load(BankAccuntPath_temp);
                 bankAccunts = XmlToBankAccunt(bankAccuntsRoot);
                 //SaveToXML(bankAccunts, "banks.xml");
                 return from BankAccunt in bankAccunts
 
                        select BankAccunt.Clone();
+
             }
             throw new Exception("banks file problem");
 
