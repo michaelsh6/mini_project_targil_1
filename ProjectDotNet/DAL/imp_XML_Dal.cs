@@ -34,7 +34,7 @@ namespace DAL
         internal imp_XML_Dal()
         {
             //DownloadBankXml();
-            Thread threadBanks = new Thread(DownloadBankXml);
+            //Thread threadBanks = new Thread(DownloadBankXml);
             //threadBanks.Start();
             /// config file
             if (!File.Exists(configPath))

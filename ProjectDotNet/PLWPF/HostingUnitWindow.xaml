@@ -156,7 +156,8 @@
 
 
 
-                        <ListView x:Name="orderListView" Grid.ColumnSpan="7" Grid.Row="1"  Margin="26,26,209,29" SelectionMode="Single" Background="#99000000"  SelectionChanged="orderListView_SelectionChanged">
+                        <ListView x:Name="orderListView" Grid.ColumnSpan="7" Grid.Row="1"  Margin="26,26,209,29" SelectionMode="Single" Background="#99000000"  >
+                            <!--SelectionChanged="orderListView_SelectionChanged">-->
                     
                  
                     <ListView.ItemContainerStyle>
