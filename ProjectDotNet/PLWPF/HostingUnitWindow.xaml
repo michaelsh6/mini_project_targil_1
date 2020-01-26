@@ -93,8 +93,8 @@
 
                         <Label VerticalAlignment = "Center" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Content="Bank Name:" Height="26" Width="93"/>
                         <ComboBox x:Name="BankNameComboBox" Text="{Binding Owner.BankBranchDetails.BankName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Width="120"  Grid.Row="1" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="5"/>
-                       
-                         
+
+
                         <Label VerticalAlignment = "Center" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Content="Bank Number:" Height="26" Width="93"/>
                         <ComboBox IsEditable="True"  x:Name="BankNumberComboBox" Text="{Binding Owner.BankBranchDetails.BankNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Width="120"   Grid.Row="2" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="5"/>
 
@@ -127,112 +127,161 @@
 
                 <Grid>
 
-                    <Grid    VerticalAlignment="Top" Margin="27,26,0,0" HorizontalAlignment="Left"  Height="300" Width="777">
+                    <Grid    VerticalAlignment="Top"   Height="350" Width="777">
 
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="19"/>
-                           
+                            <RowDefinition Height="27"/>
+
                             <RowDefinition Height="350"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
 
+                            <ColumnDefinition Width="30" />
+                            
+                            <ColumnDefinition Width="15" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="10" />
+                            
+                            <ColumnDefinition Width="10" />
+                            <ColumnDefinition Width="100" />
 
-                            <ColumnDefinition Width="70" />
-                            <ColumnDefinition Width="60" />
-                            <ColumnDefinition Width="35" />
-                            <ColumnDefinition Width="70" />
-                            <ColumnDefinition Width="40" />
-                            <ColumnDefinition Width="280" />
                             <ColumnDefinition Width="auto" />
 
                         </Grid.ColumnDefinitions>
 
-                        <Label HorizontalAlignment="Left" Height="50" Width="150" Grid.Column="0" Grid.Row="0" Content=":GuestRequestKey"/>
-                        <ComboBox HorizontalAlignment="Left" Height="40" Width="94" Grid.Column="3" Grid.Row="0"/>
+                        <Label HorizontalAlignment="Left"   Grid.Column="1"   Width="130" Grid.Row="0" Content=":GuestRequestKey"/>
+                        <TextBox HorizontalAlignment="Left"  Width="77" Grid.Column="2" Grid.Row="0"  />
 
-                        <Label  HorizontalAlignment="Left"  Height="50"  Width="140" Grid.Column="2" Grid.Row="0" Content=":Status:" />
-                        <TextBox  Grid.Column="1" Grid.Row="0" />
-                        <Button Content="סנן" Grid.Column="4" Grid.Row="0"/>
+                        <Label  HorizontalAlignment="Right"    Width="45"   Grid.Column="3" Grid.Row="0" Content=":Status:" />
+
+                        <ComboBox HorizontalAlignment="Left"  Width="45"  Grid.Column="4" Grid.Row="0"/>
+
+                        <Button Content="סנן" Width="45"  Grid.Column="5" Grid.Row="0"/>
 
 
 
-                        <ListView x:Name="orderListView" Grid.ColumnSpan="7" Grid.Row="1"  Margin="26,26,209,29" SelectionMode="Single" Background="#99000000"  >
+                        <ListView x:Name="orderListView" Grid.ColumnSpan="8" Grid.Row="1"  Margin="26,26,209,29" SelectionMode="Single" Background="#99000000"  >
                             <!--SelectionChanged="orderListView_SelectionChanged">-->
-                    
-                 
-                    <ListView.ItemContainerStyle>
-                        <Style>
-                            <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
-                            <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
-
-                        </Style>
-
-                    </ListView.ItemContainerStyle>
 
 
-                   
-                    
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn x:Name="createDateColumn" Header="Create Date" Width="80">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Label Content="{Binding CreateDate}" Margin="6,-1,-6,-1"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn x:Name="guestRequestKeyColumn" Header="Guest Request Key" Width="110">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Label Content="{Binding GuestRequestKey}" Margin="-6,-1"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn x:Name="hostingUnitKeyColumn" Header="Hosting Unit Key" Width="110">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Label Content="{Binding HostingUnitKey}" Margin="-6,-1"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn x:Name="orderDateColumn" Header="Order Date" Width="80">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Label Content="{Binding OrderDate}" Margin="-6,-1"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn x:Name="orderKeyColumn" Header="Order Key" Width="80">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Label Content="{Binding OrderKey}" Margin="-6,-1"/>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn x:Name="statusColumn" Header="Status" Width="80">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Label Content="{Binding Status}" Margin="-6,-1"/>
-                                        
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                                
-                            </GridViewColumn>
-                            
-                        </GridView>
-                        
-                    </ListView.View>
+                            <ListView.ItemContainerStyle>
+                                <Style>
+                                    <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+                                    <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+
+                                </Style>
+
+                            </ListView.ItemContainerStyle>
 
 
-                </ListView>
+
+
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn x:Name="createDateColumn" Header="Create Date" Width="80">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Label Content="{Binding CreateDate}" Margin="6,-1,-6,-1"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn x:Name="guestRequestKeyColumn" Header="Guest Request Key" Width="110">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Label Content="{Binding GuestRequestKey}" Margin="-6,-1"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn x:Name="hostingUnitKeyColumn" Header="Hosting Unit Key" Width="110">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Label Content="{Binding HostingUnitKey}" Margin="-6,-1"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn x:Name="orderDateColumn" Header="Order Date" Width="80">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Label Content="{Binding OrderDate}" Margin="-6,-1"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn x:Name="orderKeyColumn" Header="Order Key" Width="80">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Label Content="{Binding OrderKey}" Margin="-6,-1"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn x:Name="statusColumn" Header="Status" Width="80">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Label Content="{Binding Status}" Margin="-6,-1"/>
+
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+
+                                    </GridViewColumn>
+
+                                </GridView>
+
+                            </ListView.View>
+
+
+                        </ListView>
                     </Grid>
                 </Grid>
             </TabItem>
 
- <TabItem x:Name="guestTabItem" Header="בקשות אירוח" Height="30" Width="100">
+            <TabItem x:Name="guestTabItem" Header="בקשות אירוח" Height="30" Width="100">
                 <Grid>
 
-                    <ListView x:Name="guestListView" Width="770" Height="300" ItemsSource="{Binding}"  SelectionMode="Single" Background="#99000000" >
+                    <Grid   Width="auto"  VerticalAlignment="Top" HorizontalAlignment="Right" Height="450">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="26"/>
+
+                                <RowDefinition Height="350"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+
+
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="45" />
+
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="45" />
+
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="45" />
+                                
+                            <ColumnDefinition Width="30" />
+                            <ColumnDefinition Width="45" />
+
+
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="auto" />
+
+
+                        </Grid.ColumnDefinitions>
+
+                        <Label HorizontalAlignment="Right" Width="35"  Grid.Column="0" Grid.Row="0" Content=":Pool"/>
+                        <ComboBox  Width="100" Grid.Column="1" Grid.Row="0"/>
+
+                        <Label HorizontalAlignment="Right" Width="49" Grid.Column="2" Grid.Row="0" Content=":Jacuzzi"/>
+                        <ComboBox HorizontalAlignment="Right" Width="100" Grid.Column="3" Grid.Row="0"/>
+
+                        <Label HorizontalAlignment="Right" Width="35" Grid.Column="4" Grid.Row="0" Content=":Area"/>
+                        <ComboBox HorizontalAlignment="Right" Width="100" Grid.Column="5" Grid.Row="0"/>
+
+                        <Label HorizontalAlignment="Right" Width="47" Grid.Column="6" Grid.Row="0" Content=":Status"/>
+                        <ComboBox HorizontalAlignment="Right"  Width="100" Grid.Column="7" Grid.Row="0"/>
+
+                        <Button Content="סנן" Width="90" Grid.Column="8" Grid.Row="0"/>
+
+
+                        <ListView Grid.ColumnSpan="10" Grid.Row="1" x:Name="guestListView" Width="770" Height="300" ItemsSource="{Binding}"  SelectionMode="Single" Background="#99000000" >
                         <ListView.ItemContainerStyle>
                             <Style>
                                 <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
@@ -293,8 +342,8 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                
-                                   
+
+
 
                                 <GridViewColumn x:Name="adultsColumn" Header="Adults" Width="37">
                                     <GridViewColumn.CellTemplate>
@@ -324,8 +373,8 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                               
-                               
+
+
                                 <GridViewColumn x:Name="gardenColumn" Header="Garden" Width="42">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
@@ -333,7 +382,7 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                
+
                                 <GridViewColumn x:Name="jacuzziColumn" Header="Jacuzzi" Width="39">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
@@ -341,7 +390,7 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                               
+
                                 <GridViewColumn x:Name="poolColumn" Header="Pool" Width="40">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
@@ -349,9 +398,9 @@
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>
-                                
-                               
-                                
+
+
+
                                 <GridViewColumn x:Name="statusColumnGuest" Header="Status" Width="40">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
@@ -371,10 +420,11 @@
                     </ListView>
                     <Button Content="Button" Width="75" Margin="556,327,150,19" Click="createOrder_Button_Click"/>
                 </Grid>
-
+                </Grid>
             </TabItem>
 
         </TabControl>
+
 
 
     </Grid>
