@@ -102,7 +102,7 @@ namespace PLWPF
                     CollectionClearance = true
                 },
                 HostingUnitName = "negev",
-                Diary = new bool[31, 12]
+                //Diary = new bool[31, 12]
             };
         }
 

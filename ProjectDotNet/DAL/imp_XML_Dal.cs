@@ -9,28 +9,26 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using BE;
+using static BE.Tools;
 
 namespace DAL
 {
     class imp_XML_Dal : IDAL
     {
-        Thread bankAccunDownload = new Thread(DownloadBankXml);
+        //Thread bankAccunDownload = new Thread(DownloadBankXml);
 
-        XElement ConfigRoot;
         XElement OrderRoot;
         XElement bankAccuntsRoot;
+
         public static List<Guest> guests;
         public static List<HostingUnit> hostingUnits;
         //public static List<Order> orders;
         public static List<BankAccunt> bankAccunts;
 
 
-        private static readonly string configPath = "config.xml";
-        private static readonly string HostingUnitPath = "HostingUnit.xml";
-        private static readonly string OrderPath = "Order.xml";
-        private static readonly string GuestPath = "Guest.xml";
 
-        private static readonly string BankAccuntPath = "atm.xml";
+
+       
 
 
         internal imp_XML_Dal()
@@ -67,31 +65,16 @@ namespace DAL
             OrderRoot = XElement.Load(OrderPath);
             guests = LoadFromXML<List<Guest>>(GuestPath);
             hostingUnits = LoadFromXML<List<HostingUnit>>(HostingUnitPath);
-            if(File.Exists(BankAccuntPath))
+            if (File.Exists(BankAccuntPath))
             {
                 bankAccuntsRoot = XElement.Load(BankAccuntPath);
-                bankAccunts = XmlToBankAccunt(bankAccuntsRoot);
+                bankAccunts =  XmlToBankAccunt(bankAccuntsRoot);
                 SaveToXML(bankAccunts, "banks.xml");
             }
 
 
         }
 
-        private void SaveConfigToXml()
-        {
-            try
-            {
-                ConfigRoot = new XElement("config");
-                ConfigRoot.Add(
-                    new XElement("GuestRequestKey", configurition.GuestRequestKey),
-                    new XElement("HostingUnitKey", configurition.HostingUnitKey),
-                    new XElement("OrderKey", configurition.OrderKey),
-                    new XElement("commission", configurition.commission),
-                    new XElement("LastApdate", configurition.LastApdate));
-                ConfigRoot.Save(configPath);
-            }
-            catch (Exception) { }
-        }
 
         ~imp_XML_Dal()
         {
@@ -101,74 +84,6 @@ namespace DAL
 
            // OrderRoot.Save(OrderPath);
         }
-
-
-
-
-        public static void DownloadBankXml()
-        {
-            WebClient wc = new WebClient();
-            try
-            {
-                string xmlServerPath =
-               @"http://www.boi.org.il/he/BankingSupervision/BanksAndBranchLocations/Lists/BoiBankBranchesDocs/atm.xml";
-                wc.DownloadFile(xmlServerPath, BankAccuntPath);
-            }
-            catch (Exception)
-            {
-                string xmlServerPath = @"http://www.jct.ac.il/~coshri/atm.xml";
-                wc.DownloadFile(xmlServerPath, BankAccuntPath);
-            }
-            finally
-            {
-                wc.Dispose();
-            }
-            configurition.BanksXmlFinish = true;
-
-        }
-
-        public List<BankAccunt> XmlToBankAccunt(XElement bankAccuntsRoot)
-        {
-            try
-            {
-                return (from bankAccunt in bankAccuntsRoot.Elements()
-                        select new BankAccunt()
-                        {
-                            BankName = bankAccunt.Element("שם_בנק").Value,
-                            BankNumber = Convert.ToInt32(bankAccunt.Element("קוד_בנק").Value),
-                            BranchAddress = bankAccunt.Element("כתובת_ה-ATM").Value,
-                            BranchCity = bankAccunt.Element("ישוב").Value,
-                            BranchNumber = Convert.ToInt32(bankAccunt.Element("קוד_סניף").Value)
-                        }
-                        ).Distinct().ToList().Clone();
-            }
-            catch (Exception ex)
-            {
-                // throw new Exception("file_problem_Order");
-                throw ex;
-            }
-        }
-
-
-
-        public static void SaveToXML<T>(T source, string path)
-        {
-            FileStream file = new FileStream(path, FileMode.Create);
-            XmlSerializer xmlSerializer = new XmlSerializer(source.GetType());
-            xmlSerializer.Serialize(file, source);
-            file.Close();
-        }
-
-
-        public static T LoadFromXML<T>(string path)
-        {
-            FileStream file = new FileStream(path, FileMode.Open);
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
-            T result = (T)xmlSerializer.Deserialize(file);
-            file.Close();
-            return result;
-        }
-
 
 
 

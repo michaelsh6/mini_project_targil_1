@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="ManagementWindow" Height="450" Width="800">
     <Grid>
-        <TabControl Height="413" Margin="5,1,0,0" VerticalAlignment="Top" FlowDirection="RightToLeft"  BorderBrush="#FFACACAC" SelectionChanged="TabControl_SelectionChanged">
+        <TabControl Height="413" Margin="5,1,0,0" VerticalAlignment="Top" FlowDirection="RightToLeft"  BorderBrush="#FFACACAC" >
+            <!--SelectionChanged="TabControl_SelectionChanged"-->
             <TabControl.Background>
                 <ImageBrush ImageSource="home_page.jpg" Stretch="UniformToFill" />
             </TabControl.Background>

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,7 +51,7 @@ namespace BL
         {
             int day = EntryDate.Day;
             int month = EntryDate.Month;
-            hostingUnit[new DateTime(2020,3,2)] = true;
+            //hostingUnit[new DateTime(2020,3,2)] = true;
             for (DateTime CurrentDay = EntryDate; CurrentDay < ReleaseDate; CurrentDay = CurrentDay.AddDays(1))
                 if (hostingUnit[CurrentDay] ==true)
                     return false;
@@ -322,7 +321,7 @@ namespace BL
             //
             if (end <= first)
                 return false;
-            if (first <= localDate)
+            if (first < localDate)
                 return false;
             if (end.Year - first.Year > 1)
                 return false;
@@ -346,47 +345,7 @@ namespace BL
             
         }
 
-        public void sendMail(Order order)
-        {
-            configurition.mailFinish = false;
-
-            HostingUnit hostingUnit = GetHostingUnit(order.HostingUnitKey);
-            Guest guest = GetGuest(order.GuestRequestKey);
-            string To = guest.MailAddress;
-            string Subject = string.Format( ": {0} הצעת חופשה ביחידת האירוח ", hostingUnit.HostingUnitName );
-            string Body = string.Format("שלום {0} מייל נשלח אילך בהמשך לבקשתך לחופשה דרך האתר שלנו. יחידת האירוח {1} שלחה אילך הצעת אירוח. להמשך טיפוך ניתן לפנות למייל {2}. יום טוב ",guest.PrivateName+" "+guest.FamilyName,hostingUnit.HostingUnitName,hostingUnit.Owner.MailAddress);
-
-            configurition.mailFinish = sendMail(To,Subject,Body,false);
-
-        }
-
-        public static bool sendMail(string To, string Subject, string Body, bool isHtml)
-        {
-            MailMessage mail = new MailMessage();
-            mail.To.Add(To);
-            mail.From = new MailAddress("israelhostingservice@gmail.com");
-            mail.Subject = Subject;
-            mail.Body = Body;
-
-            mail.IsBodyHtml = isHtml;
-            SmtpClient smtp = new SmtpClient();
-
-            smtp.Host = "smtp.gmail.com";
-            smtp.Port = 587;
-            smtp.Credentials = new System.Net.NetworkCredential("israelhostingservice@gmail.com", "israel0000");
-
-            smtp.EnableSsl = true;
-            try
-            {
-                //שליחת ההודעה //
-                smtp.Send(mail);
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
-        }
+       
 
 
 
@@ -404,10 +363,11 @@ namespace BL
                 if (diffrence > 12)
                     diffrence = 12;
                 DateTime from = new DateTime(startDate.Year, startDate.Month, 1);
-                DateTime to = from.AddMonths(diffrence);
-                IEnumerable<HostingUnit> hostingUnits = getAllHostingUnits();
+                DateTime to = from.AddMonths(diffrence).AddDays(-1);
+                List<HostingUnit> hostingUnits = getAllHostingUnits().ToList();
                 foreach(var unit in hostingUnits)
                 {
+                    //HostingUnit newHostingUnit = unit.Clone();
                     insertDates(unit, from, to, false);
                     updateHostingUnit(unit);
                 }
@@ -422,6 +382,19 @@ namespace BL
             return 12 * (time1.Year - time2.Year) + (time1.Month - time2.Month);
         }
 
+        public void sendMail(Order order)
+        {
+            configurition.mailFinish = false;
+
+            HostingUnit hostingUnit = GetHostingUnit(order.HostingUnitKey);
+            Guest guest = GetGuest(order.GuestRequestKey);
+            string To = guest.MailAddress;
+            string Subject = string.Format(": {0} הצעת חופשה ביחידת האירוח ", hostingUnit.HostingUnitName);
+            string Body = string.Format("שלום {0} מייל נשלח אילך בהמשך לבקשתך לחופשה דרך האתר שלנו. יחידת האירוח {1} שלחה אילך הצעת אירוח. להמשך טיפוך ניתן לפנות למייל {2}. יום טוב ", guest.PrivateName + " " + guest.FamilyName, hostingUnit.HostingUnitName, hostingUnit.Owner.MailAddress);
+
+            configurition.mailFinish = Tools.sendMail(To, Subject, Body, false);
+
+        }
 
 
     }

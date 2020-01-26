@@ -18,39 +18,20 @@ namespace BE
 
 
 
+        private bool[,] m_diary = new bool[12, 31];
 
-        [XmlIgnoreAttribute] public bool[,] Diary { get; set; }
-        public String TempDiary
+        [XmlIgnore]
+        public bool[,] Diary
         {
-            get
-            {
-                if (Diary == null)
-                    return null;
-                string result = "";
+            get { return m_diary; }
+            set { m_diary = value; }
+        }
 
-                int sizeA = Diary.GetLength(0);
-                int sizeB = Diary.GetLength(1);
-                result += "" + sizeA + "," + sizeB;
-                for (int i = 0; i < sizeA; i++)
-                    for (int j = 0; j < sizeB; j++)
-                        result += "," + Diary[i, j].ToString();
-
-                return result;
-            }
-            set
-            {
-                 if (value != null && value.Length > 0)
-                {
-                    string[] values = value.Split(',');
-                    int sizeA = int.Parse(values[0]);
-                    int sizeB = int.Parse(values[1]);
-                    Diary = new bool[sizeA, sizeB];
-                    int index = 2;
-                    for (int i = 0; i < sizeA; i++)
-                        for (int j = 0; j < sizeB; j++)
-                            Diary[i, j] = bool.Parse(values[index++]);
-                } 
-            }
+        [XmlArray("Diary")]
+        public bool[] TempDiary
+        {
+            get { return Diary.Flatten(); }
+            set { Diary = value.Expand(31); }
         }
 
 
@@ -67,8 +48,8 @@ namespace BE
 
     public bool this[DateTime date]
         {
-            set => Diary[date.Day - 1, date.Month - 1] = value;
-            get => Diary[date.Day - 1, date.Month - 1];
+            set => Diary[date.Month - 1, date.Day - 1] = value;
+            get => Diary[date.Month - 1, date.Day - 1];
         }
 
         //public override string ToString()

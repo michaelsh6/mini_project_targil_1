@@ -63,6 +63,8 @@ namespace PLWPF
                 Guest selectedGuest = guests.ElementAtOrDefault(guestListView.SelectedIndex);
                 Order order = bl.guestToOrder(selectedGuest, hostingUnit);
                 bl.addOrder(order);
+                order.Status = enums.OrderStatus.closed_Order_accepted;
+                bl.updateOrder(order);
                 orders.Add(order);
                 orderListView.ItemsSource = orders;
             }
