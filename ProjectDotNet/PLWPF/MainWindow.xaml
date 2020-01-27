@@ -71,7 +71,7 @@
             <ComboBox Name="hostingUnitCB" Grid.Column="2" Margin="0,12,5,13" Padding="10,10"  HorizontalAlignment="Right"  VerticalAlignment="Center" Width="159" Height="38"/>
             
             <!--<TextBox  Grid.Column="2" Height="38" TextWrapping="Wrap"  Width="148" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,12,5,13" Padding="10,10" TextAlignment="Right" />-->
-            <Button Style="{StaticResource ButtonStyle}" Content="הכנס כמנהל" Grid.Column="0"  Width="106" HorizontalAlignment="Right" VerticalAlignment="Center" Height="38" Margin="0,12,0,13" />
+            <Button Click="ManagementWindowclick" Style="{StaticResource ButtonStyle}" Content="הכנס כמנהל" Grid.Column="0"  Width="106" HorizontalAlignment="Right" VerticalAlignment="Center" Height="38" Margin="0,12,0,13" />
 
         </Grid>
         <Label Content="ברוכים הבאים לאתר " HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" FontWeight="Bold" FontSize="30" Foreground =" #FFFFFFFF" Height="42" Margin="247,3,247,2" Width="298" />
