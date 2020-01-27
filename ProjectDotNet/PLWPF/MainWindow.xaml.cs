@@ -136,6 +136,10 @@ namespace PLWPF
 
         }
 
+        private void ManagementWindowclick(object sender, RoutedEventArgs e)
+        {
+            new ManagementWindow().ShowDialog();
+        }
 
     }
 }
