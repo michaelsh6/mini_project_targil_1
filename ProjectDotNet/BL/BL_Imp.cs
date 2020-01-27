@@ -88,6 +88,8 @@ namespace BL
                 throw new Exception("Unit not Availabl"); //TODO UnitIsAvailablException
             if (order.Status != enums.OrderStatus.Not_yet_addressed)
                 throw new Exception("status mast start with Not_yet_addressed"); //TODO  Exception
+            if (guest.Status != enums.GuestStatus.open)
+                throw new Exception("Guest status mast by open"); //TODO  Exception
 
             dal.addOrder(order);
             //sendMail(order);

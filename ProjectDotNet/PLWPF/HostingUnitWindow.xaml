@@ -92,20 +92,24 @@
                         <TextBox x:Name="phoneNumberTextBox"   Width="120" VerticalAlignment="Center" Text="{Binding Owner.phoneNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="7" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="2"/>
 
                         <Label VerticalAlignment = "Center" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Left" Content="Bank Name:" Height="26" Width="93"/>
-                        <ComboBox x:Name="BankNameComboBox" Text="{Binding Owner.BankBranchDetails.BankName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Width="120"  Grid.Row="1" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="5"/>
+                        <ComboBox x:Name="BankNameComboBox" SelectionChanged="BankNameComboBox_SelectionChanged" Text="{Binding Owner.BankBranchDetails.BankName, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Width="120"  Grid.Row="1" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="5"/>
 
 
                         <Label VerticalAlignment = "Center" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Left" Content="Bank Number:" Height="26" Width="93"/>
-                        <ComboBox IsEditable="True"  x:Name="BankNumberComboBox" Text="{Binding Owner.BankBranchDetails.BankNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Width="120"   Grid.Row="2" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="5"/>
+                        <TextBox IsReadOnly="True"  x:Name="BankNumberComboBox" Text="{Binding Owner.BankBranchDetails.BankNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Width="120"   Grid.Row="2" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="5"/>
 
                         <Label VerticalAlignment = "Center" Grid.Row="3" Grid.Column="3" HorizontalAlignment="Left" Content=":Branch Number" Height="26" Width="120"/>
-                        <TextBox Text="{Binding Owner.BankBranchDetails.BranchNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Width="120"   Grid.Row="3" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="5"/>
+                        <ComboBox IsReadOnly="True" SelectionChanged="BranchNumberComboBox_SelectionChanged" Name ="BranchNumberComboBox"  Text="{Binding Owner.BankBranchDetails.BranchNumber}" Width="120"   Grid.Row="3" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="5"/>
 
                         <Label VerticalAlignment = "Center" Grid.Row="4" Grid.Column="3" HorizontalAlignment="Left" Content=":Branch City" Height="26" Width="93"/>
-                        <TextBox Text="{Binding Owner.BankBranchDetails.BranchCity, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Width="120"   Grid.Row="4" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="5"/>
+                        <TextBox IsReadOnly="True" Name="BranchCityTextBox" Text="{Binding Owner.BankBranchDetails.BranchCity}" Width="120"   Grid.Row="4" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="5"/>
+
+
+
+
 
                         <Label VerticalAlignment = "Center" Grid.Row="5" Grid.Column="3" HorizontalAlignment="Left" Content=":Branch Address" Height="26" Width="120"/>
-                        <TextBox Text="{Binding Owner.BankBranchDetails.BranchAddress, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Width="120"   Grid.Row="5" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="5"/>
+                        <TextBox Name="BranchAddressTextBox" IsReadOnly="True" Text="{Binding Owner.BankBranchDetails.BranchAddress, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Width="120"   Grid.Row="5" Margin="3,4,0,4" Height="24" HorizontalAlignment="Left" Grid.Column="5"/>
 
                         <Label VerticalAlignment = "Center" Grid.Row="6" Grid.Column="3" HorizontalAlignment="Left" Content="Account Number:" Height="26" Width="120"/>
                         <TextBox x:Name="bankAccountNumberTextBox"   Width="120" VerticalAlignment="Center" Text="{Binding Owner.BankAccountNumber, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Grid.Row="6" Margin="3,1,0,5" Height="24" HorizontalAlignment="Left" Grid.Column="5"/>
@@ -248,47 +252,23 @@
                             <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
 
-                        <Grid  Grid.Row="0"  VerticalAlignment="Center" HorizontalAlignment="Stretch" >
+                        <StackPanel Name="filterGuestStackPanel"  Grid.Row="0"  VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal" >
 
-                            <Grid.ColumnDefinitions>
+                           
+                            <Label  HorizontalAlignment="Right" Width="42"  Grid.Column="0"  Content=":Pool" />
+                            <ComboBox  Name="filterPoolGuest" Width="100" Text="{Binding Pool, Mode=OneWayToSource}"/>
+                            <Label HorizontalAlignment="Right" Width="49"  Content=":Jacuzzi" Margin="20,0,5,0"/>
+                            <ComboBox Name="filterJacuzziGuest" Width="100" Grid.Column="3" Text="{Binding Jacuzzi, Mode=OneWayToSource}"/>
 
+                            <Label HorizontalAlignment="Right" Width="35" Grid.Column="4" Content=":Area"  Margin="20,0,5,0"/>
+                            <ComboBox Name="filterAreaGuest" HorizontalAlignment="Right" Width="100" Grid.Column="5" Text="{Binding Area,Mode=OneWayToSource}" />
 
-                                <ColumnDefinition Width="30*" />
-                                <ColumnDefinition Width="45*" />
-
-                                <ColumnDefinition Width="30*" />
-                                <ColumnDefinition Width="45*" />
-
-                                <ColumnDefinition Width="30*" />
-                                <ColumnDefinition Width="45*" />
-
-                                <ColumnDefinition Width="30*" />
-                                <ColumnDefinition Width="45*" />
+                            <Label HorizontalAlignment="Right" Width="47" Grid.Column="6"  Content=":Status"  Margin="20,0,5,0"/>
+                            <ComboBox Name="filterStatusGuest" HorizontalAlignment="Right"  Width="100" Grid.Column="7" Text="{Binding Status,Mode=OneWayToSource}"/>
+                            <Button Name="filterGuestButton" Content="סנן" Width="90"  Margin="20,0,5,0" Click="FilterGuestButton_Click" />
 
 
-                                <ColumnDefinition Width="35*" />
-                                <ColumnDefinition Width="65*" />
-                                <ColumnDefinition Width="auto" />
-
-
-                            </Grid.ColumnDefinitions>
-
-                            <Label  HorizontalAlignment="Right" Width="35"  Grid.Column="0"  Content=":Pool"/>
-                            <ComboBox  Width="100" Grid.Column="1"/>
-
-                            <Label HorizontalAlignment="Right" Width="49" Grid.Column="2"  Content=":Jacuzzi"/>
-                            <ComboBox Width="100" Grid.Column="3"/>
-
-                            <Label HorizontalAlignment="Right" Width="35" Grid.Column="4" Content=":Area"/>
-                            <ComboBox HorizontalAlignment="Right" Width="100" Grid.Column="5" />
-
-                            <Label HorizontalAlignment="Right" Width="47" Grid.Column="6"  Content=":Status"/>
-                            <ComboBox HorizontalAlignment="Right"  Width="100" Grid.Column="7"/>
-
-                            <Button Content="סנן" Width="90" Grid.Column="8" />
-
-
-                        </Grid>
+                        </StackPanel>
                         <ListView Grid.Row="1" x:Name="guestListView" SelectionMode="Single" Background="#99000000" >
                             <ListView.View>
                                 <GridView>
@@ -323,13 +303,7 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
-                                    <GridViewColumn x:Name="mailAddressColumn" Header="Mail" Width="44">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Label Content="{Binding MailAddress}" Margin="-6,-1"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
+
                                     <GridViewColumn x:Name="entryDateColumn" Header="Entry Date" Width="58">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
@@ -422,6 +396,7 @@
                         </ListView>
 
                         <Button Content="הזמן" Grid.Row="2" Width="75"  Click="createOrder_Button_Click" Margin="660,0,46,0" />
+                        <Button Content="נקה סינונים" Grid.Row="2" Width="75"  Margin="560,0,146,0" Click="ClearFilter_Click" />
 
                     </Grid>
 

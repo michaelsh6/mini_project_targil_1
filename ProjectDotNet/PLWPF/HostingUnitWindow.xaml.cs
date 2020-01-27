@@ -33,7 +33,9 @@ namespace PLWPF
 
         ObservableCollection<Guest> guests;
         ObservableCollection<Order> orders;
+        IEnumerable<BankAccunt> bankAccunts;
 
+        Guest filterGuest;
         public HostingUnitWindow(HostingUnit Unit)
         {
             sendMailWorker = new BackgroundWorker();
@@ -46,21 +48,26 @@ namespace PLWPF
             //bl.addHostingUnit(hostingUnit);
 
             guests = new ObservableCollection<Guest>(bl.getAllGuests());
-            orders = new ObservableCollection<Order>(bl.getAllOrders(x=>x.HostingUnitKey == hostingUnit.HostingUnitKey));
+            orders = new ObservableCollection<Order>(bl.getAllOrders(x => x.HostingUnitKey == hostingUnit.HostingUnitKey));
+            bankAccunts = bl.getAllBankBranches();
 
-            List<string> bankNames = (from bank in bl.getAllBankBranches() select bank.BankName).Distinct().ToList();
-            List<int> BankNumbers = (from bank in bl.getAllBankBranches() select bank.BankNumber).Distinct().ToList();
 
+            List<string> bankNames = (from bank in bankAccunts select bank.BankName).Distinct().ToList();
             BankNameComboBox.ItemsSource = bankNames;
-            BankNumberComboBox.ItemsSource = BankNumbers;
 
             this.filterStatusCb.ItemsSource = Enum.GetValues(typeof(enums.OrderStatus));
-            
+
+            this.filterStatusGuest.ItemsSource = Enum.GetValues(typeof(enums.GuestStatus));
+            this.filterAreaGuest.ItemsSource = Enum.GetValues(typeof(enums.CountryAreas));
+            this.filterJacuzziGuest.ItemsSource = Enum.GetValues(typeof(enums.LuxusOption));
+            this.filterPoolGuest.ItemsSource = Enum.GetValues(typeof(enums.LuxusOption));
+            filterGuest = new Guest();
+            filterGuestStackPanel.DataContext = filterGuest;
 
             //   Enum.GetValues(typeof(enums.HostingUnitType));
 
             SetBlackOutDates();
-            
+
             HostingUnitGrid.DataContext = hostingUnit;
             guestListView.ItemsSource = guests;
             orderListView.ItemsSource = orders;
@@ -69,7 +76,31 @@ namespace PLWPF
 
         private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+
+        }
+        private void BankNameComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string bamkname = BankNameComboBox.SelectedValue.ToString();
+            // BankNumberComboBox.Text = ((from bank in bankAccunts where bank.BankName == bamkname select bank.BankNumber).FirstOrDefault()).ToString();
+            BankNumberComboBox.Text = ((from bank in bankAccunts where bank.BankName == BankNameComboBox.SelectedValue.ToString() select bank.BankNumber).FirstOrDefault()).ToString();
+            List<int> BranchNumbers = (from bank in bankAccunts where bank.BankName == bamkname select bank.BranchNumber).Distinct().ToList();
+            BranchNumberComboBox.IsReadOnly = false;
+            BranchNumberComboBox.ItemsSource = BranchNumbers;
+        }
+
+        private void BranchNumberComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (BranchNumberComboBox.SelectedIndex != -1)
+            {
+                // int BranchNumber = BranchNumbers[BranchNumberComboBox.SelectedIndex];
+
+                string bamkname = BankNameComboBox.SelectedValue.ToString();
+                int BranchNumber = Convert.ToInt32(BranchNumberComboBox.SelectedValue.ToString());
+                BranchCityTextBox.Text = ((from bank in bankAccunts where bank.BankName == bamkname && bank.BranchNumber == BranchNumber select bank.BranchCity).FirstOrDefault());
+                BranchAddressTextBox.Text = ((from bank in bankAccunts where bank.BankName == bamkname && bank.BranchNumber == BranchNumber select bank.BranchAddress).FirstOrDefault());
+
+            }
+
         }
 
         private void createOrder_Button_Click(object sender, RoutedEventArgs e)
@@ -140,9 +171,9 @@ namespace PLWPF
             //MyCalendar.DisplayDate = DateTime.Today;
             DateTime from = DateTime.Today;
             DateTime To = new DateTime(from.Year + 1, from.Month, 1).AddDays(-1);
-            for (DateTime corrent = DateTime.Today; corrent <To; corrent = corrent.AddDays(1))
+            for (DateTime corrent = DateTime.Today; corrent < To; corrent = corrent.AddDays(1))
             {
-                if(hostingUnit[corrent] ==true)
+                if (hostingUnit[corrent] == true)
                     MyCalendar.BlackoutDates.Add(new CalendarDateRange(corrent));
             }
         }
@@ -154,7 +185,7 @@ namespace PLWPF
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
-            Regex regex = new Regex("[^0-9]+"); 
+            Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text); ;
         }
 
@@ -188,5 +219,33 @@ namespace PLWPF
         //}
 
 
+        private Func<Guest, bool> getGuestFilter(Guest guest)
+        {
+
+            return x => (x.Pool == guest.Pool || filterPoolGuest.SelectedIndex == -1) &&
+            (x.Jacuzzi == guest.Jacuzzi || filterJacuzziGuest.SelectedIndex == -1) &&
+            (x.Area == guest.Area || filterAreaGuest.SelectedIndex == -1) &&
+            (x.Status == guest.Status || filterStatusGuest.SelectedIndex == -1);
+
+
+        }
+
+        private void FilterGuestButton_Click(object sender, RoutedEventArgs e)
+        {
+            IEnumerable<Guest> newGuests = bl.getAllGuests(getGuestFilter(filterGuest));
+            guests.Clear();
+            newGuests.ToList().ForEach(guests.Add);
+        }
+
+        private void ClearFilter_Click(object sender, RoutedEventArgs e)
+        {
+            filterPoolGuest.SelectedIndex = -1;
+            filterJacuzziGuest.SelectedIndex = -1;
+            filterAreaGuest.SelectedIndex = -1;
+            filterStatusGuest.SelectedIndex = -1;
+            guests.Clear();
+            bl.getAllGuests().ToList().ForEach(guests.Add);
+
+        }
     }
 }

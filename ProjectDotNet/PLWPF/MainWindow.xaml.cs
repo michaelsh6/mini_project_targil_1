@@ -40,7 +40,7 @@ namespace PLWPF
 
             InitializeComponent();
             hostingUnitCB.ItemsSource = hostingUnits;
-            hostingUnitCB.DisplayMemberPath = "HostingUnitKey";
+            hostingUnitCB.DisplayMemberPath = "HostingUnitName";
             hostingUnitCB.SelectedIndex = 0;
 
         }
