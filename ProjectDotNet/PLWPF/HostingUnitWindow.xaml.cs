@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,7 +26,7 @@ namespace PLWPF
     public partial class HostingUnitWindow : Window
     {
 
-
+        BackgroundWorker sendMailWorker;
 
         public HostingUnit hostingUnit;
         BL.IBL bl;
@@ -34,6 +36,8 @@ namespace PLWPF
 
         public HostingUnitWindow(HostingUnit Unit)
         {
+            sendMailWorker = new BackgroundWorker();
+            sendMailWorker.DoWork += sendMail;
             InitializeComponent();
             this.hostingUnit = Unit;
             bl = BL.FactoryBL.GetBL();
@@ -42,13 +46,16 @@ namespace PLWPF
             //bl.addHostingUnit(hostingUnit);
 
             guests = new ObservableCollection<Guest>(bl.getAllGuests());
-            orders = new ObservableCollection<Order>(bl.getAllOrders());
+            orders = new ObservableCollection<Order>(bl.getAllOrders(x=>x.HostingUnitKey == hostingUnit.HostingUnitKey));
 
             List<string> bankNames = (from bank in bl.getAllBankBranches() select bank.BankName).Distinct().ToList();
             List<int> BankNumbers = (from bank in bl.getAllBankBranches() select bank.BankNumber).Distinct().ToList();
 
             BankNameComboBox.ItemsSource = bankNames;
             BankNumberComboBox.ItemsSource = BankNumbers;
+
+            this.filterStatusCb.ItemsSource = Enum.GetValues(typeof(enums.OrderStatus));
+            
 
             //   Enum.GetValues(typeof(enums.HostingUnitType));
 
@@ -74,6 +81,7 @@ namespace PLWPF
                 bl.addOrder(order);
                 //order.Status = enums.OrderStatus.closed_Order_accepted;
                 //bl.updateOrder(order);
+                sendMailWorker.RunWorkerAsync(order);
                 orders.Add(order);
                 //orderListView.ItemsSource = orders;
             }
@@ -114,6 +122,7 @@ namespace PLWPF
             {
                 case MessageBoxResult.Yes:
                     MessageBox.Show("הפעולה בוצעה בהצלחה", "מחיקת יחידת אירוח");
+                    bl.deleteHostingUnit(hostingUnit.HostingUnitKey);
                     this.Close();
                     break;
                 case MessageBoxResult.No:
@@ -142,5 +151,42 @@ namespace PLWPF
         {
             new MainWindow().Show();
         }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+"); 
+            e.Handled = regex.IsMatch(e.Text); ;
+        }
+
+        public void sendMail(object sender, DoWorkEventArgs e)
+        {
+            Order order = (Order)e.Argument;
+            HostingUnit hostingUnit = bl.GetHostingUnit(order.HostingUnitKey);
+            Guest guest = bl.GetGuest(order.GuestRequestKey);
+            string To = guest.MailAddress;
+            string Subject = string.Format(": {0} הצעת חופשה ביחידת האירוח ", hostingUnit.HostingUnitName);
+            string Body = string.Format("שלום {0} מייל נשלח אילך בהמשך לבקשתך לחופשה דרך האתר שלנו. יחידת האירוח {1} שלחה אילך הצעת אירוח. להמשך טיפוך ניתן לפנות למייל {2}. יום טוב ", guest.PrivateName + " " + guest.FamilyName, hostingUnit.HostingUnitName, hostingUnit.Owner.MailAddress);
+
+
+            for (int i = 0; i < 10; i++)
+            {
+                if (Tools.sendMail(To, Subject, Body, false))
+                {
+                    order.Status = enums.OrderStatus.mail_has_been_sent;
+                    bl.updateOrder(order);
+                    return;
+                }
+            }
+            MessageBox.Show("לא הצליח לשלוח מייל", "בעיה");
+        }
+
+
+        //public Func<Guest, bool> getFilter(Guest guest)
+        //{
+        //    bool statusSelected = filterStatusCb.SelectedIndex != -1;
+        //    return x => x.Status == (enums.OrderStatus)filterStatusCb.SelectedIndex;
+        //}
+
+
     }
 }

@@ -90,7 +90,7 @@ namespace BL
                 throw new Exception("status mast start with Not_yet_addressed"); //TODO  Exception
 
             dal.addOrder(order);
-            sendMail(order);
+            //sendMail(order);
 
         }
 
@@ -405,24 +405,7 @@ namespace BL
             return 12 * (time1.Year - time2.Year) + (time1.Month - time2.Month);
         }
 
-        public void sendMail(Order order)
-        {
-            
-
-            HostingUnit hostingUnit = GetHostingUnit(order.HostingUnitKey);
-            Guest guest = GetGuest(order.GuestRequestKey);
-            string To = guest.MailAddress;
-            string Subject = string.Format(": {0} הצעת חופשה ביחידת האירוח ", hostingUnit.HostingUnitName);
-            string Body = string.Format("שלום {0} מייל נשלח אילך בהמשך לבקשתך לחופשה דרך האתר שלנו. יחידת האירוח {1} שלחה אילך הצעת אירוח. להמשך טיפוך ניתן לפנות למייל {2}. יום טוב ", guest.PrivateName + " " + guest.FamilyName, hostingUnit.HostingUnitName, hostingUnit.Owner.MailAddress);
-
-            if (Tools.sendMail(To, Subject, Body, false))
-            {
-                order.Status = enums.OrderStatus.mail_has_been_sent;
-                updateOrder(order);
-            }
-
-
-        }
+        
 
 
     }

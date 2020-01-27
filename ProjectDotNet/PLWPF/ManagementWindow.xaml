@@ -7,12 +7,19 @@
         xmlns:BE="clr-namespace:BE;assembly=BE" x:Class="PLWPF.ManagementWindow"
         mc:Ignorable="d"
         WindowStartupLocation = "CenterScreen"
-        Title="ManagementWindow" Height="450" Width="800" Loaded="Window_Loaded">
-    <Window.Resources>
-        <CollectionViewSource x:Key="guestViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:Guest}, CreateList=True}"/>
-        <CollectionViewSource x:Key="hostingUnitViewSource" d:DesignSource="{d:DesignInstance {x:Type BE:HostingUnit}, CreateList=True}"/>
-        <CollectionViewSource x:Key="OrderSource" d:DesignSource="{d:DesignInstance {x:Type BE:HostingUnit}, CreateList=True}"/>
+        Title="ManagementWindow" Height="450" Width="800" >
+
+<Window.Resources>
+        <Style TargetType="{x:Type Label}">
+            <!--<Setter Property="FontSize" Value="32" />-->
+
+            <!--<Setter Property="Background" Value="#00000000" />-->
+            <Setter Property="Foreground" Value="#FFFFFFFF" />
+        </Style>
+
     </Window.Resources>
+
+
     <Grid>
         <TabControl Height="413" Margin="5,1,0,0" VerticalAlignment="Top" FlowDirection="RightToLeft"  BorderBrush="#FFACACAC" >
             <!--SelectionChanged="TabControl_SelectionChanged"-->
@@ -22,7 +29,7 @@
             <TabItem Header="שאילתות רשימת לקוחות" Height="30" Width="145">
 
                 <Grid>
-                    <Grid x:Name="ManagementGrid" VerticalAlignment="Top"  HorizontalAlignment="Left" Background="#99000000" Height="340" Width="777">
+                    <Grid x:Name="ManagementGrid" VerticalAlignment="Top"  HorizontalAlignment="Left" Background="#00000000" Height="340" Width="777">
 
                         <Grid.Resources>
                             <Style TargetType="{x:Type Label}">
@@ -33,86 +40,55 @@
 
                         <Grid.RowDefinitions>
 
-                            <RowDefinition Height="24"/>
-                            <RowDefinition Height="24"/>
-                            <RowDefinition Height="10"/>
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="168"/>
-                            <ColumnDefinition Width="40"/>
-
-                            <ColumnDefinition Width="10" />
-
-                            <ColumnDefinition Width="132"/>
-                            <ColumnDefinition Width="75"/>
-                            <ColumnDefinition Width="40"/>
-
-                            <ColumnDefinition Width="10" />
-
-                            <ColumnDefinition Width="150" />
-                            <ColumnDefinition Width="75" />
-                            <ColumnDefinition Width="40" />
 
 
+                        <Grid Grid.Row="0">
 
-                            <ColumnDefinition Width="45"/>
-                            <ColumnDefinition Width="45"/>
-                            <ColumnDefinition Width="45" />
-                            <ColumnDefinition Width="45" />
-                            <ColumnDefinition Width="45" />
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="168"/>
+                                <ColumnDefinition Width="40"/>
 
-                        </Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="10" />
 
-                        <!--
-                        <Label  VerticalAlignment="Center"  Grid.Row="1" Content="להצגת הזמנות ממוינות לפי מס' אנשים :" Grid.ColumnSpan="2" Grid.Column="3"/>
-                        <Button x:Name="GetguestByPerson" Content="הצג" Grid.Column="5" Grid.Row="1" Click="GetguestByPersonclick" />
+                                <ColumnDefinition Width="132"/>
+                                <ColumnDefinition Width="75"/>
+                                <ColumnDefinition Width="40"/>
 
+                                <ColumnDefinition Width="10" />
 
-                        <Label  VerticalAlignment="Center"  Grid.Row="1" Content="להצגת הזמנות ממוינות לפי אזור:" Grid.ColumnSpan="2" Grid.Column="7"/>
-                        <Button x:Name="GetguestByArea" Content="הצג" Grid.Column="9" Grid.Row="1" Click="GetguestByAreaclick" />
-                        
-                        
-                        <ListView x:Name="QueryGuestListView" Grid.ColumnSpan="15" Grid.Row="4" SelectionMode="Single">
-                            <ListView.ItemContainerStyle>
-                                <Style>
-                                    <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
-                                    <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
-                                </Style>
-                            </ListView.ItemContainerStyle>
+                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="75" />
+                                <ColumnDefinition Width="40" />
 
+                                <ColumnDefinition Width="45"/>
+                                <ColumnDefinition Width="45"/>
+                                <ColumnDefinition Width="45" />
+                                <ColumnDefinition Width="45" />
+                                <ColumnDefinition Width="45" />
+
+                            </Grid.ColumnDefinitions>
+
+                            <Label  VerticalAlignment="Center"   Content="להצגת כל הלקוחות:" Grid.Column="0"/>
+                            <Button x:Name="GetAllguest" Content="הצג" Grid.Column="1"  Click="GetAllguestclick" Height="24" VerticalAlignment="Top" />
+
+                            <Label  VerticalAlignment="Center"   Content="להצגת לקוח לפי ת.ז:" Grid.Column="3"/>
+                            <TextBox Grid.Column="4" />
+                            <Button x:Name="GetguestById" Content="הצג" Grid.Column="5"  Click="GetguestByIdclick" />
+
+                            <Label  VerticalAlignment="Center"  Content="להצגת לקוח לפי מס'הזמנה:" Grid.Column="7"/>
+                            <TextBox Grid.Column="8" />
+                            <Button x:Name="GetguestByOrder" Content="הצג" Grid.Column="9"  Click="GetguestByOrderclick" />
+
+                            <Label  VerticalAlignment="Center"  Content=""  Grid.Column="0"/>
+                            <Button x:Name="GetguestOpen" Content="הצג" Grid.Column="1"  Click="GetguestOpenclick" />
+                        </Grid>
+
+                        <ListView  Grid.Row="1" x:Name="guestListView" SelectionMode="Single" Background="#99000000" >
                             
-                            </ListView>
-                        
-                        -->
-
-                        <Grid.DataContext>
-                            <StaticResource ResourceKey="guestViewSource"/>
-                        </Grid.DataContext>
-
-                        <Label  VerticalAlignment="Center"  Grid.Row="0" Content="להצגת כל הלקוחות:" Grid.Column="0"/>
-                        <Button x:Name="GetAllguest" Content="הצג" Grid.Column="1" Grid.Row="0" Click="GetAllguestclick" Height="24" VerticalAlignment="Top" />
-
-                        <Label  VerticalAlignment="Center"  Grid.Row="0" Content="להצגת לקוח לפי ת.ז:" Grid.Column="3"/>
-                        <TextBox Grid.Column="4" Grid.Row="0"/>
-                        <Button x:Name="GetguestById" Content="הצג" Grid.Column="5" Grid.Row="0" Click="GetguestByIdclick" />
-
-                        <Label  VerticalAlignment="Center"  Grid.Row="0" Content="להצגת לקוח לפי מס'הזמנה:" Grid.Column="7"/>
-                        <TextBox Grid.Column="8" Grid.Row="0"/>
-                        <Button x:Name="GetguestByOrder" Content="הצג" Grid.Column="9" Grid.Row="0" Click="GetguestByOrderclick" />
-
-                        <Label  VerticalAlignment="Center"  Grid.Row="1" Content="להצגת הזמנות פתוחות/סגורות:"  Grid.Column="0"/>
-                        <Button x:Name="GetguestOpen" Content="הצג" Grid.Column="1" Grid.Row="1" Click="GetguestOpenclick" />
-
-
-                        <ListView Grid.ColumnSpan="15" Grid.Column="0" Grid.Row="4" x:Name="guestListView" Width="auto" Height="300" ItemsSource="{Binding}"  SelectionMode="Single" Background="#99000000" >
-                            <ListView.ItemContainerStyle>
-                                <Style>
-                                    <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
-                                    <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
-                                </Style>
-                            </ListView.ItemContainerStyle>
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn x:Name="guestRequestKeyColumnGuest" Header="Guest Key" Width="60">
@@ -251,10 +227,13 @@
             </TabItem>
             <TabItem Header="שאילתות יחידת אירוח" Height="30" Width="125">
 
-                <Grid>
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
 
-
-                    <Grid x:Name="ManagementGrid2" VerticalAlignment="Top"  HorizontalAlignment="Left"  Background="#99000000" Height="340" Width="777">
+                    <Grid x:Name="ManagementGrid2" Grid.Row="0" VerticalAlignment="Top"  HorizontalAlignment="Stretch"  Background="#99000000" >
 
                         <Grid.Resources>
                             <Style TargetType="{x:Type Label}">
@@ -263,17 +242,8 @@
                             </Style>
                         </Grid.Resources>
 
-                        <Grid.DataContext>
-                            <StaticResource ResourceKey="hostingUnitViewSource"/>
-                        </Grid.DataContext>
 
-                        <Grid.RowDefinitions>
 
-                            <RowDefinition Height="24"/>
-                            <RowDefinition Height="24"/>
-                            <RowDefinition Height="10"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="168"/>
@@ -291,11 +261,6 @@
                             <ColumnDefinition Width="75" />
                             <ColumnDefinition Width="40" />
 
-                            <ColumnDefinition Width="45"/>
-                            <ColumnDefinition Width="45"/>
-                            <ColumnDefinition Width="45" />
-                            <ColumnDefinition Width="45" />
-                            <ColumnDefinition Width="45" />
 
                         </Grid.ColumnDefinitions>
 
@@ -315,21 +280,88 @@
                         <!-- <ListView Grid.ColumnSpan="15" Grid.Column="0" Grid.Row="4" x:Name="guestListView" Width="auto" Height="300" ItemsSource="{Binding}"  SelectionMode="Single" Background="#99000000" >
                        -->
 
-                        <DataGrid x:Name="hostingUnitDataGrid" AutoGenerateColumns="False" Grid.ColumnSpan="15" Grid.Column="0" EnableRowVirtualization="True" SelectionMode="Single" Height="Auto"  Background="#99000000"  ItemsSource="{Binding}"  Grid.Row="4" RowDetailsVisibilityMode="VisibleWhenSelected" Width="Auto">
-                            <DataGrid.Columns>
-                                <DataGridTemplateColumn x:Name="hostingUnitKeyColumn" Header="Hosting Unit Key" Width="SizeToHeader">
-                                    <DataGridTemplateColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Label Content="{Binding HostingUnitKey}"/>
-                                        </DataTemplate>
-                                    </DataGridTemplateColumn.CellTemplate>
-                                </DataGridTemplateColumn>
-                                <DataGridTextColumn x:Name="hostingUnitNameColumn" Binding="{Binding HostingUnitName}" Header="Hosting Unit Name" Width="SizeToHeader"/>
-                            </DataGrid.Columns>
-                        </DataGrid>
-
                     </Grid>
+                    <ListView x:Name="hostingUnitListView" Grid.Row="1" SelectionMode="Single" Background="#99000000">
+                        <ListView.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn x:Name="hostingUnitKeyColumn" Header="Hosting Unit Key" Width="80">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding HostingUnitKey}" Margin="6,-1,-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="hostingUnitNameColumn" Header="Hosting Unit Name" Width="80">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding HostingUnitName}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+
+                                <GridViewColumn x:Name="bankAccountNumberColumn1" Header="Bank Account Number" Width="80">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding BankAccountNumber}" Margin="6,-1,-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="collectionClearanceColumn1" Header="Collection Clearance" Width="80">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsEnabled="False" IsChecked="{Binding CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="familyNameColumn2" Header="Family Name" Width="80">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Owner.FamilyName}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="hostKeyColumn1" Header="Host Key" Width="80">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Owner.HostKey}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="mailAddressColumn2" Header="Mail Address" Width="80">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Owner.MailAddress}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="phoneNumberColumn1" Header="phone Number" Width="80">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Owner.phoneNumber}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="privateNameColumn2" Header="Private Name" Width="80">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Owner.PrivateName}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                   
+
                 </Grid>
+
 
 
             </TabItem>
@@ -338,26 +370,25 @@
 
             <TabItem Header="שאילתות הזמנות" Height="30" Width="145">
 
-                <Grid>
-                    <Grid x:Name="ManagementGrid3" VerticalAlignment="Top"  HorizontalAlignment="Left" Background="#99000000" Height="340" Width="777">
+               <Grid x:Name="ManagementGrid3" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Background="#00000000">
 
-                        <Grid.Resources>
-                            <Style TargetType="{x:Type Label}">
-                                <!--<Setter Property="FontSize" Value="32" />-->
-                                <Setter Property="Foreground" Value="#FFFFFFFF"/>
-                            </Style>
-                        </Grid.Resources>
-                        <Grid.DataContext>
-                            <StaticResource ResourceKey="OrderSource"/>
-                        </Grid.DataContext>
+                    <Grid.Resources>
+                        <Style TargetType="{x:Type Label}">
+                            <!--<Setter Property="FontSize" Value="32" />-->
+                            <Setter Property="Foreground" Value="#FFFFFFFF"/>
+                        </Style>
+                    </Grid.Resources>
 
-                        <Grid.RowDefinitions>
 
-                            <RowDefinition Height="24"/>
-                            <RowDefinition Height="135"/>
-                            <RowDefinition Height="10"/>
-                            <RowDefinition Height="auto"/>
-                        </Grid.RowDefinitions>
+
+                    <Grid.RowDefinitions>
+
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Top">
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="115"/>
@@ -380,95 +411,82 @@
 
                         </Grid.ColumnDefinitions>
 
+                        <Label  VerticalAlignment="Center"   Content="להצגת כל ההזמנות:" Grid.Column="0"/>
+                        <Button x:Name="GetAllOrders" Content="הצג" Grid.Column="1" Click="GetAllHostingUnitclick" Height="24" VerticalAlignment="Top" />
 
-                        <Label  VerticalAlignment="Center"  Grid.Row="0" Content="להצגת כל ההזמנות:" Grid.Column="0"/>
-                        <Button x:Name="GetAllOrders" Content="הצג" Grid.Column="1" Grid.Row="0" Click="GetAllHostingUnitclick" Height="24" VerticalAlignment="Top" />
-
-                        <Label  VerticalAlignment="Center"  Grid.Row="0" Content="להצגה לפי מס' הזמנה:" Grid.Column="3"/>
-                        <TextBox Grid.Column="4" Grid.Row="0"/>
-                        <Button Height="24" x:Name="GetOrderById" Content="הצג" Grid.Column="5" Grid.Row="0" Click="GetHostingUnitByIdclick" />
+                        <Label  VerticalAlignment="Center"  Content="להצגה לפי מס' הזמנה:" Grid.Column="3"/>
+                        <TextBox Grid.Column="4" />
+                        <Button Height="24" x:Name="GetOrderById" Content="הצג" Grid.Column="5" Click="GetHostingUnitByIdclick" />
 
                         <Label  VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Row="0" Content="להצגת הזמנות מתאריך:" Grid.Column="7"/>
-                        <Calendar Grid.Column="10" Grid.Row="0"  Grid.RowSpan="2" x:Name="GetHOrdersByDate"  Width="auto" HorizontalAlignment="Left"/>
                         <Button Height="24" VerticalAlignment="Top" HorizontalAlignment="Right"  Width="40" Content="הצג" Grid.Row="0"  Grid.Column="8" Click="GetHostingUnitAvilableclick"    />
 
-
-
-
-                        <ListView x:Name="orderListView" Grid.Column="0" Grid.ColumnSpan="15" Grid.Row="4" SelectionMode="Single" Background="#99000000"  >
-
-
-
-                            <ListView.ItemContainerStyle>
-                                <Style>
-                                    <Setter Property="Control.HorizontalContentAlignment" Value="Stretch"/>
-                                    <Setter Property="Control.VerticalContentAlignment" Value="Stretch"/>
-
-                                </Style>
-
-                            </ListView.ItemContainerStyle>
-
-
-
-
-                            <ListView.View>
-                                <GridView>
-                                    <GridViewColumn x:Name="createDateColumn" Header="Create Date" Width="80">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Label Content="{Binding CreateDate}" Margin="6,-1,-6,-1"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn x:Name="guestRequestKeyColumn" Header="Guest Request Key" Width="110">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Label Content="{Binding GuestRequestKey}" Margin="-6,-1"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn x:Name="hostingUnitKeyColumn1" Header="Hosting Unit Key" Width="110">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Label Content="{Binding HostingUnitKey}" Margin="-6,-1"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn x:Name="orderDateColumn" Header="Order Date" Width="80">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Label Content="{Binding OrderDate}" Margin="-6,-1"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn x:Name="orderKeyColumn" Header="Order Key" Width="80">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Label Content="{Binding OrderKey}" Margin="-6,-1"/>
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-                                    </GridViewColumn>
-                                    <GridViewColumn x:Name="statusColumn" Header="Status" Width="80">
-                                        <GridViewColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Label Content="{Binding Status}" Margin="-6,-1"/>
-
-                                            </DataTemplate>
-                                        </GridViewColumn.CellTemplate>
-
-                                    </GridViewColumn>
-
-                                </GridView>
-
-                            </ListView.View>
-
-
-                        </ListView>
-
-
-
-
                     </Grid>
+
+                    <ListView x:Name="orderListView" Grid.Row="1" SelectionMode="Single" Background="#99000000"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+
+
+
+
+
+
+
+
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn x:Name="createDateColumn" Header="Create Date" Width="80">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding CreateDate}" Margin="6,-1,-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="guestRequestKeyColumn" Header="Guest Request Key" Width="110">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding GuestRequestKey}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="hostingUnitKeyColumn1" Header="Hosting Unit Key" Width="110">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding HostingUnitKey}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="orderDateColumn" Header="Order Date" Width="80">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding OrderDate}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="orderKeyColumn" Header="Order Key" Width="80">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding OrderKey}" Margin="-6,-1"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn x:Name="statusColumn" Header="Status" Width="80">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding Status}" Margin="-6,-1"/>
+
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+
+                                </GridViewColumn>
+
+                            </GridView>
+
+                        </ListView.View>
+
+
+                    </ListView>
+
+
                 </Grid>
 
             </TabItem>

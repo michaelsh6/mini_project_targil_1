@@ -11,6 +11,7 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Net.NetworkInformation;
+using System.Text.RegularExpressions;
 
 namespace BE
 {
@@ -209,6 +210,6 @@ namespace BE
                 return (T)formatter.Deserialize(stream);
             }
         }
-
+        
     }
 }

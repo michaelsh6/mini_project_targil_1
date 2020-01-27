@@ -24,7 +24,12 @@ namespace PLWPF
     {
         public ManagementWindow()
         {
+            IBL bl = FactoryBL.GetBL();
             InitializeComponent();
+            hostingUnitListView.ItemsSource = bl.getAllHostingUnits();
+            guestListView.ItemsSource = bl.getAllGuests();
+            orderListView.ItemsSource = bl.getAllOrders();
+            
         }
 
 
@@ -62,16 +67,7 @@ namespace PLWPF
 
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-
-            System.Windows.Data.CollectionViewSource guestViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("guestViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // guestViewSource.Source = [generic data source]
-            System.Windows.Data.CollectionViewSource hostingUnitViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("hostingUnitViewSource")));
-            // Load data by setting the CollectionViewSource.Source property:
-            // hostingUnitViewSource.Source = [generic data source]
-        }
+     
 
         private void GetAllHostingUnitclick(object sender, RoutedEventArgs e)
         {
@@ -86,6 +82,15 @@ namespace PLWPF
 
         }
 
-          
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            System.Windows.Data.CollectionViewSource hostingUnitViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("hostingUnitViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // hostingUnitViewSource.Source = [generic data source]
+            System.Windows.Data.CollectionViewSource hostViewSource = ((System.Windows.Data.CollectionViewSource)(this.FindResource("hostViewSource")));
+            // Load data by setting the CollectionViewSource.Source property:
+            // hostViewSource.Source = [generic data source]
+        }
     }
 }
