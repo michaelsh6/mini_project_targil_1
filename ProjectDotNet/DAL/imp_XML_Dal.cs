@@ -50,6 +50,7 @@ namespace DAL
                 configurition.HostingUnitKey = Convert.ToInt32(ConfigRoot.Element("HostingUnitKey").Value);
                 configurition.OrderKey = Convert.ToInt32(ConfigRoot.Element("OrderKey").Value);
                 configurition.commission = Convert.ToInt32(ConfigRoot.Element("commission").Value);
+                configurition.commissionAll = Convert.ToInt32(ConfigRoot.Element("commissionAll").Value);
                 configurition.LastApdateMonthly = Convert.ToDateTime(ConfigRoot.Element("LastApdateMonthly").Value);
                 configurition.LastApdateDaily = Convert.ToDateTime(ConfigRoot.Element("LastApdateDaily").Value);
             }

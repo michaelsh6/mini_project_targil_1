@@ -22,9 +22,14 @@ namespace PLWPF
     /// </summary>
     public partial class ManagementWindow : Window
     {
+        IBL bl;
+        IEnumerable<IGrouping<int,Guest>> FeildSet;
         public ManagementWindow()
         {
-            IBL bl = FactoryBL.GetBL();
+
+            bl = FactoryBL.GetBL();
+            FeildSet = bl.GetGroupingGuestByNumOfPeoples();
+
             InitializeComponent();
             hostingUnitListView.ItemsSource = bl.getAllHostingUnits();
             guestListView.ItemsSource = bl.getAllGuests();

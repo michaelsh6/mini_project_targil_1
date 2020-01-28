@@ -108,6 +108,7 @@ namespace BE
                     new XElement("HostingUnitKey", configurition.HostingUnitKey),
                     new XElement("OrderKey", configurition.OrderKey),
                     new XElement("commission", configurition.commission),
+                    new XElement("commissionAll", configurition.commissionAll),
                     new XElement("LastApdateMonthly", configurition.LastApdateMonthly),
                     new XElement("LastApdateDaily", configurition.LastApdateDaily));
                 ConfigRoot.Save(configPath);

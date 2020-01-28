@@ -90,6 +90,9 @@ namespace BL
                 throw new Exception("status mast start with Not_yet_addressed"); //TODO  Exception
             if (guest.Status != enums.GuestStatus.open)
                 throw new Exception("Guest status mast by open"); //TODO  Exception
+            if (unit.Owner.CollectionClearance ==false)
+                throw new Exception("אין אפשרות לפתוח הזמנה שכן אין הרשאה לחיוב חשבון הבנק שלך"); //TODO  Exception
+
 
             dal.addOrder(order);
             //sendMail(order);
@@ -278,20 +281,24 @@ namespace BL
                         Console.WriteLine("mail_has_been_sent");
                         break;
                     case enums.OrderStatus.closed_Request_expired:
-                        guest.Status = enums.GuestStatus.closed_Request_expired;
-                        updateGuest(guest);
+                        if(guest.Status == enums.GuestStatus.open)
+                        {
+                            guest.Status = enums.GuestStatus.closed_Request_expired;
+                            updateGuest(guest);
+                        }
+                       
                         
                         foreach (var ord in orders)
                         {
                             ord.Status = enums.OrderStatus.closed_Request_expired;
-                            updateOrder(ord);
+                            dal.updateOrder(ord);
                         }
 
                         break;
                     case enums.OrderStatus.closed_Order_accepted:
                         int num_of_days = GetNumOfDays(guest.EntryDate, guest.ReleaseDate);
                         int commission = configurition.commission * num_of_days;
-
+                        configurition.commissionAll += commission;
                         guest.Status = enums.GuestStatus.closed_Order_accepted;
                         updateGuest(guest);
                         foreach(var ord in orders)

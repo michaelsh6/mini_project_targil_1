@@ -115,6 +115,8 @@ namespace PLWPF
                 sendMailWorker.RunWorkerAsync(order);
                 orders.Add(order);
                 //orderListView.ItemsSource = orders;
+                MessageBox.Show("הפעולה בוצעה בהצלחה", "הזמנה נשלחה ללקוח");
+
             }
             catch (Exception ex)
             {
@@ -124,45 +126,63 @@ namespace PLWPF
 
         private void UpDateHostingUnit(object sender, RoutedEventArgs e)
         {
-            if (HostingUnitGrid.IsEnabled == false)
+            try
             {
-                HostingUnitGrid.IsEnabled = true;
-                upDateHostingUnit.Content = "שלח"
-;
-            }
-            else
-            {
-                MessageBox.Show("הפעולה בוצעה בהצלחה", "עידכון יחידת אירוח");
-                upDateHostingUnit.Content = "ערוך יחידת אירוח";
-                bl.updateHostingUnit(hostingUnit);
-                HostingUnitGrid.IsEnabled = false;
-                if (DeleteHostingUnit.IsEnabled == false)
+                if (HostingUnitGrid.IsEnabled == false)
                 {
-                    DeleteHostingUnit.IsEnabled = true;
-                    orderTabItem.IsEnabled = true;
-                    guestTabItem.IsEnabled = true;
+                    HostingUnitGrid.IsEnabled = true;
+                    upDateHostingUnit.Content = "שלח"
+    ;
+                }
+                else
+                {
+                    bl.updateHostingUnit(hostingUnit);
+                    MessageBox.Show("הפעולה בוצעה בהצלחה", "עידכון יחידת אירוח");
+                    upDateHostingUnit.Content = "ערוך יחידת אירוח";
+                    HostingUnitGrid.IsEnabled = false;
+                    if (DeleteHostingUnit.IsEnabled == false)
+                    {
+                        DeleteHostingUnit.IsEnabled = true;
+                        orderTabItem.IsEnabled = true;
+                        guestTabItem.IsEnabled = true;
+                    }
                 }
             }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+
 
         }
 
         private void DelButton_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult result = MessageBox.Show("?" + "האם ברצונך למחוק יחידת אירוח", "מחיקת יחידת אירוח", MessageBoxButton.YesNoCancel);
-            switch (result)
+            try
             {
-                case MessageBoxResult.Yes:
-                    MessageBox.Show("הפעולה בוצעה בהצלחה", "מחיקת יחידת אירוח");
-                    bl.deleteHostingUnit(hostingUnit.HostingUnitKey);
-                    this.Close();
-                    break;
-                case MessageBoxResult.No:
-                    MessageBox.Show("!" + "הפעולה לא בוצעה", "מחיקת יחידת אירוח");
-                    break;
-                case MessageBoxResult.Cancel:
-                    MessageBox.Show("!" + "הפעולה לא בוצעה", "מחיקת יחידת אירוח");
-                    break;
+                switch (result)
+                {
+                    case MessageBoxResult.Yes:
+                        bl.deleteHostingUnit(hostingUnit.HostingUnitKey);
+                        MessageBox.Show("הפעולה בוצעה בהצלחה", "מחיקת יחידת אירוח");
+                        this.Close();
+                        break;
+                    case MessageBoxResult.No:
+                        MessageBox.Show("!" + "הפעולה לא בוצעה", "מחיקת יחידת אירוח");
+                        break;
+                    case MessageBoxResult.Cancel:
+                        MessageBox.Show("!" + "הפעולה לא בוצעה", "מחיקת יחידת אירוח");
+                        break;
+                }
             }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
+
         }
 
 
@@ -245,6 +265,27 @@ namespace PLWPF
             filterStatusGuest.SelectedIndex = -1;
             guests.Clear();
             bl.getAllGuests().ToList().ForEach(guests.Add);
+
+        }
+
+        private void closedOrderButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Order order = orders[orderListView.SelectedIndex];
+                if (order.Status == enums.OrderStatus.mail_has_been_sent || order.Status == enums.OrderStatus.Not_yet_addressed)
+                {
+                    order.Status = enums.OrderStatus.closed_Order_accepted;
+                    bl.updateOrder(order);
+                    MessageBox.Show("הפעולה בוצעה בהצלחה", "סגירת הזמנה בהצלחה");
+
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
 
         }
     }

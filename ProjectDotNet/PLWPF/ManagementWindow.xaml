@@ -491,7 +491,12 @@
 
             </TabItem>
 
-            <TabItem Header="שאילתות נוספות" Height="30" Width="100"/>
+            <TabItem Header="שאילתות נוספות" Height="30" Width="100">
+         
+            </TabItem>
+
+            
+
         </TabControl>
     </Grid>
 </Window>

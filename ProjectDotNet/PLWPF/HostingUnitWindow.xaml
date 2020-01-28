@@ -236,7 +236,19 @@
 
 
                         </ListView>
-                        <Button Content="סגירת הזמנה" Grid.Row="2"  Margin="635,5,46,0" />
+                        <Button Content="סגירת הזמנה" Grid.Row="2"  Margin="635,5,46,0" Click="closedOrderButton_Click" >
+                            <Button.Style>
+                                <Style TargetType="{x:Type Button}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedItem, ElementName=orderListView}"
+                             Value="{x:Null}">
+                                            <Setter Property="IsEnabled" Value="True" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+
+                        </Button>
 
                     </Grid>
                 </Grid>

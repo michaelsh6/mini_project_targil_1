@@ -34,6 +34,7 @@ namespace BE
         }
 
         public static int commission = 10; 
+        public static int commissionAll = 0; 
 
         public static DateTime LastApdateMonthly;
         public static DateTime LastApdateDaily;
