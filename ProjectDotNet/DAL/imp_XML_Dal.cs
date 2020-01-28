@@ -88,7 +88,7 @@ namespace DAL
         }
 
 
-
+         //addGuest function get Guest for Save To XML
         public void addGuest(Guest guest)
         {
             if (!guests.Any(x => x.GuestRequestKey == guest.GuestRequestKey))
@@ -98,16 +98,16 @@ namespace DAL
             }
             else
             {
-                throw new Exception("DuplicateIdExceptionGuest"); //TODO // DuplicateIdException()
+                throw new ExceptionException("DuplicateIdExceptionGuest"); //TODO // DuplicateIdException()
             }
         }
-
+        //updateGuest function get Guest for Save To XML
         public void updateGuest(Guest guest)
         {
             guests.RemoveAll(x => x.GuestRequestKey == guest.GuestRequestKey);
             addGuest(guest);
         }
-
+        //addHostingUnit function get HostingUnit for Save To XML
         public void addHostingUnit(HostingUnit hostingUnit)
         {
             if (!hostingUnits.Any(x => x.HostingUnitKey == hostingUnit.HostingUnitKey))
@@ -117,42 +117,42 @@ namespace DAL
             }
             else
             {
-                throw new Exception("DuplicateIdExceptionHostinUnit"); //TODO // DuplicateIdException()
+                throw new ExceptionException("DuplicateIdExceptionHostinUnit"); //TODO // DuplicateIdException()
             }
         }
-
+           //updateHostingUnit function get HostingUnit for Save To XML 
         public void updateHostingUnit(HostingUnit hostingUnit)
         {
             hostingUnits.RemoveAll(x => x.HostingUnitKey == hostingUnit.HostingUnitKey);
             addHostingUnit(hostingUnit);
         }
-
+         //deleteHostingUnit function get hosting Unit Id  and delete it from XML
         public void deleteHostingUnit(int hostingUnitId)
         {
             int count = hostingUnits.RemoveAll(x => x.HostingUnitKey == hostingUnitId);
             if (count == 0)
-                throw new Exception("HostinUnit not exist"); //TODO // DuplicateIdException()
+                throw new HostinUnitNotExistException("HostinUnit not exist"); //TODO // DuplicateIdException()
             SaveToXML<List<HostingUnit>>(hostingUnits, HostingUnitPath);
 
         }
-
+        // GetGuest function get Guest Request Key and return Guest obj from Xml data
         public Guest GetGuest(int GuestRequestKey)
         {
             return guests.FirstOrDefault(x => x.GuestRequestKey == GuestRequestKey).Clone();
         }
-
+        // HostingUnit function get  Hosting Unit Key and return HostingUnit obj from Xml data
         public HostingUnit GetHostingUnit(int HostingUnitKey)
         {
             return hostingUnits.FirstOrDefault(x => x.HostingUnitKey == HostingUnitKey).Clone();
         }
-
+      // getAllHostingUnits function   return all HostingUnit obj from Xml data
         public IEnumerable<HostingUnit> getAllHostingUnits(Func<HostingUnit, bool> predicat = null)
         {
             return from hostingUnit in hostingUnits
                    where predicat == null ? true : predicat(hostingUnit)
                    select hostingUnit.Clone();
         }
-
+ // getAllGuest function   return all Guest obj from Xml data
         public IEnumerable<Guest> getAllGuest(Func<Guest, bool> predicat = null)
         {
             return from guest in guests
@@ -165,12 +165,12 @@ namespace DAL
 
 
 
-
+  // addOrder function   add Order obj to Xml data
         public void addOrder(Order order)
         {
             if (GetOrder(order.OrderKey) != null)
             {
-                throw new Exception("DuplicateIdExceptionOrder"); //TODO // DuplicateIdException()
+                throw new IdOrderException("DuplicateIdExceptionOrder"); //TODO // DuplicateIdException()
             }
             try
             {
@@ -189,12 +189,13 @@ namespace DAL
             }
             catch (Exception ex)
             {
-                throw new Exception("file_problem_Order");
+                throw new problem_OrderException("file_problem_Order");
             }
 
         }
-
-        public void updateOrder(Order order)
+        
+          // updateOrder function   add update Order  to Xml data
+         public void updateOrder(Order order)
         {
             order = order.Clone();
             XElement oldorder = (from orderXml in OrderRoot.Elements()
@@ -212,7 +213,7 @@ namespace DAL
 
         }
 
-
+       // GetOrder function get Order Key and return Order obj from xml data.
         public Order GetOrder(int OrderKey)
         {
             //OrderRoot = XElement.Load(OrderPath);
@@ -229,7 +230,7 @@ namespace DAL
         }
 
 
-
+       // getAllOrders function  return all Order obj from xml data.
         public IEnumerable<Order> getAllOrders(Func<Order, bool> predicat = null)
         {
             try
@@ -251,10 +252,11 @@ namespace DAL
             catch (Exception ex)
             {
                // throw new Exception("file_problem_Order");
-                throw ex;
+               throw new problem_OrderException("file_problem_Order");
             }
         }
 
+        //getAllBankBranches function  return all All Bank Branches from flie BankAccuntPath or atm1.xml.
         public IEnumerable<BankAccunt> getAllBankBranches()
         {
 
