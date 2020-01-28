@@ -25,6 +25,18 @@ namespace BE
  
    public class NoOpenOrderException : Exception{ public NoOpenOrderException(string message) : base(message){ }}
    
+   public class IncorrentStatusException : Exception{ public IncorrentStatusException(string message) : base(message){ }}
+   
+   public class IdOrderException : Exception{ public IdOrderException(string message) : base(message){ }}
+   
+   public class HostinUnitNotExistException : Exception{ public HostinUnitNotExistException(string message) : base(message){ }}
+   
+   public class ExceptionException : Exception{ public ExceptionException(string message) : base(message){ }}
+   
+    public class problem_OrderException : Exception{ public problem_OrderException(string message) : base(message){ }}
+   
+   
+   
    //public class NotImplementedException : Exception{ public NotImplementedException(){ }}
   
 }
