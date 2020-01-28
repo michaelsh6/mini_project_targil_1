@@ -46,7 +46,7 @@ namespace BL
             // תאריך תחילת הנופש קודם לפחות ביום אחד לתאריך סיום הנופש
             //if date distance more than 11 month, or EntryDate earler than today.
             if (!ValidDate(guest.EntryDate,guest.ReleaseDate))
-                throw new Exception("Date mismatch");//TODO DateMismatchException
+                throw new DateMismatchException("Date mismatch");//TODO DateMismatchException
             //incorrect mail                                  
             if (!MailValidition(guest.MailAddress))
                 throw new Exception("incorrect mail");//TODO DateMismatchException }

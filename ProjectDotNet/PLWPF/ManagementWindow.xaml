@@ -28,8 +28,8 @@
             </TabControl.Background>
             <TabItem Header="שאילתות רשימת לקוחות" Height="30" Width="145">
 
-                <Grid>
-                    <Grid x:Name="ManagementGrid" VerticalAlignment="Top"  HorizontalAlignment="Left" Background="#00000000" Height="340" Width="777">
+
+                    <Grid x:Name="ManagementGrid" VerticalAlignment="Stretch"  HorizontalAlignment="Stretch" Background="#00000000">
 
                         <Grid.Resources>
                             <Style TargetType="{x:Type Label}">
@@ -42,50 +42,29 @@
 
                             <RowDefinition Height="40"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition Height="40"/>
                         </Grid.RowDefinitions>
 
 
 
-                        <Grid Grid.Row="0">
+                        
+                        <StackPanel Name="filterGuestStackPanel"  Grid.Row="0"  VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal" >
 
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="168"/>
-                                <ColumnDefinition Width="40"/>
 
-                                <ColumnDefinition Width="10" />
+                            <Label  HorizontalAlignment="Right" Width="42"  Grid.Column="0"  Content=":Pool" />
+                            <ComboBox  Name="filterPoolGuest" Width="100" Text="{Binding Pool, Mode=OneWayToSource}"/>
+                            <Label HorizontalAlignment="Right" Width="49"  Content=":Jacuzzi" Margin="20,0,5,0"/>
+                            <ComboBox Name="filterJacuzziGuest" Width="100" Grid.Column="3" Text="{Binding Jacuzzi, Mode=OneWayToSource}"/>
 
-                                <ColumnDefinition Width="132"/>
-                                <ColumnDefinition Width="75"/>
-                                <ColumnDefinition Width="40"/>
+                            <Label HorizontalAlignment="Right" Width="35" Grid.Column="4" Content=":Area"  Margin="20,0,5,0"/>
+                            <ComboBox Name="filterAreaGuest" HorizontalAlignment="Right" Width="100" Grid.Column="5" Text="{Binding Area,Mode=OneWayToSource}" />
 
-                                <ColumnDefinition Width="10" />
+                            <Label HorizontalAlignment="Right" Width="47" Grid.Column="6"  Content=":Status"  Margin="20,0,5,0"/>
+                            <ComboBox Name="filterStatusGuest" HorizontalAlignment="Right"  Width="100" Grid.Column="7" Text="{Binding Status,Mode=OneWayToSource}"/>
+                            <Button Name="filterGuestButton" Content="סנן" Width="90"  Margin="20,0,5,0" Click="FilterGuestButton_Click" />
 
-                                <ColumnDefinition Width="150" />
-                                <ColumnDefinition Width="75" />
-                                <ColumnDefinition Width="40" />
 
-                                <ColumnDefinition Width="45"/>
-                                <ColumnDefinition Width="45"/>
-                                <ColumnDefinition Width="45" />
-                                <ColumnDefinition Width="45" />
-                                <ColumnDefinition Width="45" />
-
-                            </Grid.ColumnDefinitions>
-
-                            <Label  VerticalAlignment="Center"   Content="להצגת כל הלקוחות:" Grid.Column="0"/>
-                            <Button x:Name="GetAllguest" Content="הצג" Grid.Column="1"  Click="GetAllguestclick" Height="24" VerticalAlignment="Top" />
-
-                            <Label  VerticalAlignment="Center"   Content="להצגת לקוח לפי ת.ז:" Grid.Column="3"/>
-                            <TextBox Grid.Column="4" />
-                            <Button x:Name="GetguestById" Content="הצג" Grid.Column="5"  Click="GetguestByIdclick" />
-
-                            <Label  VerticalAlignment="Center"  Content="להצגת לקוח לפי מס'הזמנה:" Grid.Column="7"/>
-                            <TextBox Grid.Column="8" />
-                            <Button x:Name="GetguestByOrder" Content="הצג" Grid.Column="9"  Click="GetguestByOrderclick" />
-
-                            <Label  VerticalAlignment="Center"  Content=""  Grid.Column="0"/>
-                            <Button x:Name="GetguestOpen" Content="הצג" Grid.Column="1"  Click="GetguestOpenclick" />
-                        </Grid>
+                        </StackPanel>
 
                         <ListView  Grid.Row="1" x:Name="guestListView" SelectionMode="Single" Background="#99000000" >
                             
@@ -219,9 +198,10 @@
                                 </GridView>
                             </ListView.View>
                         </ListView>
+                        <Button Content="נקה סינונים" Grid.Row="2" Width="75"  Margin="667,6,39,4" Click="ClearFilter_Click" />
 
                     </Grid>
-                </Grid>
+
 
 
             </TabItem>
