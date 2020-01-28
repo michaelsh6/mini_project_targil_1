@@ -14,12 +14,12 @@ namespace BL
 
     public class BL_Imp : IBL
     {
-        IDAL dal = DalFactory.GetDal();
+        IDAL dal = DalFactory.GetDal(); 
 
-       internal BL_Imp()
+       internal BL_Imp() //implementaion DalFactory
         {
             updateMatrixs();
-            if (configurition.LastApdateDaily.AddDays(1) < DateTime.Now)
+            if (configurition.LastApdateDaily.AddDays(1) < DateTime.Now) // Sync those date that passed.
             {
                 
                 Thread threadDaily = new Thread(UpdateOldOrder);
@@ -29,19 +29,19 @@ namespace BL
         }
 
 
-        private void UpdateOldOrder()
+        private void UpdateOldOrder() //Update old order function.
         {
             IEnumerable<Order> oldOrders = GetOrderOldersThen(31);
             foreach(var order in oldOrders)
             {
-                order.Status = enums.OrderStatus.closed_Request_expired;
+                order.Status = enums.OrderStatus.closed_Request_expired;//Update Status.
                 updateOrder(order);
             }
-            configurition.LastApdateDaily = DateTime.Now;
+            configurition.LastApdateDaily = DateTime.Now; //Update date to DateTime=now.
         }
 
 
-      public void addGuest(Guest guest)
+      public void addGuest(Guest guest)//addGuest the function get guest object and input it to data base
         {
             // תאריך תחילת הנופש קודם לפחות ביום אחד לתאריך סיום הנופש
             //if date distance more than 11 month, or EntryDate earler than today.
@@ -49,49 +49,52 @@ namespace BL
                 throw new DateMismatchException("Date mismatch");//TODO DateMismatchException
             //incorrect mail                                  
             if (!MailValidition(guest.MailAddress))
-                throw new Exception("incorrect mail");//TODO DateMismatchException }
+                throw new MailValiditionException("incorrect mail");//TODO DateMismatchException }
             //
             dal.addGuest(guest);
         }
 
-        public void addHostingUnit(HostingUnit hostingUnit)
+        public void addHostingUnit(HostingUnit hostingUnit) //addHostingUnit the  function get HostingUnit object and input it to data base
         {
             //incorrect mail                                  
             if (!MailValidition(hostingUnit.Owner.MailAddress))
-                throw new Exception("incorrect mail");//TODO DateMismatchException }
+                throw new MailValiditionException("incorrect mail");//TODO DateMismatchException }
             //
             //incorrect Phon                                  
             if (!IsDigitsOnly(hostingUnit.Owner.phoneNumber))
-                throw new Exception("incorrect phone");//TODO DateMismatchException }
+                throw new IncorrectPhoneException("incorrect phone");//TODO DateMismatchException }
             //
             dal.addHostingUnit(hostingUnit);
         }
 
-        private bool UnitIsAvailabl(HostingUnit hostingUnit, DateTime EntryDate,DateTime ReleaseDate)
-        {
+        private bool UnitIsAvailabl(HostingUnit hostingUnit, DateTime EntryDate,DateTime ReleaseDate) //UnitIsAvailabl function.
+        { // the function return true when Unit Is Availabl
             int day = EntryDate.Day;
             int month = EntryDate.Month;
             //hostingUnit[new DateTime(2020,3,2)] = true;
-            for (DateTime CurrentDay = EntryDate; CurrentDay < ReleaseDate; CurrentDay = CurrentDay.AddDays(1))
+            for (DateTime CurrentDay = EntryDate; CurrentDay < ReleaseDate; CurrentDay = CurrentDay.AddDays(1))   
                 if (hostingUnit[CurrentDay] ==true)
                     return false;
             return true;
         }
 
-        public void addOrder(Order order)
+        public void addOrder(Order order) //addOrder function. the function get order and add it into data base
         {
             //יש לוודא בעת יצירת הזמנה ללקוח, שהתאריכים המבוקשים פנויים ביחידת האירוח שמוצעת לו
             HostingUnit unit = dal.GetHostingUnit(order.HostingUnitKey);
             Guest guest = dal.GetGuest(order.GuestRequestKey);
 
-            if (!UnitIsAvailabl(unit, guest.EntryDate, guest.ReleaseDate))
-                throw new Exception("Unit not Availabl"); //TODO UnitIsAvailablException
-            if (order.Status != enums.OrderStatus.Not_yet_addressed)
-                throw new Exception("status mast start with Not_yet_addressed"); //TODO  Exception
-            if (guest.Status != enums.GuestStatus.open)
-                throw new Exception("Guest status mast by open"); //TODO  Exception
-            if (unit.Owner.CollectionClearance ==false)
-                throw new Exception("אין אפשרות לפתוח הזמנה שכן אין הרשאה לחיוב חשבון הבנק שלך"); //TODO  Exception
+            if (!UnitIsAvailabl(unit, guest.EntryDate, guest.ReleaseDate)) //check if Unit Availabl
+                throw new UnitIsAvailablException("Unit not Availabl"); //TODO UnitIsAvailablException
+		
+            if (order.Status != enums.OrderStatus.Not_yet_addressed) //check if status start with Not_yet_addressed
+                throw new StartStatusException("status mast start with Not_yet_addressed"); //TODO  Exception
+		
+            if (guest.Status != enums.GuestStatus.open) //check if guest status open
+                throw new GuestStatusException("Guest status mast by open"); //TODO  Exception
+		
+            if (unit.Owner.CollectionClearance ==false) //check if bank have credit
+                throw new NoBankCreditException("אין אפשרות לפתוח הזמנה שכן אין הרשאה לחיוב חשבון הבנק שלך"); //TODO  Exception
 
 
             dal.addOrder(order);
@@ -99,50 +102,50 @@ namespace BL
 
         }
 
-        public void deleteHostingUnit(int HostingUnitKey)
+        public void deleteHostingUnit(int HostingUnitKey) //deleteHostingUnit function the function get HostingUnitKey and delete the HostingUnit
         {
             //לא ניתן למחוק יחידת אירוח כל עוד יש הצעה הקשורה אליה במצב פתוח
             Func<Order, bool> func = x => x.HostingUnitKey == HostingUnitKey &&
              (x.Status == enums.OrderStatus.mail_has_been_sent || x.Status == enums.OrderStatus.Not_yet_addressed);
             int count = dal.getAllOrders(func).Count();
             if (count != 0)
-                throw new Exception("there is open orders to this unit"); //TODO OpenOrdersUnitException
+                throw new NoOpenOrderException("there is open orders to this unit"); //TODO OpenOrdersUnitException
             dal.deleteHostingUnit(HostingUnitKey);
 
 
 
         }
 
-        public IEnumerable<HostingUnit> getAllAvailableHostingUnits(DateTime date, int num_of_dats)
-        {
+        public IEnumerable<HostingUnit> getAllAvailableHostingUnits(DateTime date, int num_of_dats) //getAllAvailableHostingUnits function
+        { //the function return all AvailableHostingUnit objects 
             DateTime EntryDate = date;
             DateTime ReleaseDate = date.AddDays(num_of_dats);
             return dal.getAllHostingUnits(unit => UnitIsAvailabl(unit, EntryDate, ReleaseDate));
         }
 
-        public IEnumerable<BankAccunt> getAllBankBranches()
-        {
+        public IEnumerable<BankAccunt> getAllBankBranches() //getAllBankBranches function.
+        { //the function return all Bank Branches
             return dal.getAllBankBranches();
         }
 
-        public IEnumerable<Guest> getAllGuests(Func<Guest, bool> predicat = null)
-        {
+        public IEnumerable<Guest> getAllGuests(Func<Guest, bool> predicat = null) //getAllGuests function.
+        { //the function return All Guests
             return dal.getAllGuest(predicat);
             throw new NotImplementedException();
         }
 
-        public IEnumerable<HostingUnit> getAllHostingUnits(Func<HostingUnit, bool> predicat = null)
-        {
+        public IEnumerable<HostingUnit> getAllHostingUnits(Func<HostingUnit, bool> predicat = null) //getAllHostingUnits function.
+        { //the function return all Hosting Units
             return dal.getAllHostingUnits(predicat);
         }
 
-        public IEnumerable<Order> getAllOrders(Func<Order, bool> predicat = null)
-        {
+        public IEnumerable<Order> getAllOrders(Func<Order, bool> predicat = null) //getAllOrders function.
+        { //the function All Orders.
             return dal.getAllOrders(predicat);
         }
 
-        public IEnumerable<IGrouping<enums.CountryAreas, Guest>> GetGroupingGuestByCountryAreas()
-        {
+        public IEnumerable<IGrouping<enums.CountryAreas, Guest>> GetGroupingGuestByCountryAreas() //Grouping function.
+        { //the function return Guest object by Grouping Country Areas.
             var guests =  dal.getAllGuest();
             return from guest in guests group guest by guest.Area;
         }
@@ -165,7 +168,7 @@ namespace BL
                     let num_of_Unit = Units.Count()
                     group Owner by num_of_Unit;
         }
-
+// לפי אזור )Grouping )ע"פ מספר יחידות האירוח שהם מחזיקים
         public IEnumerable<IGrouping<enums.CountryAreas, HostingUnit>> GetGroupingHostingUnitByCountryAreas()
         {
 
@@ -174,23 +177,23 @@ namespace BL
             var orders = dal.getAllOrders();
             return from order in orders group GetHostingUnit(order.HostingUnitKey) by GetGuest(order.GuestRequestKey).Area;
         }
-
-        public Guest GetGuest(int GuestRequestKey)
+ 
+        public Guest GetGuest(int GuestRequestKey) //GetGuest the function get Guest Request Key and return the object.
         {
             return dal.GetGuest(GuestRequestKey);
         }
 
-        public HostingUnit GetHostingUnit(int HostingUnitKey)
+        public HostingUnit GetHostingUnit(int HostingUnitKey) //GetHostingUnit the function get Hosting Unit Key and return the object.
         {
             return dal.GetHostingUnit(HostingUnitKey);
         }
 
-        public Order GetOrder(int OrderKey)
+        public Order GetOrder(int OrderKey) //GetOrder the function get Order Key and return the object.
         {
             return dal.GetOrder(OrderKey);
         }
 
-        public int GetNumOfDays(DateTime dateFrom, DateTime? dateTo = null)
+        public int GetNumOfDays(DateTime dateFrom, DateTime? dateTo = null) //GetNumOfDays the function  get date From and date To and return the num of days
         {
             dateTo = dateTo == null ? DateTime.Today : dateTo; 
             return ((DateTime)dateTo - dateFrom).Days;
@@ -204,24 +207,24 @@ namespace BL
             return getAllOrders(OrderOlderThen);
         }
 
-        public int GuestNunOfOrders(int GuestRequestKey)
+        public int GuestNunOfOrders(int GuestRequestKey) //GuestNunOfOrders the function get Guest Request Key and retrun Nun Of Orders
         {
             return getAllOrders(x => x.GuestRequestKey == GuestRequestKey).Count();
         }
         
-        public int GuestOpenOrSuccessfullyClosedOrders(int GuestRequestKey)
-        {
+        public int GuestOpenOrSuccessfullyClosedOrders(int GuestRequestKey)//GuestOpenOrSuccessfullyClosedOrders the function get Guest Request Key
+        { // and retrun the number of Guest Open Or Successfully Closed Orders
             return getAllOrders(x => x.GuestRequestKey == GuestRequestKey &&
             (x.Status != enums.OrderStatus.closed_Request_expired)).Count();
             //(x.Status == enums.OrderStatus.mail_has_been_sent || x.Status == enums.OrderStatus.closed_Order_accepted)).Count();
         }
 
-        public void updateGuest(Guest guest)
+        public void updateGuest(Guest guest) //the function get guest obj and  update Guest into data base
         {
             dal.updateGuest(guest);
         }
 
-        public void updateHostingUnit(HostingUnit hostingUnit)
+        public void updateHostingUnit(HostingUnit hostingUnit) //the function get HostingUnit obj and  update HostingUnit into data base
         {
             // לא ניתן לבטל הרשאה לחיוב חשבון כאשר יש הצעה הקשורה אליה במצב פתוח
             HostingUnit OldhostingUnit = GetHostingUnit(hostingUnit.HostingUnitKey);
@@ -237,13 +240,13 @@ namespace BL
                 int hostKey = hostingUnit.Owner.HostKey;
                 IEnumerable<Order> orderOrders = getAllOrders(x => GetHostingUnit(x.HostingUnitKey).Owner.HostKey == hostKey);
                 if (orderOrders.Any(x => x.Status == enums.OrderStatus.mail_has_been_sent || x.Status == enums.OrderStatus.Not_yet_addressed))
-                    throw new Exception("There is an open offer for the owner so account authorization cannot be revoked");
+                    throw new IncorrentStatusException("There is an open offer for the owner so account authorization cannot be revoked");
             }
             //get(x=>x.Owner.HostKey == hostKey)
             dal.updateHostingUnit(hostingUnit);
         }
 
-        public void updateOrder(Order order)
+        public void updateOrder(Order order) //the function get Order obj and update order into data base  
         {
             //בעל יחידת אירוח יוכל לשלוח הזמנה ללקוח  (שינוי הסטטוס ל "נשלח מייל")  רק אם חתם על הרשאה לחיוב חשבון בנק.
             //לאחר שסטטוס ההזמנה השתנה לסגירת עיסקה – לא ניתן לשנות יותר את הסטטוס שלה
@@ -322,7 +325,9 @@ namespace BL
             dal.updateOrder(order);
         }
 
-        public void insertDates(HostingUnit hostingUnit, DateTime from,DateTime To,bool val =true)
+
+
+        public void insertDates(HostingUnit hostingUnit, DateTime from,DateTime To,bool val =true) //the function get HostingUnit obj and insert Dates into
         {
             for (DateTime corrent = from; corrent < To; corrent = corrent.AddDays(1))
             {
@@ -330,7 +335,7 @@ namespace BL
             }
         }
 
-         //mail validition    
+         //mail validition function    
         public bool MailValidition(string email)
         {         
              var addr = new System.Net.Mail.MailAddress(email);
@@ -364,7 +369,7 @@ namespace BL
             return true;
         }
 
-        public Order guestToOrder(Guest guest, HostingUnit hostingUnit)
+        public Order guestToOrder(Guest guest, HostingUnit hostingUnit) //the function get guest obj and HostingUnit obj and creat Order
         {
             Order order = new Order();
             order.HostingUnitKey = hostingUnit.HostingUnitKey;
