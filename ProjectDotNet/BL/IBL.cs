@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BE;
 namespace BL
 {
+    // BL interface
     public interface IBL
     {
 
