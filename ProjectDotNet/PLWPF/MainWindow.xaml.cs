@@ -72,6 +72,7 @@ namespace PLWPF
         private void CreateHostingUnitButton_click(object sender, RoutedEventArgs e)
         {
 
+
             HostingUnit hostingUnit = getHostingUnit();
            // bl.addHostingUnit(hostingUnit);
            // hostingUnits.Add(hostingUnit);
@@ -109,23 +110,24 @@ namespace PLWPF
                 HostingUnitKey = configurition.GetHostingUnitKey(),
                 Owner = new BE.Host()
                 {
-                    HostKey = 203376655,
-                    PrivateName = "shay",
-                    FamilyName = "patito",
-                    phoneNumber = "0544655345",
-                    MailAddress = "shay@gmail.com",
+                    //HostKey = 203376655,
+                    //PrivateName = "shay",
+                    //FamilyName = "patito",
+                    //phoneNumber = "0544655345",
+                    //MailAddress = "shay@gmail.com",
+
                     BankBranchDetails = new BE.BankAccunt()
-                    {
-                        BankNumber = 1,
-                        BankName = "Leumi",
-                        BranchNumber = 747,
-                        BranchAddress = "Hayarkot st",
-                        BranchCity = "Tel Aviv"
-                    },
-                    BankAccountNumber = 456789,
-                    CollectionClearance = true
+                    //{
+                    //    BankNumber = 1,
+                    //    BankName = "Leumi",
+                    //    BranchNumber = 747,
+                    //    BranchAddress = "Hayarkot st",
+                    //    BranchCity = "Tel Aviv"
+                    //},
+                    //BankAccountNumber = 456789,
+                    //CollectionClearance = true
                 },
-                HostingUnitName = "negev",
+                //HostingUnitName = "negev",
                 //Diary = new bool[31, 12]
             };
         }

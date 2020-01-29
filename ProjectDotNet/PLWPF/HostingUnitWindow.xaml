@@ -34,7 +34,7 @@
             </TabControl.Background>
             <TabItem Header="איזור אישי" Height="30" Width="100">
                 <Grid>
-                    <Grid x:Name="HostingUnitGrid"  IsEnabled="False" VerticalAlignment="Top" Margin="27,26,0,0" HorizontalAlignment="Left" Background="#99000000" Height="300" Width="720">
+                    <Grid x:Name="HostingUnitGrid"  IsEnabled="False" VerticalAlignment="Top" Margin="27,23,0,0" HorizontalAlignment="Left" Background="#99000000" Height="303" Width="535">
 
                         <Grid.RowDefinitions>
                             <RowDefinition Height="9"/>
@@ -54,9 +54,9 @@
 
                             <ColumnDefinition Width="118"/>
                             <ColumnDefinition Width="14"/>
-                            <ColumnDefinition Width="132" />
-                            <ColumnDefinition Width="7" />
-                            <ColumnDefinition Width="170" />
+                            <ColumnDefinition Width="118" />
+                            <!--<ColumnDefinition Width="7" />-->
+                            <!--<ColumnDefinition Width="170" />-->
                         </Grid.ColumnDefinitions>
 
                         <Grid.Resources>
@@ -117,12 +117,12 @@
                         <Label VerticalAlignment = "Center" Grid.Row="7" Margin="3,3,0,4" HorizontalAlignment="Left"  Content="Collection Clearance:" Grid.Column="3"  Height="26" Width="125"/>
                         <CheckBox  x:Name="collectionClearanceCheckBox"   VerticalAlignment="Center" Grid.Row="7" Margin="3,9,0,9" IsChecked="{Binding Owner.CollectionClearance, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}" HorizontalAlignment="Left" Grid.Column="5" Content="" Height="15" Width="20"/>
 
-                        <Calendar x:Name="MyCalendar" IsTodayHighlighted ="True"  Grid.Column="7" Grid.RowSpan="6"  Height="195" Width="170" VerticalAlignment = "Center" Grid.Row="2" Margin="3,0,-2,10" HorizontalAlignment="Left" />
                         <!--DisplayDate="{Binding HostingUnit.Diary, Mode=TwoWay, NotifyOnValidationError=true, ValidatesOnExceptions=true}"-->
                     </Grid>
+                    <Calendar x:Name="MyCalendar" IsTodayHighlighted ="True"    Height="195" Width="170" VerticalAlignment = "Center" Margin="571,59,0,121" HorizontalAlignment="Left" />
 
                     <Button x:Name="DeleteHostingUnit" Content="מחק יחידת אירוח" Margin="27,341,651,10" Click="DelButton_Click"/>
-                    <Button x:Name="upDateHostingUnit" Content="ערוך יחידת אירוח" Margin="143,341,526,10" Click="UpDateHostingUnit" />
+                    <Button x:Name="upDateHostingUnit" Content="ערוך יחידת אירוח" Margin="143,341,526,10" Click="UpDateHostingUnit_Button_Click" />
 
                 </Grid>
 
@@ -266,7 +266,7 @@
 
                         <StackPanel Name="filterGuestStackPanel"  Grid.Row="0"  VerticalAlignment="Center" HorizontalAlignment="Left" Orientation="Horizontal" >
 
-                           
+
                             <Label  HorizontalAlignment="Right" Width="42"  Grid.Column="0"  Content=":Pool" />
                             <ComboBox  Name="filterPoolGuest" Width="100" Text="{Binding Pool, Mode=OneWayToSource}"/>
                             <Label HorizontalAlignment="Right" Width="49"  Content=":Jacuzzi" Margin="20,0,5,0"/>

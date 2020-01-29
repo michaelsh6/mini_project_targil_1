@@ -34,6 +34,8 @@ namespace BE
    public class ExceptionException : Exception{ public ExceptionException(string message) : base(message){ }}
    
     public class problem_OrderException : Exception{ public problem_OrderException(string message) : base(message){ }}
+
+    public class BankAccuntException : Exception{ public BankAccuntException(string message) : base(message){ }}
    
    
    

@@ -8,7 +8,7 @@ using System.Xml.Serialization;
 namespace BE
 {
     [Serializable]
-    public class HostingUnit
+    public class HostingUnit 
     {
 
 

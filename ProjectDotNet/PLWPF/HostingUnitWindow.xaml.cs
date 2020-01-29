@@ -49,7 +49,18 @@ namespace PLWPF
 
             guests = new ObservableCollection<Guest>(bl.getAllGuests());
             orders = new ObservableCollection<Order>(bl.getAllOrders(x => x.HostingUnitKey == hostingUnit.HostingUnitKey));
-            bankAccunts = bl.getAllBankBranches();
+
+            bankAccunts = new List<BankAccunt>();
+            try
+            {
+                bankAccunts = bl.getAllBankBranches();
+
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+            }
 
 
             List<string> bankNames = (from bank in bankAccunts select bank.BankName).Distinct().ToList();
@@ -124,12 +135,15 @@ namespace PLWPF
             }
         }
 
-        private void UpDateHostingUnit(object sender, RoutedEventArgs e)
+        private void UpDateHostingUnit_Button_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (HostingUnitGrid.IsEnabled == false)
                 {
+                    hostingUnit = bl.GetHostingUnit(hostingUnit.HostingUnitKey);
+                    HostingUnitGrid.DataContext = hostingUnit;
+
                     HostingUnitGrid.IsEnabled = true;
                     upDateHostingUnit.Content = "שלח"
     ;

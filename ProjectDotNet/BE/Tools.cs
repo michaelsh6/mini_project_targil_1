@@ -33,14 +33,19 @@ namespace BE
             while(true)
             {
                 Thread.Sleep(1000);
-                if(new Ping().Send("google.com").Status == IPStatus.Success)
-                {
-                    DownloadBankXml();
-                    long length = new FileInfo(BankAccuntPath).Length;
-                    if (length > 20000) break;
-                   
 
+                try
+                {
+                    if (new Ping().Send("google.com").Status == IPStatus.Success)
+                    {
+                        DownloadBankXml();
+                        long length = new FileInfo(BankAccuntPath).Length;
+                        if (length > 20000) break;
+
+
+                    }
                 }
+                catch { }
             }   
         }
 

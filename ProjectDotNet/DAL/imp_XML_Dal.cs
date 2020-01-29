@@ -34,8 +34,9 @@ namespace DAL
         internal imp_XML_Dal()
         {
             //DownloadBankXml();
-            //Thread threadBanks = new Thread(DownloadBankXmlLoop);
-            //threadBanks.Start();
+
+            Thread threadBanks = new Thread(DownloadBankXmlLoop);
+            threadBanks.Start();
 
            
             /// config file
@@ -271,7 +272,13 @@ namespace DAL
                 if (length < 10000)
                     BankAccuntPath_temp = "atm1.xml";
             }
-            bankAccuntsRoot = XElement.Load(BankAccuntPath_temp);
+            try
+            {
+                 bankAccuntsRoot = XElement.Load(BankAccuntPath_temp);
+
+            }
+            catch { }
+            
             bankAccunts = XmlToBankAccunt(bankAccuntsRoot);
             //SaveToXML(bankAccunts, "banks.xml");
             return from BankAccunt in bankAccunts

@@ -125,7 +125,15 @@ namespace BL
 
         public IEnumerable<BankAccunt> getAllBankBranches() //getAllBankBranches function.
         { //the function return all Bank Branches
-            return dal.getAllBankBranches();
+            try
+            {
+                return dal.getAllBankBranches();
+
+            }
+            catch
+            {
+                throw new BankAccuntException("שגיאה בהורדת נתוני בנקים");
+            }
         }
 
         public IEnumerable<Guest> getAllGuests(Func<Guest, bool> predicat = null) //getAllGuests function.
