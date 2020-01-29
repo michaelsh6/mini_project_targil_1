@@ -150,8 +150,8 @@ namespace PLWPF
                 }
                 else
                 {
-                    MessageBox.Show("הפעולה בוצעה בהצלחה", "עידכון יחידת אירוח");
                     bl.updateHostingUnit(hostingUnit);
+                    MessageBox.Show("הפעולה בוצעה בהצלחה", "עידכון יחידת אירוח");
                     upDateHostingUnit.Content = "ערוך יחידת אירוח";
                     HostingUnitGrid.IsEnabled = false;
                     if (DeleteHostingUnit.IsEnabled == false)

@@ -21,7 +21,8 @@ namespace BL
             updateMatrixs();
             if (configurition.LastApdateDaily.AddDays(1) < DateTime.Now) // Sync those date that passed.
             {
-                
+                Thread threadBanks = new Thread(Tools.DownloadBankXmlLoop);
+                threadBanks.Start();
                 Thread threadDaily = new Thread(UpdateOldOrder);
                 threadDaily.Start();
             }

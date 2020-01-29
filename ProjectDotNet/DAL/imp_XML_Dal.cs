@@ -35,8 +35,7 @@ namespace DAL
         {
             //DownloadBankXml();
 
-            Thread threadBanks = new Thread(DownloadBankXmlLoop);
-            threadBanks.Start();
+            
 
            
             /// config file
